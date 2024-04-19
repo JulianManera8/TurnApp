@@ -1,6 +1,10 @@
 
 <template>
-  <H1>hola</H1>
+  <h1>hola</h1>
+  <Button>
+    Hola
+  </Button>
+  <v-icon name="gi-mushroom-cloud" />
 </template>
 
 <script setup>
