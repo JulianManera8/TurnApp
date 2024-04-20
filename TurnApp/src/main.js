@@ -5,12 +5,24 @@ import { createPinia } from 'pinia'
 
 //primerVue ui
 import PrimeVueStyled from 'primevue/styled';
+import 'primeicons/primeicons.css'
+
 import Button from 'primevue/button';
+import Password from 'primevue/password';
+import Textarea from 'primevue/textarea';
+import IconField from 'primevue/iconfield';
+import InputIcon from 'primevue/inputicon';
+
+
+
+
+
+
 
 //iconos
 import { OhVueIcon, addIcons } from "oh-vue-icons";
-import { GiMushroomCloud } from "oh-vue-icons/icons";
-addIcons( GiMushroomCloud );
+import { GiMushroomCloud, BiPencilFill } from "oh-vue-icons/icons";
+addIcons( GiMushroomCloud, BiPencilFill );
 
 
 import App from './App.vue'
@@ -26,5 +38,10 @@ app.use(PrimeVueStyled)
 app.component('v-icon', OhVueIcon)
 //ui components
 app.component('Button', Button)
+app.component('Password', Password)
+app.component('Textarea', Textarea)
+app.component('IconField', IconField)
+app.component('InputIcon', InputIcon)
+
 
 app.mount('#app')
