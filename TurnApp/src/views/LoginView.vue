@@ -3,7 +3,7 @@
         <h1>Vista del login de inicio</h1>
         <!-- <formLogin /> -->
         <!-- <formRegistro /> -->
-        <popupDetalles />
+        <popupNuevoTurno />
         <!-- 
             aca vamos a mostrar;
             - form login
@@ -17,8 +17,8 @@
 <script setup>
     // import formLogin from '../components/formularios/FormLogin.vue'
     // import formRegistro from '../components/formularios/FormRegistro.vue';
-    import popupDetalles from '../components/formularios/PopupDetalles.vue';
-    // import formRegistro from '../components/formularios/FormRegistro.vue';
+    // import popupDetalles from '../components/formularios/PopupDetalles.vue';
+    import popupNuevoTurno from '../components/formularios/PopupNuevoTurno.vue';
     // import formRegistro from '../components/formularios/FormRegistro.vue';
 
 </script>
