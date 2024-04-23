@@ -12,6 +12,10 @@ import Password from 'primevue/password';
 import Textarea from 'primevue/textarea';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
+import Avatar from 'primevue/avatar';
+import FileUpload from 'primevue/fileupload';
+
+
 
 
 
@@ -42,6 +46,8 @@ app.component('Password', Password)
 app.component('Textarea', Textarea)
 app.component('IconField', IconField)
 app.component('InputIcon', InputIcon)
+app.component('Avatar', Avatar)
+app.component('FileUpload', FileUpload)
 
 
 app.mount('#app')
