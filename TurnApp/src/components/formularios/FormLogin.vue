@@ -5,44 +5,59 @@
       <h3 class="title">Inicia sesión</h3>
 
       <form class="form">
-        <input type="email" class="input" placeholder="Email">
+        <input type="email" class="input" placeholder="Email" autocomplete="email">
 
-        <input type="password" class="input" placeholder="Contraseña" toggleMask>
+        <input type="password" class="input" placeholder="Contraseña" autocomplete="current-password">
         
         <p class="page-link">
             <span class="page-link-label">Olvidaste tu contraseña?</span>
         </p>
         
         <button class="form-btn">Entrar</button>
-            <div>
-                <label class="check-label" for="checkbox">Mantener sesion iniciada</label>
-                <input type="checkbox" id="checkbox" class="check">
-            </div>
+        
+        <div>
+          <label class="check-label" style="font-size: 12px;" for="checkbox">Mantener sesion iniciada</label>
+          <input type="checkbox" id="checkbox" class="check">
+        </div>
+          
+        <p class="sign-up-label">
+          No tienes cuenta?<span style="font-size: small; text-decoration: none;" class="sign-up-link"  @click="mostrarFormRegistro" >Crea una!</span>
+        </p>
+
       </form>
 
-      <p class="sign-up-label">
-        No tienes cuenta?<span class="sign-up-link">Crea una!</span>
-      </p>
+      
 
     </div>
 
 </template>
 
 <script setup>
+import { defineEmits } from 'vue'
+
+const emit  = defineEmits(['mostrarFormRegistro']);
+
+const mostrarFormRegistro = () => {
+  emit('mostrarFormRegistro')
+}
+
+
 </script>
 
 <style scoped>
     * {
         margin: auto;
+        background-color: transparent;
     }
     .form-container {
       width: 350px;
-      height: 500px;
-      background-color: #fff;
-      border: 1px solid black;
-      border-radius: 10px;
+      background-color: rgba(255, 255, 255, 0.942);
+      box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.14);
+      border-radius: 20px;
+      border-bottom-right-radius: 30%;
       box-sizing: border-box;
       padding: 20px 30px;
+      margin-top: 90px;
     }
 
     .title {
@@ -68,10 +83,13 @@
       outline: 0 !important;
       box-sizing: border-box;
       padding: 12px 15px;
+      height: 35px;
+      font-size: 16px;
+      width: 80%;
     }
 
     .input:focus {
-        border: 3px solid teal;
+      border: 3px solid teal;
     }
 
     .page-link {
@@ -86,7 +104,7 @@
       cursor: pointer;
       font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
             "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-      font-size: 9px;
+      font-size: 3px;
       font-weight: 700;
     }
 
@@ -134,7 +152,7 @@
     }
 
     .check {
-        scale: 150%;
+        scale: 120%;
         cursor: pointer;
     }
 
