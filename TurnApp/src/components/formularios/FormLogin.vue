@@ -5,15 +5,15 @@
       <h3 class="title">Inicia sesión</h3>
 
       <form class="form">
-        <input type="email" class="input" placeholder="Email" autocomplete="email">
+        <input type="email" class="input" placeholder="Email" autocomplete="email" v-model="email">
 
-        <input type="password" class="input" placeholder="Contraseña" autocomplete="current-password">
+        <input type="password" class="input" placeholder="Contraseña" autocomplete="current-password" v-model="password">
         
         <p class="page-link">
             <span class="page-link-label">Olvidaste tu contraseña?</span>
         </p>
         
-        <button class="form-btn">Entrar</button>
+        <button class="form-btn" @click.prevent="iniciarSesion">Entrar</button>
         
         <div>
           <label class="check-label" style="font-size: 12px;" for="checkbox">Mantener sesion iniciada</label>
@@ -26,19 +26,38 @@
 
       </form>
 
-      
-
+    
     </div>
 
 </template>
 
 <script setup>
-import { defineEmits } from 'vue'
+
+import { ref } from 'vue';
+import { supabase } from '@/supabase';
 
 const emit  = defineEmits(['mostrarFormRegistro']);
 
 const mostrarFormRegistro = () => {
   emit('mostrarFormRegistro')
+}
+
+let email = ref('')
+let password = ref('')
+
+async function iniciarSesion() {
+
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: email.value,
+    password: password.value
+  })
+
+  if(error) {
+    console.log(error)
+  } else {
+    console.log(data)
+  }
+
 }
 
 

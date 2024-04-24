@@ -5,17 +5,16 @@
       <h3 class="title">Crear Cuenta</h3>
 
       <form class="form">
-        <input type="text" class="input" placeholder="Nombre" autocomplete="name">
-        <input type="text" class="input" placeholder="Apellido" autocomplete="additional-name">
+        <input type="text" class="input" placeholder="Nombre" autocomplete="name" v-model="nombre">
+        <input type="text" class="input" placeholder="Apellido" autocomplete="additional-name" v-model="apellido">
 
-        <input type="email" class="input" placeholder="Email" autocomplete="email">
+        <input type="email" class="input" placeholder="Email" autocomplete="email" v-model="email">
 
-        <input type="text" class="input" placeholder="D.N.I" autocomplete="cc-number">
+        <input type="text" class="input" placeholder="D.N.I" autocomplete="number" v-model="dni">
 
-        <input type="password" class="input" placeholder="Contraseña" autocomplete="new-password">
-        <input type="password" class="input" placeholder="Repetir contraseña" autocomplete="password">
+        <input type="password" class="input" placeholder="Contraseña" autocomplete="new-password" v-model="password">
         
-        <button class="form-btn">Entrar</button>
+        <button class="form-btn" @click.prevent="crearCuenta">Crear</button>
 
       </form>
 
@@ -29,13 +28,43 @@
 
 <script setup>
 
-import { defineEmits } from 'vue';
+import { ref } from 'vue'
+import { supabase } from '../../supabase'
 
 const emit = defineEmits(['mostrarLogin'])
 
 function mostrarLogin() {
   emit('mostrarLogin')
 }
+
+let email = ref('')
+let password = ref('')
+let dni = ref('')
+let nombre = ref('')
+let apellido = ref('')
+
+async function crearCuenta() {
+  const { data, error } = await supabase.auth.signUp({
+    email: email.value,
+    password: password.value,
+    options: {
+      data: {
+        dni: dni.value,
+        nombre: nombre.value,
+        apellido: apellido.value
+      }
+    }
+
+  })
+
+  if(error) {
+    console.log(error)
+  } else {
+    console.log(data)
+  }
+}
+
+
 
 
 </script>

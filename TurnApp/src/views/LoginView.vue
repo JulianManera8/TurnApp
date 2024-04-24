@@ -32,20 +32,24 @@
 
 <script setup>
 
-    import { ref } from 'vue';
+import { ref } from 'vue';
 
-    import formLogin from '../components/formularios/FormLogin.vue'
-    import formRegistro from '../components/formularios/FormRegistro.vue';
+import formLogin from '../components/formularios/FormLogin.vue'
+import formRegistro from '../components/formularios/FormRegistro.vue';
 
-    const verRegistro = ref(false);
 
-    function mostrarRegistro() {
-        verRegistro.value = true
-    }
 
-    function mostrarLogin() {
-        verRegistro.value = false
-    }
+const verRegistro = ref(false);
+
+function mostrarRegistro() {
+    verRegistro.value = true
+}
+
+function mostrarLogin() {
+    verRegistro.value = false
+}
+
+
 
 
 </script>
