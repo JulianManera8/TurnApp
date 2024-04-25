@@ -5,18 +5,21 @@
       <h3 class="title">Crear Cuenta</h3>
 
       <form class="form">
-        <input type="text" class="input" placeholder="Nombre" autocomplete="name" v-model="nombre">
-        <input type="text" class="input" placeholder="Apellido" autocomplete="additional-name" v-model="apellido">
+        <input type="text" class="input" placeholder="Nombre" autocomplete="name" v-model="nombre" required>
+        <input type="text" class="input" placeholder="Apellido" autocomplete="additional-name" v-model="apellido" required>
+        <input type="text" class="input" placeholder="D.N.I" autocomplete="number" v-model="dni" required>
+        <input type="email" class="input" placeholder="Email" autocomplete="email" v-model="email" required>
+        <input type="password" class="input" placeholder="Contraseña" autocomplete="new-password" v-model="password" required>
+        <input type="password" class="input" placeholder="Repetir contraseña" autocomplete="new-password" v-model="repePassword" required>
 
-        <input type="email" class="input" placeholder="Email" autocomplete="email" v-model="email">
-
-        <input type="text" class="input" placeholder="D.N.I" autocomplete="number" v-model="dni">
-
-        <input type="password" class="input" placeholder="Contraseña" autocomplete="new-password" v-model="password">
         
         <button class="form-btn" @click.prevent="crearCuenta">Crear</button>
 
       </form>
+
+      <div class="mostrarError" v-if="errorMsg">
+        <p> Hay un error {{ errorMsg }}</p>
+      </div>
 
       <p class="sign-up-label">
         ¿Ya tienes cuenta?<span class="sign-up-link" @click="mostrarLogin">¡Inicia sesion!</span>
@@ -28,8 +31,13 @@
 
 <script setup>
 
+// IMPORTS
 import { ref } from 'vue'
 import { supabase } from '../../supabase'
+import { useRouter } from 'vue-router';
+
+
+// ENVIAR  INFO DESDE EL FORM A LA VISTA POR EMITS
 
 const emit = defineEmits(['mostrarLogin'])
 
@@ -37,37 +45,72 @@ function mostrarLogin() {
   emit('mostrarLogin')
 }
 
-let email = ref('')
-let password = ref('')
-let dni = ref('')
+
+//FUNCIONALIDAD DEL FORM PARA REGISTRARSE
+
+//       descripcion de variables
+
+const router = useRouter()
+
 let nombre = ref('')
 let apellido = ref('')
+let dni = ref('')
+let email = ref('')
+let password = ref('')
+let repePassword = ref('')
 
+let errorMsg = ref('')
+
+
+//       funcion para conectar a supabase 
 async function crearCuenta() {
-  const { data, error } = await supabase.auth.signUp({
-    email: email.value,
-    password: password.value,
-    options: {
-      data: {
-        dni: dni.value,
-        nombre: nombre.value,
-        apellido: apellido.value
-      }
-    }
 
-  })
+  if(email.value, apellido.value, dni.value, email.value, password.value, repePassword.value) {
+    if(password.value === repePassword.value) {
+      const { data, error } = await supabase.auth.signUp({
+        email: email.value,
+        password: password.value,
+        options: {
+          data: {
+            dni: dni.value,
+            nombre: nombre.value,
+            apellido: apellido.value
+          }
+        }
+      })
+    
+      if(error) {
+        errorMsg.value = 'Completa correctamente todos los campos'
 
-  if(error) {
-    console.log(error)
+        setTimeout(() => {
+          return errorMsg.value = ''
+        }, 2500);
+      } else {
+        return  console.log(data)
+        // router.push({name: 'logeado/homeview'}) 
+      };
+
+    } else {
+      errorMsg.value = 'Las contraseñas tienen que coincidir perro'
+      setTimeout(() => {
+        return errorMsg.value = ''
+      }, 2500);
+    };
+
   } else {
-    console.log(data)
-  }
+    errorMsg.value = 'Completa correctamente todos los campos'
+    setTimeout(() => {
+      return errorMsg.value = ''
+    }, 2500);
+  };
+
 }
-
-
-
-
 </script>
+
+
+
+
+
 
 <style scoped>
 

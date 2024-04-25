@@ -19,6 +19,10 @@
           <label class="check-label" style="font-size: 12px;" for="checkbox">Mantener sesion iniciada</label>
           <input type="checkbox" id="checkbox" class="check">
         </div>
+
+        <div class="mostrarError">
+          <p> {{ errormsg }}</p>
+        </div>
           
         <p class="sign-up-label">
           No tienes cuenta?<span style="font-size: small; text-decoration: none;" class="sign-up-link"  @click="mostrarFormRegistro" >Crea una!</span>
@@ -33,8 +37,12 @@
 
 <script setup>
 
+// IMPORTS
 import { ref } from 'vue';
 import { supabase } from '@/supabase';
+import { useRouter } from 'vue-router';
+
+// ENVIAR  INFO DESDE EL FORM A LA VISTA POR EMITS
 
 const emit  = defineEmits(['mostrarFormRegistro']);
 
@@ -42,26 +50,54 @@ const mostrarFormRegistro = () => {
   emit('mostrarFormRegistro')
 }
 
+//FUNCIONALIDAD DEL FORM PARA INICIAR SESION
+
+//       descripcion de variables
+
+const router = useRouter()
+
 let email = ref('')
 let password = ref('')
+let errormsg = ref('')
+
+
+//       funcion para conectar a supabase 
 
 async function iniciarSesion() {
 
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email: email.value,
-    password: password.value
-  })
+  if(email.value, password.value) {
 
-  if(error) {
-    console.log(error)
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email.value,
+      password: password.value
+    })
+  
+    if(error) {
+      errormsg.value = 'Email o contraseña incorrecto, vuelve a intentarlo'
+
+      setTimeout(() => {
+        return errormsg.value = ''
+      }, 2500);
+    } else {
+      console.log(data)
+        // router.push({name: 'logeado/homeview'}) 
+      }
+
   } else {
-    console.log(data)
+    errormsg.value = 'Completa el email y contraseña para iniciar sesion'
+    setTimeout(() => {
+      return errormsg.value = ''
+    }, 2500);
   }
 
 }
 
 
 </script>
+
+
+
+
 
 <style scoped>
     * {
