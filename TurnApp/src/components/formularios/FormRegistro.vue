@@ -85,9 +85,15 @@ async function crearCuenta() {
         setTimeout(() => {
           return errorMsg.value = ''
         }, 2500);
+
       } else {
-        return  console.log(data)
-        // router.push({name: 'logeado/homeview'}) 
+        console.log(data)
+        errorMsg.value = 'Registrado con exito, prueba de iniciar sesion.'
+        setTimeout(() => {
+          errorMsg.value = '';
+          mostrarLogin();
+        }, 3000);
+        
       };
 
     } else {
