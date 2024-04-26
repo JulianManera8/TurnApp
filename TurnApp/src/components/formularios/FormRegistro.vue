@@ -9,16 +9,28 @@
         <input type="text" class="input" placeholder="Apellido" autocomplete="additional-name" v-model="apellido" required>
         <input type="text" class="input" placeholder="D.N.I" autocomplete="number" v-model="dni" required>
         <input type="email" class="input" placeholder="Email" autocomplete="email" v-model="email" required>
-        <input type="password" class="input" placeholder="Contraseña" autocomplete="new-password" v-model="password" required>
-        <input type="password" class="input" placeholder="Repetir contraseña" autocomplete="new-password" v-model="repePassword" required>
+
+        <div class="password">
+          <v-icon v-if="!verContra" @click="cambiarType" class="password-icono" name="bi-eye-slash"> </v-icon>
+          <v-icon v-else @click="cambiarType" class="password-icono" name="bi-eye"> </v-icon>
+
+          <input :type="inputType" class="input" placeholder="Contraseña" autocomplete="new-password" v-model="password" required>
+        </div>
+
+        <div class="password">
+          <input :type="inputType" class="input" placeholder="Repetir contraseña" autocomplete="new-password" v-model="repePassword" required>
+        </div>
 
         
         <button class="form-btn" @click.prevent="crearCuenta">Crear</button>
 
       </form>
 
-      <div class="mostrarError" v-if="errorMsg">
-        <p> Hay un error {{ errorMsg }}</p>
+      <div class="mostrarMsg" v-if="errorMsg">
+        <p class="errormsg"> {{ errorMsg }}</p>
+      </div>
+      <div class="mostrarMsg" v-if="exitoMsg">
+        <p class="exitomsg"> {{ exitoMsg }}</p>
       </div>
 
       <p class="sign-up-label">
@@ -60,6 +72,7 @@ let password = ref('')
 let repePassword = ref('')
 
 let errorMsg = ref('')
+let exitoMsg = ref('')
 
 
 //       funcion para conectar a supabase 
@@ -88,12 +101,12 @@ async function crearCuenta() {
 
       } else {
         console.log(data)
-        errorMsg.value = 'Registrado con exito, prueba de iniciar sesion.'
+        exitoMsg.value = 'Registrado con exito, prueba de iniciar sesion.'
         setTimeout(() => {
-          errorMsg.value = '';
+          exitoMsg.value = '';
           mostrarLogin();
         }, 3000);
-        
+
       };
 
     } else {
@@ -111,6 +124,18 @@ async function crearCuenta() {
   };
 
 }
+
+//MOSTRAR CONTRASEÑA
+//   variables
+let verContra = ref(false)
+let inputType = ref('password')
+
+//  funcion
+const cambiarType = () => {
+  verContra.value = (verContra.value === false) ? true : false
+  inputType.value = (inputType.value === 'password') ? 'text' : 'password'
+}
+
 </script>
 
 
@@ -228,5 +253,49 @@ async function crearCuenta() {
   font-size: 17px;
 }
 
+.mostrarMsg {
+  display: flex;
+  text-align: center;
+ 
+  width: 100%;
+  font-weight: bold;
+
+  padding: 2px;
+  font-size: small;
+  margin-top: 20px; 
+  .errormsg {
+    border-top: 2px solid rgb(165, 0, 0);
+    border-bottom: 2px solid rgb(156, 0, 0);
+    color: rgba(182, 0, 0, 0.965);
+  }
+  .exitomsg {
+    border-top: 2px solid rgb(11, 132, 0);
+    border-bottom: 2px solid rgb(11, 132, 0);
+    color: rgb(11, 132, 0);
+  }
+}
+
+.password {
+  position: relative;
+
+  display: flex;
+  text-align: center;
+  justify-content: left;
+
+  .password-icono {
+    position: absolute;
+    right: -30px;
+    top: 42px;
+    border-radius: 50%;
+    padding: 4px;
+    cursor: pointer;
+    transition: 0.2s;
+    scale: 115%;
+
+    &:hover{
+      background-color: rgba(128, 128, 128, 0.303);
+    }
+  }
+}
 
 </style>

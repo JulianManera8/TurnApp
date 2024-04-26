@@ -25,8 +25,8 @@ import FileUpload from 'primevue/fileupload';
 
 //iconos
 import { OhVueIcon, addIcons } from "oh-vue-icons";
-import { GiMushroomCloud, BiPencilFill, LaCalendarDaySolid, BiEye } from "oh-vue-icons/icons";
-addIcons( GiMushroomCloud, BiPencilFill, LaCalendarDaySolid, BiEye );
+import { GiMushroomCloud, BiPencilFill, LaCalendarDaySolid, BiEye, BiEyeSlash } from "oh-vue-icons/icons";
+addIcons( GiMushroomCloud, BiPencilFill, LaCalendarDaySolid, BiEye, BiEyeSlash );
 
 
 import App from './App.vue'

@@ -8,8 +8,10 @@
         <input type="email" class="input" placeholder="Email" autocomplete="email" v-model="email">
 
         <div class="password">
-          <input type="password" class="input" placeholder="Contraseña" autocomplete="current-password" v-model="password">
-          <v-icon class="password-icono" name="bi-eye"> </v-icon>
+          <v-icon v-if="!verContra" @click="cambiarType" class="password-icono" name="bi-eye-slash"> </v-icon>
+          <v-icon v-else @click="cambiarType" class="password-icono" name="bi-eye"> </v-icon>
+
+          <input :type="inputType" id="password" class="input" placeholder="Contraseña" autocomplete="current-password" v-model="password">
         </div>
         
         <p class="page-link">
@@ -95,6 +97,19 @@ async function iniciarSesion() {
 
 }
 
+// VER CONTRASEÑA
+//variables
+let verContra = ref(false)
+let inputType = ref('password')
+
+//funcion para msotrar contra
+const cambiarType = () => {
+  verContra.value = (verContra.value === false) ? true : false;
+  inputType.value = (inputType.value === 'password') ? 'text' : 'password';
+}
+
+
+
 
 </script>
 
@@ -142,7 +157,7 @@ async function iniciarSesion() {
   padding: 12px 15px;
   height: 35px;
   font-size: 16px;
-  width: 80%;
+
 }
 
 .input:focus {
@@ -229,10 +244,23 @@ async function iniciarSesion() {
 
 .password {
   position: relative;
-  width: 100%;
+
+  display: flex;
+  text-align: center;
+  justify-content: left;
 
   .password-icono {
     position: absolute;
+    right: -35px;
+    top: 4px;
+    border-radius: 50%;
+    padding: 4px;
+    cursor: pointer;
+    transition: 0.2s;
+    
+    &:hover{
+      background-color: rgba(128, 128, 128, 0.303);
+    }
   }
 }
 
