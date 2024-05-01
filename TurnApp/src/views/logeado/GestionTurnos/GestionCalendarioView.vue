@@ -1,5 +1,6 @@
 <template>
     <div>
+        <navbar />
         <h1> VISTA DE GESTION DE TURNOS CALENDARIO LOGEADO </h1>
 <!--   
     aca mostramos:
@@ -14,6 +15,7 @@
 </template>
 
 <script setup>
+import navbar from '../../../components/navbar/navbarComp.vue';
 
 </script>
 

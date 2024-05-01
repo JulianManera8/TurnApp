@@ -15,6 +15,12 @@ const router = createRouter({
       name: 'login',
       component: LoginView
     },
+    //es la vista de login de inicio, aca entramos siempre
+    {
+      path: '/noauth',
+      name: 'noauth',
+      component: () => import(/* webpackChunkName: "noauth" */ '../views/NoAuthView.vue'),
+    },
     //es la vista de home post haberse logeado
     {
       path: '/homeView',
@@ -58,7 +64,7 @@ const router = createRouter({
 async function getUser(next) {
   let currentUser = await supabase.auth.getSession()
   if(currentUser.data.session == null) {
-    next('/login')
+    next('/noauth')
   } else {
     next();
   }

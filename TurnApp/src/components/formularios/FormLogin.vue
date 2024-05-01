@@ -19,6 +19,9 @@
         </p>
         
         <button class="form-btn" @click.prevent="iniciarSesion">Entrar</button>
+        <button class="form-btn" @click.prevent="verSesion">Ver sesion</button>
+        <button class="form-btn" @click.prevent="cerrarSesion">Log out</button>
+
         
         <div>
           <label class="check-label" style="font-size: 12px;" for="checkbox">Mantener sesion iniciada</label>
@@ -66,8 +69,7 @@ let password = ref('')
 let errormsg = ref('')
 
 
-//       funcion para conectar a supabase 
-
+// iniciar sesion
 async function iniciarSesion() {
 
   if(email.value, password.value) {
@@ -98,8 +100,21 @@ async function iniciarSesion() {
 
 }
 
-async function seeCurrentUser() {
+// ver sesion
+async function verSesion() {
   const currentUser = await supabase.auth.getSession()
+  console.log(currentUser)
+}
+
+// cerrar sesion
+async function cerrarSesion() {
+  const { error } = await supabase.auth.signOut()
+
+  if(error) {
+    console.log(error)
+  } else {
+    console.log('sesion cerrada')
+  }
 }
 
 // VER CONTRASEÑA
