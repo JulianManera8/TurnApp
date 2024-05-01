@@ -1,7 +1,9 @@
 <template>
     <div>
         <navbar />
-        <h1> VISTA DE HOME LOGEADO </h1>
+        <div class="main">
+            <h1> VISTA DE HOME LOGEADO </h1>
+        </div>
 <!--   
     aca mostramos:
     - COMPONENTE navbar
@@ -19,4 +21,8 @@ import navbar from '../../components/navbar/navbarComp.vue'
 </script>
 
 <style scoped>
+.main {
+    margin-top: 70px;
+}
+
 </style>

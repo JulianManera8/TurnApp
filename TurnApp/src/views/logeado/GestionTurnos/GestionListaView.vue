@@ -1,7 +1,9 @@
 <template>
     <div>
         <navbar />
-        <h1> VISTA DE GESTION DE TURNOS LISTA LOGEADO </h1>
+        <div class="main">
+            <h1> VISTA DE GESTION DE TURNOS LISTA LOGEADO </h1>
+        </div>
 <!--   
     aca mostramos:
     - COMPONENTE navbar
@@ -20,5 +22,7 @@ import navbar from '../../../components/navbar/navbarComp.vue'
 </script>
 
 <style lang="scss" scoped>
-
+.main {
+    margin-top: 70px;
+}
 </style>

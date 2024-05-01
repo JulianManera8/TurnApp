@@ -14,12 +14,15 @@ import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
 import Avatar from 'primevue/avatar';
 import FileUpload from 'primevue/fileupload';
+import TieredMenu from 'primevue/tieredmenu';
+import Menubar from 'primevue/menubar';
+
 
 
 //iconos
 import { OhVueIcon, addIcons } from "oh-vue-icons";
-import { GiMushroomCloud, BiPencilFill, LaCalendarDaySolid, BiEye, BiEyeSlash } from "oh-vue-icons/icons";
-addIcons( GiMushroomCloud, BiPencilFill, LaCalendarDaySolid, BiEye, BiEyeSlash );
+import { GiMushroomCloud, BiPencilFill, LaCalendarDaySolid, BiEye, BiEyeSlash, MdMenu } from "oh-vue-icons/icons";
+addIcons( GiMushroomCloud, BiPencilFill, LaCalendarDaySolid, BiEye, BiEyeSlash, MdMenu );
 
 
 import App from './App.vue'
@@ -41,6 +44,8 @@ app.component('IconField', IconField)
 app.component('InputIcon', InputIcon)
 app.component('Avatar', Avatar)
 app.component('FileUpload', FileUpload)
+app.component('TieredMenu', TieredMenu)
+app.component('Menubar', Menubar)
 
 
 app.mount('#app')
