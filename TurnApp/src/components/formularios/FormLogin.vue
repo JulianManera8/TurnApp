@@ -83,6 +83,7 @@ async function iniciarSesion() {
       setTimeout(() => {
         return errormsg.value = ''
       }, 2500);
+
     } else {
       console.log(data)
         router.push({name: 'homeview'}) 
@@ -95,6 +96,10 @@ async function iniciarSesion() {
     }, 2500);
   }
 
+}
+
+async function seeCurrentUser() {
+  const currentUser = await supabase.auth.getSession()
 }
 
 // VER CONTRASEÑA

@@ -16,13 +16,6 @@ import Avatar from 'primevue/avatar';
 import FileUpload from 'primevue/fileupload';
 
 
-
-
-
-
-
-
-
 //iconos
 import { OhVueIcon, addIcons } from "oh-vue-icons";
 import { GiMushroomCloud, BiPencilFill, LaCalendarDaySolid, BiEye, BiEyeSlash } from "oh-vue-icons/icons";

@@ -38,7 +38,6 @@ import formLogin from '../components/formularios/FormLogin.vue'
 import formRegistro from '../components/formularios/FormRegistro.vue';
 
 
-
 const verRegistro = ref(false);
 
 function mostrarRegistro() {
