@@ -102,7 +102,6 @@ async function crearCuenta() {
         }, 2500);
 
       } else {
-        createPerfil()
         console.log(data)
         exitoMsg.value = 'Registrado con exito, prueba de iniciar sesion.'
         setTimeout(() => {
