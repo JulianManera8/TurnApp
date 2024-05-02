@@ -1,0 +1,1 @@
+import{_ as t,c as r,a as e,b as a,w as s,r as n,o as c,d as l}from"./index-Cg6UCHKS.js";const _={},i=e("h1",null,"No podes estar aca perro, primer logeate ;)",-1);function d(u,p){const o=n("router-link");return c(),r("div",null,[i,e("button",null,[a(o,{to:"/"},{default:s(()=>[l(" Iniciar sesion / registrarse ")]),_:1})])])}const m=t(_,[["render",d]]);export{m as default};

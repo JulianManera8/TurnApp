@@ -1,0 +1,1 @@
+import{n as o}from"./navbarComp-Dmmz1cPW.js";import{_ as s,c as t,b as c,o as p,p as _,e as r,a}from"./index-Cg6UCHKS.js";const d=e=>(_("data-v-9d694904"),e=e(),r(),e),n=d(()=>a("div",{class:"main"},[a("h1",null," VISTA DE HOME LOGEADO ")],-1)),i={__name:"HomeView",setup(e){return(m,l)=>(p(),t("div",null,[c(o),n]))}},h=s(i,[["__scopeId","data-v-9d694904"]]);export{h as default};
