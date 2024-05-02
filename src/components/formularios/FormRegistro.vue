@@ -4,11 +4,11 @@
 
       <h3 class="title">Crear Cuenta</h3>
 
-      <form class="form">
+      <form class="form" >
         <input type="text" class="input" placeholder="Nombre" autocomplete="name" v-model="nombre" required>
         <input type="text" class="input" placeholder="Apellido" autocomplete="additional-name" v-model="apellido" required>
-        <input type="text" class="input" placeholder="D.N.I" autocomplete="number" v-model="dni" required>
         <input type="email" class="input" placeholder="Email" autocomplete="email" v-model="email" required>
+        <input type="number" class="input" placeholder="Telefono" autocomplete="number" v-model="telefono" required>
 
         <div class="password">
           <v-icon v-if="!verContra" @click="cambiarType" class="password-icono" name="bi-eye-slash"> </v-icon>
@@ -22,7 +22,7 @@
         </div>
 
         
-        <button class="form-btn" @click.prevent="crearCuenta">Crear</button>
+        <button class="form-btn" @click.prevent="crearCuenta" type="submit">Crear</button>
 
       </form>
 
@@ -66,8 +66,8 @@ const router = useRouter()
 
 let nombre = ref('')
 let apellido = ref('')
-let dni = ref('')
 let email = ref('')
+let telefono = ref('')
 let password = ref('')
 let repePassword = ref('')
 
@@ -78,16 +78,18 @@ let exitoMsg = ref('')
 //       funcion para conectar a supabase 
 async function crearCuenta() {
 
-  if(email.value, apellido.value, dni.value, email.value, password.value, repePassword.value) {
+  if(email.value, apellido.value, telefono.value, email.value, password.value, repePassword.value) {
     if(password.value === repePassword.value) {
       const { data, error } = await supabase.auth.signUp({
         email: email.value,
         password: password.value,
         options: {
           data: {
-            dni: dni.value,
             nombre: nombre.value,
-            apellido: apellido.value
+            apellido: apellido.value,
+            email: email.value,
+            telefono: telefono.value,
+            password: password.value
           }
         }
       })
@@ -100,6 +102,7 @@ async function crearCuenta() {
         }, 2500);
 
       } else {
+        createPerfil()
         console.log(data)
         exitoMsg.value = 'Registrado con exito, prueba de iniciar sesion.'
         setTimeout(() => {
@@ -124,6 +127,7 @@ async function crearCuenta() {
   };
 
 }
+
 
 //MOSTRAR CONTRASEÑA
 //   variables

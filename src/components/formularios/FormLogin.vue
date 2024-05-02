@@ -87,9 +87,10 @@ async function iniciarSesion() {
       }, 2500);
 
     } else {
-      console.log(data)
+      console.log(data.user.user_metadata
+)
         router.push({name: 'homeview'}) 
-      }
+    }
 
   } else {
     errormsg.value = 'Completa el email y contraseña para iniciar sesion.'
@@ -103,7 +104,18 @@ async function iniciarSesion() {
 // ver sesion
 async function verSesion() {
   const currentUser = await supabase.auth.getSession()
-  console.log(currentUser)
+
+  let currentUserData = currentUser.data.session.user.user_metadata 
+
+  let dataPerfil = {
+    dataNombre: currentUserData.nombre,
+    dataApellido: currentUserData.apellido,
+    dataEmail: currentUserData.email,
+    dataTelefono: currentUserData.telefono,
+    dataPassword: currentUserData.password
+  }
+  console.log(dataPerfil);
+
 }
 
 // cerrar sesion

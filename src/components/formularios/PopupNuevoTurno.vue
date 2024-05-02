@@ -54,6 +54,26 @@
 </template>
 
 <script setup>
+
+import { ref } from 'vue';
+import { supabase } from '@/supabase';
+
+
+let nombreApellido= ref('')
+let dni = ref('')
+let email = ref('')
+let obraSocial = ref('')
+let fecha = ref('')
+let hora = ref('')
+let observaciones = ref('')
+
+//funcion para mandar datos a supabase
+const createTurn = async () => {
+  
+}
+
+
+
 </script>
 
 <style scoped>

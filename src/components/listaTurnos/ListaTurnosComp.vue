@@ -36,6 +36,9 @@ import popupEditarTurno from '@/components/formularios/PopupDetalles.vue'
 let newTurn = ref(false)
 let editTurn = ref(false)
 
+//aca tengo q agarrar los turnos que esten en la base de datos y mostrarlos
+
+
 </script>
 
 <style scoped>

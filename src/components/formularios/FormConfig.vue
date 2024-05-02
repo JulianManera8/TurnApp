@@ -17,44 +17,38 @@
   
         <!-- FORM DE DATOS DE PERFIL -->
         <section v-if="!elegirAvatar" class="container-form">
-          <form class="form" >
+          <form class="form">
             <div class="form-item">
                 <label for="nombre">Nombre</label>
-                <input type="text" id="nombre" class="input">
-                <v-icon class="v-icon" name="bi-pencil-fill" scale="1.2"/>
+                <input type="text" id="nombre" class="input" :value="dataPerfil.dataNombre" :readonly="!editar">
+                <v-icon v-if="!editar" class="v-icon" name="bi-pencil-fill" scale="1.2" @click="editar = !editar"/>
+                <v-icon v-if="editar" class="v-icon" name="bi-check-circle" scale="1.2" @click="editar = !editar"/>
             </div>
 
             <div class="form-item">
                 <label for="apellido">Apellido</label>
-                <input type="text" id="apellido" class="input">
+                <input type="text" id="apellido" class="input" :value="dataPerfil.dataApellido" >
                 <v-icon class="v-icon" name="bi-pencil-fill" scale="1.2"/>
             </div>
     
             <div class="form-item">
                 <label for="Email">Email</label>
-                <input type="text" id="Email" class="input">
+                <input type="text" id="Email" class="input" :value="dataPerfil.dataEmail">
                 <v-icon class="v-icon" name="bi-pencil-fill" scale="1.2"/>
             </div>
     
             <div class="form-item">
                 <label for="telefono">Teléfono</label>
-                <input type="number" id="telefono" class="input">
+                <input type="number" id="telefono" class="input" :value="dataPerfil.dataTelefono">
                 <v-icon class="v-icon" name="bi-pencil-fill" scale="1.2"/>
             </div>
     
             <div class="form-item">
                 <label for="contraseña">Contraseña</label>
-                <input type="password" id="contraseña" class="input">
+                <input type="password" id="contraseña" class="input" :value="dataPerfil.dataPassword">
                 <v-icon class="v-icon" name="bi-pencil-fill" scale="1.2"/>
             </div>
-          
-    
-            <ButtonGroup class="btn-container">
-                <Button label="Cancelar" icon="pi pi-times" />
-                <Button label="Guardar" icon="pi pi-check" />
-            </ButtonGroup>
             
-    
           </form>
         </section>
 
@@ -107,7 +101,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { supabase } from '@/supabase';
 import iconoUser from '@/assets/img/user.png';
 
 var avatarSrc = ref(iconoUser);
@@ -138,11 +133,34 @@ const cambiarAvatar = (event) => {
 const cancelarCambio = function (file) {
   if(file) {
     avatarSrc.value = iconoUser;
-  } 
-  
-
-  
+  }   
 }
+
+// completar campos con los datos de cada uno
+
+let dataPerfil = ref({})
+
+onMounted( async () => {
+
+  const currentUser = await supabase.auth.getSession()
+  
+  let currentUserData = currentUser.data.session.user.user_metadata
+  
+  dataPerfil.value = {
+    dataNombre: currentUserData.nombre,
+    dataApellido: currentUserData.apellido,
+    dataEmail: currentUserData.email,
+    dataTelefono: currentUserData.telefono,
+    dataPassword: currentUserData.password
+  }
+
+})
+
+
+
+
+//editar campos
+let editar = ref(false)
 
 </script>
 

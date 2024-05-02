@@ -11,6 +11,7 @@ import Aura from 'primevue/themes/primeone/aura';
 import 'primeicons/primeicons.css'
 
 import Button from 'primevue/button';
+import ButtonGroup from 'primevue/buttongroup'
 import Password from 'primevue/password';
 import Textarea from 'primevue/textarea';
 import IconField from 'primevue/iconfield';
@@ -24,8 +25,8 @@ import Menubar from 'primevue/menubar';
 
 //iconos
 import { OhVueIcon, addIcons } from "oh-vue-icons";
-import { GiMushroomCloud, BiPencilFill, LaCalendarDaySolid, BiEye, BiEyeSlash, MdMenu, MdDeleteforeverRound } from "oh-vue-icons/icons";
-addIcons( GiMushroomCloud, BiPencilFill, LaCalendarDaySolid, BiEye, BiEyeSlash, MdMenu, MdDeleteforeverRound );
+import { GiMushroomCloud, BiPencilFill, LaCalendarDaySolid, BiEye, BiEyeSlash, MdMenu, MdDeleteforeverRound, BiCheckCircle } from "oh-vue-icons/icons";
+addIcons( GiMushroomCloud, BiPencilFill, LaCalendarDaySolid, BiEye, BiEyeSlash, MdMenu, MdDeleteforeverRound, BiCheckCircle );
 
 
 import App from './App.vue'
@@ -51,6 +52,7 @@ app.use(PrimeVue, {
 app.component('v-icon', OhVueIcon)
 //ui components
 app.component('Button', Button)
+app.component('ButtonGroup', ButtonGroup)
 app.component('Password', Password)
 app.component('Textarea', Textarea)
 app.component('IconField', IconField)
