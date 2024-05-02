@@ -4,7 +4,7 @@
             <img src="../../assets/img/user.png" alt="" width="60px">
         </div>
         <div class="container-titulo">
-            <h3>TurnApp</h3>
+            <h1>TurnApp</h1>
         </div>
         <div class="container-lupa-desplegable">
             <div class="container-lupa">
