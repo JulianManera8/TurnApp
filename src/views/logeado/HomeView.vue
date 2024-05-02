@@ -2,7 +2,8 @@
     <div>
         <navbar />
         <div class="main">
-            <h1> VISTA DE HOME LOGEADO </h1>
+            <h1 style="color: #999999;"> VISTA DE HOME LOGEADO </h1>
+            <listaTurnos />
         </div>
 <!--   
     aca mostramos:
@@ -18,6 +19,7 @@
 
 <script setup>
 import navbar from '../../components/navbar/navbarComp.vue'
+import listaTurnos from '../../components/listaTurnos/ListaTurnosComp.vue'
 </script>
 
 <style scoped>

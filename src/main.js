@@ -4,7 +4,10 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
 //primerVue ui
-import PrimeVueStyled from 'primevue/styled';
+import PrimeVue from 'primevue/config';
+import PrimeOne from 'primevue/themes/primeone';
+import Aura from 'primevue/themes/primeone/aura';
+
 import 'primeicons/primeicons.css'
 
 import Button from 'primevue/button';
@@ -21,8 +24,8 @@ import Menubar from 'primevue/menubar';
 
 //iconos
 import { OhVueIcon, addIcons } from "oh-vue-icons";
-import { GiMushroomCloud, BiPencilFill, LaCalendarDaySolid, BiEye, BiEyeSlash, MdMenu } from "oh-vue-icons/icons";
-addIcons( GiMushroomCloud, BiPencilFill, LaCalendarDaySolid, BiEye, BiEyeSlash, MdMenu );
+import { GiMushroomCloud, BiPencilFill, LaCalendarDaySolid, BiEye, BiEyeSlash, MdMenu, MdDeleteforeverRound } from "oh-vue-icons/icons";
+addIcons( GiMushroomCloud, BiPencilFill, LaCalendarDaySolid, BiEye, BiEyeSlash, MdMenu, MdDeleteforeverRound );
 
 
 import App from './App.vue'
@@ -33,7 +36,17 @@ const app = createApp(App)
 
 app.use(createPinia())
 app.use(router)
-app.use(PrimeVueStyled)
+app.use(PrimeVue, {
+    theme: {
+        base: PrimeOne,
+        preset: Aura,
+        options: {
+            prefix: 'p',
+            darkModeSelector: 'my-app-dark',
+            cssLayer: false
+        }
+    }
+})
 //iconos
 app.component('v-icon', OhVueIcon)
 //ui components

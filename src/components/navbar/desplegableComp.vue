@@ -4,7 +4,7 @@
         <transition name="desplegable">            
             <div class="container-desplegable" v-if="desplegar">
 
-                <!-- boton DARKMODE -->
+                <!-- <Button label="Toggle Color Scheme" @click="toggleColorScheme" /> -->
                 <!-- boton LENGUAJE -->
                 <router-link to="/homeView" @click="desplegar = !desplegar" class="link" > Inicio </router-link>
                 <router-link to="/gestionTurnos/lista" @click="desplegar = !desplegar" class="link" > Gestionar turnos </router-link>
@@ -33,6 +33,7 @@ const cerrarSesion = async () => {
 // funcionalidad de desplegar el menu
 
 let desplegar = ref(false)
+
 
 </script>
 
