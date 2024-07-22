@@ -1,12 +1,11 @@
 <template>
     <div>
-        <h1>Home</h1>
-        <HomeComp />
+        <h1>Home component</h1>
     </div>
 </template>
 
 <script setup>
-import HomeComp from '../components/HomeComp.vue'
+
 </script>
 
 <style lang="scss" scoped>
