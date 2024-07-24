@@ -1,32 +1,29 @@
 <template>
-  <RouterView />
+  <div style="height: 100vh;">
+    <RouterView />
+  </div>
+
 </template>
 
 <script setup>
-
 import { RouterLink, RouterView } from 'vue-router'
-import { onMounted } from 'vue'
-import { supabase } from './supabase.js'
-
-
-const getAuth = async () => {
-  const {data, error} = await supabase.auth.getUser()
-  try {
-    console.log(data.user)
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-onMounted( () => {
-  getAuth()
-})
-
+import '../src/css/colors.css'
 
 </script>
 
 
 
-<style scoped>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: content-box;
+  transition: opacity 0.5s;
+}
+
+div {
+  opacity: var(--opacity-fondo);
+}
+
 
 </style>

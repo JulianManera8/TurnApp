@@ -1,0 +1,208 @@
+<template>
+    <div>
+        <h1>Sign in</h1>
+
+        <form>
+
+            <div class="input-container">
+                <input type="email" name="email" id="email" placeholder="Email" v-model="email" autocomplete="username"/>
+                <input type="password" name="password" autocomplete="current-password" id="password" placeholder="Password" v-model="password"/>
+            </div>
+
+            <div class="btn-container">
+
+                <button type="submit" class="btn-signIn" @click.prevent="signIn">Sign In!</button>
+                <!-- <button type="submit" class="btn-signIn" @click.prevent="getUser">Sign In!</button> -->
+
+                <div class="btn-container-social">
+                    <button class="btn-social-item" value="google" name="provider"  type="submit" @click.prevent="signInGoogle"> <img src="../icons/google.png" alt="google"> Continue with Google </button>
+                    <!-- <button class="btn-social-item" value="facebook" name="provider"  type="submit" @click.prevent="signInFacebook"><img src="../icons/facebook.png" alt="facebook"> Continue with Facebook</button>  -->
+                </div>
+  
+            </div>
+
+            <p> New here? <span class="linkRegister"> Create an account </span> </p>
+        </form>
+    </div>
+</template>
+
+<script setup>
+
+import { RouterLink, RouterView } from 'vue-router'
+import { onMounted, ref } from 'vue'
+import { supabase } from '@/supabase.js'
+
+const email = ref('')
+const password = ref('')
+
+//function to login using the email and password
+const signIn = async () => {
+  const {error, data} = await supabase.auth.signInWithPassword({
+    email: email.value,
+    password: password.value
+  })
+
+  if(error) {
+    console.log(error.message)
+  } else {
+    console.log('Login successful')
+  }
+  
+}
+
+//function to login using google
+const signInGoogle = async () => {
+  let {data, error} = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+  })
+  
+  if(error) {
+    console.log(error.message)
+  } 
+
+}
+
+//function to login using facebook
+// const signInFacebook = async () => {
+//   let { data, error } = await supabase.auth.signInWithOAuth({
+//     provider: 'facebook'
+//   })
+
+//   if(error) {
+//     console.log(error.message)
+//   } else {
+//     console.log('logeado correctamente')
+//     window.location.href = '../../home'
+//   }
+  
+// }
+
+async function getUser() {
+  const { data, error } = await supabase.auth.getUser()
+
+  if(error) {
+    return false
+  } else {
+    window.location.href = '../../home'
+  }
+}
+
+
+onMounted( () => {
+  getUser();
+})
+
+</script>
+
+<style scoped>
+
+* {
+    color: rgb(123, 123, 123);
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    box-sizing: content-box;
+}
+
+.all-container {
+    max-width: 350px;
+    min-width: 350px;
+}
+
+h1 {
+    color: rgb(172, 172, 172);
+    display: flex;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 20px;
+    font-size: 40px;
+}  
+
+.input-container {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    max-width: 300px;
+    min-width: 300px;
+
+    input {
+        padding: 11px !important;
+        margin: 0;
+        border-radius: 20px;
+        border: none;
+        background-color: rgb(227, 227, 227);
+    }
+}
+
+.btn-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.btn-signIn {
+    padding: 10px 15px;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    border-radius: 20px;
+    border: 0 !important;
+    outline: 0 !important;
+    background: teal;
+    color: white;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    width: 150px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;    
+
+    &:hover {
+        background-color: rgb(0, 184, 184);
+    }
+}
+
+.btn-container-social {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    margin-bottom: 30px;
+    width: 100%;
+
+    .btn-social-item {
+    
+        display: flex;
+        flex-direction: row;
+        justify-content: left;
+        align-items: center;
+        gap: 15px;
+        cursor: pointer;
+        background-color: rgba(0, 193, 193, 0.822);
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 20px;
+
+        &:hover {
+            background-color: rgba(0, 184, 184, 0.484);
+        }
+
+        img {
+            width: 30px;
+            margin: 0;
+            display: flex;
+        }
+    }
+
+
+}
+
+.linkRegister { 
+    color: teal;
+    cursor: pointer;
+
+    &:hover {
+        color: rgb(0, 184, 184);
+    }
+}
+
+</style>
+

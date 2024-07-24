@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <h1>Home component</h1>
+    <div class="all-container">
+        <h1>Home component</h1>   
     </div>
 </template>
 
@@ -9,5 +9,9 @@
 </script>
 
 <style lang="scss" scoped>
+
+.all-container {
+    margin-bottom: 150px;
+}
 
 </style>
