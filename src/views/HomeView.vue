@@ -9,7 +9,7 @@
 <script setup>
 
 import mainLayout from '../layouts/mainLayout.vue'
-import HomeComp from '../components/HomeComp.vue'
+import HomeComp from '../components/HomeComponents/HomeComp.vue'
 
 </script>
 

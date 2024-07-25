@@ -4,7 +4,7 @@
             <div class="logo-container">
                 <router-link id="a" to="/">
                     <div class="imagen">
-                        <img class="logo" alt="logo" src="../icons/logo.png" width="170px">
+                        <img class="logo" alt="logo" src="../icons/LOGO.jpg" width="170px">
                     </div>
                 </router-link>
             </div>
@@ -28,7 +28,7 @@
 <style lang="scss" scoped>
     
 footer {
-    background-color: rgba(0, 0, 255, 0.28);
+    background-color: rgba(255, 213, 0, 0.28);
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;

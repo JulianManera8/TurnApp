@@ -21,7 +21,7 @@
   
             </div>
 
-            <p> New here? <span class="linkRegister"> Create an account </span> </p>
+            <p> New here? <button class="linkRegister" @click.prevent="$emit('changeForm')"> Create an account </button> </p>
         </form>
     </div>
 </template>
@@ -83,10 +83,15 @@ async function getUser() {
   if(error) {
     return false
   } else {
-    window.location.href = '../../home'
+
   }
 }
 
+//emit de cambiar de formulario
+
+const changeForm = () => {
+    emit('changeForm')
+}
 
 onMounted( () => {
   getUser();
@@ -198,6 +203,8 @@ h1 {
 .linkRegister { 
     color: teal;
     cursor: pointer;
+    border: none;
+    background-color: transparent;
 
     &:hover {
         color: rgb(0, 184, 184);

@@ -17,7 +17,7 @@
             <Darkmode />
             <div class="log-container">
                 <button v-if="!loged" @click.prevent="login"> LogIn </button>
-                <div v-else> BtnLogout </div>
+                <BtnLogout v-else @handleClick="logOut"/>
             </div>
         </div>
 
@@ -25,11 +25,15 @@
     
     <section class="popupAuth-container" v-if="showPopup">
 
+        <div class="close-container">
+            <v-icon @click="showPopup = !showPopup" name="io-close-circle-outline" scale="2" class="close-icon"></v-icon>
+        </div>
+
         <div class="login-container" v-if="signIn">
-            <LoginForm />
+            <LoginForm @changeForm="handleChangeForm"/>
         </div>
         <div class="register-container" v-else>
-            <RegisterForm />
+            <RegisterForm @changeForm="handleChangeForm"/>
         </div>
 
     </section>
@@ -41,14 +45,14 @@
 import '../../css/colors.css'
 
 import Darkmode from '../LayoutComponents/Darkmode.vue'
-
+import BtnLogout from '../Auth/BtnLogout.vue'
 import LoginForm from '../Auth/LoginForm.vue'
 import RegisterForm from '../Auth/RegisterForm.vue'
-import BtnLogout from '../Auth/BtnLogout.vue'
 
 import { RouterLink, RouterView } from 'vue-router'
 import { onMounted, ref } from 'vue'
 import { supabase } from '@/supabase.js'
+
 
 //check if the user is logged in
 const loged = ref(false)
@@ -66,17 +70,35 @@ const getAuth = async () => {
     console.log(error)
   }
 }
-onMounted( () => {
-  getAuth()
-})
+
 
 //show popup window to login or register
 const signIn = ref(true)
-const showPopup = ref(true)
+const showPopup = ref(false)
 
 const login = () => {
     showPopup.value = !showPopup.value
 }
+
+//show register instead of login
+const handleChangeForm = () => {
+    signIn.value = !signIn.value
+}
+
+//logout of the account
+const logOut = async () => {
+    const {error} = await supabase.auth.signOut();
+    try {
+        getAuth();
+    } catch (error) {
+        console.log(error)
+    }
+};
+
+//to verify if the user is logged in or not, as soon as the user enters the web.
+onMounted( () => {
+  getAuth()
+})
 
 </script>
 
@@ -126,14 +148,32 @@ const login = () => {
 .popupAuth-container {
     background-color: rgb(255, 212, 212);
     position: absolute;
-    top: 45%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     height: fit-content;
-    width: 400px;
+    width: 450px;
     box-shadow: 0px 0px 10000px 200px black;
     border-radius: 1rem;
     padding: 15px;
+
+    .close-container {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+
+        .close-icon {
+            opacity: .5;
+            transition: all 0.20s;
+            cursor: pointer;
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+
+    }
+
 }
 
 </style>
