@@ -9,10 +9,10 @@
 import { ref } from 'vue';
 import {supabase} from '@/supabase.js'
 
+//function to emit the event of log out
 const handleClick = () => {
     emit('handleClick');
 }
-
 
 </script>
 

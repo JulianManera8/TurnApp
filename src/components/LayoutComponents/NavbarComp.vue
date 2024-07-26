@@ -16,7 +16,7 @@
         <div class="dark-log-container">
             <Darkmode />
             <div class="log-container">
-                <button v-if="!loged" @click.prevent="login"> LogIn </button>
+                <button v-if="!loged" @click.prevent="showPopup = !showPopup"> LogIn </button>
                 <BtnLogout v-else @handleClick="logOut"/>
             </div>
         </div>
@@ -30,10 +30,10 @@
         </div>
 
         <div class="login-container" v-if="signIn">
-            <LoginForm @changeForm="handleChangeForm"/>
+            <LoginForm @changeForm="signIn = !signIn"/>
         </div>
         <div class="register-container" v-else>
-            <RegisterForm @changeForm="handleChangeForm"/>
+            <RegisterForm @changeForm="signIn = !signIn" />
         </div>
 
     </section>
@@ -53,51 +53,39 @@ import { RouterLink, RouterView } from 'vue-router'
 import { onMounted, ref } from 'vue'
 import { supabase } from '@/supabase.js'
 
+import { useUserStore } from '../../stores/userStore.js'
+const store = useUserStore();
+
 
 //check if the user is logged in
-const loged = ref(false)
-
-const getAuth = async () => {
-  const {data, error} = await supabase.auth.getUser()
-  try {
-    // console.log(data.user)
-    if(data.user === null) {
-        loged.value = false 
+const loged = ref(null)
+const checkUser = () => {
+    if (store.user === null) {
+        loged.value = false
     } else {
         loged.value = true
     }
-  } catch (error) {
-    console.log(error)
-  }
-}
 
+}
 
 //show popup window to login or register
 const signIn = ref(true)
 const showPopup = ref(false)
 
-const login = () => {
-    showPopup.value = !showPopup.value
-}
-
-//show register instead of login
-const handleChangeForm = () => {
-    signIn.value = !signIn.value
-}
 
 //logout of the account
 const logOut = async () => {
     const {error} = await supabase.auth.signOut();
     try {
-        getAuth();
+        loged.value = false
     } catch (error) {
-        console.log(error)
+        console.alert(error)
     }
 };
 
 //to verify if the user is logged in or not, as soon as the user enters the web.
 onMounted( () => {
-  getAuth()
+    checkUser();
 })
 
 </script>

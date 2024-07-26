@@ -16,7 +16,7 @@
 
       <div class="btn-container">
         <p v-if="error"> Debes completar todos los campos </p>
-        <button type="submit" class="btn-signIn" @click.prevent="signUp">Create!</button>
+        <button type="submit" class="btn-signIn" @click.prevent="handleCreate">Create!</button>
       </div>
 
       <p style="margin-top: 20px;">Already have an account? <button class="linkSignIn" @click.prevent="$emit('changeForm')">Sign In!</button></p>
@@ -28,9 +28,14 @@
 </template>
 
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView, useRouter } from 'vue-router'
+const router = useRouter();
+
 import { onMounted, ref } from 'vue'
 import { supabase } from '@/supabase.js'
+
+import { useUserStore } from '../../stores/userStore.js'
+const store = useUserStore();
 
 const name = ref('')
 const lastname = ref('')
@@ -40,6 +45,7 @@ const repPassword = ref('')
 
 const error = ref(false)
 
+//function to create account in supabase
 const signUp = async () => {
 
   if(email.value && password.value && name.value && lastname.value && repPassword.value) {
@@ -62,7 +68,8 @@ const signUp = async () => {
         if(error) {
           alert(error.message)
         } else {
-          window.location.href = '/home'
+          console.log(store.user)
+          router.push({ name: 'home' })
         };
 
     } else {
@@ -89,8 +96,16 @@ const signUp = async () => {
 
 }
 
-//emit to change to form login
+//function to create account and then remove de popup to login/register without emits.
+const handleCreate = () => {
+  signUp();
 
+  setTimeout(() => {
+    window.location.reload();
+  }, 500);
+}
+
+//emit to change to form login
 const changeForm = () => {
   emit('changeForm')
 }
