@@ -1,7 +1,7 @@
 <template>
   <div v-if="appReady" style="height: 100vh;">
-    <!-- <Pruebas /> -->
-    <RouterView />
+    <Pruebas /> 
+    <!-- <RouterView /> -->
   </div>
 
 </template>
@@ -9,6 +9,8 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import '../src/css/colors.css'
+
+import Pruebas from './pruebas.vue'
 
 import { supabase } from '@/supabase.js'
 import { ref, onMounted } from 'vue'
