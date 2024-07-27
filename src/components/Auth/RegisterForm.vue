@@ -44,6 +44,7 @@ const password = ref('')
 const repPassword = ref('')
 
 const error = ref(false)
+const redirect = ref(false)
 
 //function to create account in supabase
 const signUp = async () => {
@@ -68,8 +69,11 @@ const signUp = async () => {
         if(error) {
           alert(error.message)
         } else {
-          console.log(store.user)
-          router.push({ name: 'home' })
+          redirect.value = true
+          router.push('/')
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
         };
 
     } else {
@@ -91,7 +95,6 @@ const signUp = async () => {
       }
 
     });
-
   };
 
 }
@@ -100,9 +103,9 @@ const signUp = async () => {
 const handleCreate = () => {
   signUp();
 
-  setTimeout(() => {
-    window.location.reload();
-  }, 500);
+
+  
+
 }
 
 //emit to change to form login

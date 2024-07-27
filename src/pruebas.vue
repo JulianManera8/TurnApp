@@ -33,8 +33,8 @@ const insert = async () => {
             horaTurno: '15:00', //este es el formato para time
             dniTurno: 43428302 // este es el formato para dni pq es number
         })
-        .select()
     ;
+    
 
     try {
         console.log(data)
@@ -55,9 +55,8 @@ const upsert = async () => {
             apellidoTurno: 'Manera',  
             fechaTurno: '2024-08-15', //este es el formato para date
             horaTurno: '15:00', //este es el formato para time
-            dniTurno: 43428302 // este es el formato para dni pq es number
+            dniTurno: 43428303 // si se repite este numero, no lo agrega y me da un error por conflico
         })
-        .select()
     ;
 
     try {
@@ -71,11 +70,11 @@ const upsert = async () => {
 const select = async () => {
     const { data, error } = await supabase
         .from('turno')
-        .select() // esto nos trae todo
+        .select() // esto nos trae todo de la tabla turno
     ;
 
     try {
-        console.log(data)
+        console.log(data) // aca vuelve mi select
     } catch (error) {
         console.log(error)
     }
@@ -86,7 +85,7 @@ const update = async () => {
     const { error } = await supabase
         .from('turno')
         .update({ nombreTurno: 'Matias' })
-        .eq('id', 4)
+        .eq('id', 11)
     ;
 
     try {
@@ -101,7 +100,7 @@ const deletee = async () => {
     const response = await supabase
         .from('turno')
         .delete()
-        .eq('id', 2) // borra el row q tenga el id 1 en este caso
+        .eq('id', 11) // borra el row q tenga el id 1 en este caso
     ;    
 
     try {

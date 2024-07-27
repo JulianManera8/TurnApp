@@ -1,7 +1,7 @@
 <template>
   <div v-if="appReady" style="height: 100vh;">
-    <Pruebas /> 
-    <!-- <RouterView /> -->
+    <!-- <Pruebas />  -->
+    <RouterView />
   </div>
 
 </template>
