@@ -27,8 +27,7 @@
 
 <script setup>
 
-import { RouterLink, RouterView, useRouter } from 'vue-router'
-const router = useRouter();
+import { RouterLink, RouterView } from 'vue-router'
 
 import { onMounted, ref } from 'vue'
 import { supabase } from '@/supabase.js'
@@ -46,7 +45,7 @@ const signIn = async () => {
         });
 
         if (error) throw error
-        router.push('/')
+
         setTimeout(() => {
             window.location.reload();
         }, 1000);

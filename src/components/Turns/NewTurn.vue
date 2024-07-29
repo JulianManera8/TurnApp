@@ -29,6 +29,10 @@ import { ref, onMounted } from 'vue'
 import { useUserStore } from '../../stores/userStore.js'
 const store = useUserStore()
 
+const userId = store.user.id
+console.log(user.id)
+
+
 const nameTurn = ref(null) // string: julian
 const lastnameTurn = ref(null) // string manera
 const dniTurn = ref(null) // number 43428302
@@ -57,6 +61,8 @@ const handleSave = () => {
 
 }
 
+
+
 //cancel or close the popup
 const emit = defineEmits(['closePopup'])
 const handleClickCloseCancel = () => {
@@ -64,10 +70,9 @@ const handleClickCloseCancel = () => {
 }
 
 
-
-
 // function to insert a new turn in supabase database
-const insertTurn = async (name, lastname, dni, date, time) => {
+const insertTurn = async (name, lastname, dni, time, date) => {
+
 
     try {
         const { data, error } = await supabase
@@ -75,13 +80,19 @@ const insertTurn = async (name, lastname, dni, date, time) => {
             .insert({ 
                 nombreTurno: name, 
                 apellidoTurno: lastname,  
-                fechaTurno: date, 
-                horaTurno: time, 
-                dniTurno: dni 
+                fechaTurno: time, 
+                horaTurno: date, 
+                dniTurno: dni
             })
         ;
 
         if(error) throw error;
+        
+        nameTurn.value = null
+        lastnameTurn.value = null
+        timeTurn.value = null
+        dateTurn.value = null
+        dniTurn.value = null
 
     } catch (error) {
         console.log(error)
