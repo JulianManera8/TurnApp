@@ -12,7 +12,6 @@
             <div class="btn-container">
 
                 <button type="submit" class="btn-signIn" @click.prevent="signIn">Sign In!</button>
-                <!-- <button type="submit" class="btn-signIn" @click.prevent="getUser">Sign In!</button> -->
 
                 <div class="btn-container-social">
                     <button class="btn-social-item" value="google" name="provider"  type="submit" @click.prevent="signInGoogle"> <img src="../icons/google.png" alt="google"> Continue with Google </button>
@@ -28,7 +27,9 @@
 
 <script setup>
 
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView, useRouter } from 'vue-router'
+const router = useRouter();
+
 import { onMounted, ref } from 'vue'
 import { supabase } from '@/supabase.js'
 
@@ -37,28 +38,38 @@ const password = ref('')
 
 //function to login using the email and password
 const signIn = async () => {
-  const {error, data} = await supabase.auth.signInWithPassword({
-    email: email.value,
-    password: password.value
-  })
 
-  if(error) {
-    console.log(error.message)
-  } else {
-    console.log('Login successful')
-  }
+    try {
+        const {error, data} = await supabase.auth.signInWithPassword({
+            email: email.value,
+            password: password.value
+        });
+
+        if (error) throw error
+        router.push('/')
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
+
+    } catch (error) {
+        console.log(error.message)
+    }
   
 }
 
 //function to login using google
 const signInGoogle = async () => {
-  let {data, error} = await supabase.auth.signInWithOAuth({
-    provider: 'google',
-  })
-  
-  if(error) {
-    console.log(error.message)
-  } 
+
+    try {
+        const {data, error} = await supabase.auth.signInWithOAuth({
+            provider: 'google',
+        })
+
+        if(error) throw error
+
+    } catch (error) {
+        console.log(error.message)
+    }
 
 }
 
@@ -77,25 +88,11 @@ const signInGoogle = async () => {
   
 // }
 
-async function getUser() {
-  const { data, error } = await supabase.auth.getUser()
-
-  if(error) {
-    return false
-  } else {
-
-  }
-}
-
 //emit de cambiar de formulario
 
 const changeForm = () => {
     emit('changeForm')
 }
-
-onMounted( () => {
-  getUser();
-})
 
 </script>
 

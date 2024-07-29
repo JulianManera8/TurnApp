@@ -60,6 +60,7 @@ const store = useUserStore();
 //check if the user is logged in
 const loged = ref(null)
 const checkUser = () => {
+    
     if (store.user === null) {
         loged.value = false
     } else {
@@ -75,9 +76,14 @@ const showPopup = ref(false)
 
 //logout of the account
 const logOut = async () => {
-    const {error} = await supabase.auth.signOut();
+    
     try {
+        const {error} = await supabase.auth.signOut();
+
+        if(error) throw error
+
         loged.value = false
+
     } catch (error) {
         console.alert(error)
     }

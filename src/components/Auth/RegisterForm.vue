@@ -44,8 +44,6 @@ const password = ref('')
 const repPassword = ref('')
 
 const error = ref(false)
-const redirect = ref(false)
-
 //function to create account in supabase
 const signUp = async () => {
 
@@ -55,26 +53,30 @@ const signUp = async () => {
 
     if(repPassword.value === password.value) {
 
-      const {error, data} = await supabase.auth.signUp({
-        email: email.value,
-        password: password.value,
-        options: {
-          data: {
-            name: name.value,
-            lastname: lastname.value
+      try {
+        const {error, data} = await supabase.auth.signUp({
+          email: email.value,
+          password: password.value,
+          options: {
+            data: {
+              name: name.value,
+              lastname: lastname.value
+            }
           }
-        }
         });
 
-        if(error) {
-          alert(error.message)
-        } else {
-          redirect.value = true
-          router.push('/')
-          setTimeout(() => {
-            window.location.reload();
-          }, 2000);
-        };
+        if(error) throw error
+
+      } catch (error) {
+        console.log(error.message)
+      }
+
+      router.push('/');
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+          
 
     } else {
       alert('las contras no coinciden')
@@ -102,10 +104,6 @@ const signUp = async () => {
 //function to create account and then remove de popup to login/register without emits.
 const handleCreate = () => {
   signUp();
-
-
-  
-
 }
 
 //emit to change to form login

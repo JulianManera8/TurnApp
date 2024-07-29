@@ -68,22 +68,24 @@ const handleClickCloseCancel = () => {
 
 // function to insert a new turn in supabase database
 const insertTurn = async (name, lastname, dni, date, time) => {
-    const { data, error } = await supabase
-        .from('turno')
-        .insert({ 
-            nombreTurno: name, 
-            apellidoTurno: lastname,  
-            fechaTurno: date, 
-            horaTurno: time, 
-            dniTurno: dni 
-        })
-    ;
 
     try {
-        console.log(data)
+        const { data, error } = await supabase
+            .from('turno')
+            .insert({ 
+                nombreTurno: name, 
+                apellidoTurno: lastname,  
+                fechaTurno: date, 
+                horaTurno: time, 
+                dniTurno: dni 
+            })
+        ;
+
+        if(error) throw error;
+
     } catch (error) {
         console.log(error)
-    }
+    };
 }
 
 </script>
