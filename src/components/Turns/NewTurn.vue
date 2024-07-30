@@ -28,10 +28,7 @@ import { ref, onMounted } from 'vue'
 
 import { useUserStore } from '../../stores/userStore.js'
 const store = useUserStore()
-
 const userId = store.user.id
-console.log(user.id)
-
 
 const nameTurn = ref(null) // string: julian
 const lastnameTurn = ref(null) // string manera
@@ -41,13 +38,14 @@ const timeTurn = ref(null) // time 12:54
 
 const showError = ref(false);
 
+//handle the click on save button, verifying that the user is logged in and has completed all the data
 const handleSave = () => {
 
     if(store.user == null) {
         return alert('activar popup de login')
     }
 
-    if(nameTurn.value == null && lastnameTurn.value == null && dniTurn.value == null && dateTurn.value == null && timeTurn.value == null) {
+    if(nameTurn.value == null || lastnameTurn.value == null || dniTurn.value == null || dateTurn.value == null || timeTurn.value == null) {
         showError.value = true;
 
         setTimeout(() => {
@@ -57,22 +55,19 @@ const handleSave = () => {
         return
     };
 
-    insertTurn(nameTurn.value, lastnameTurn.value, dniTurn.value, dateTurn.value, timeTurn.value);
+    insertTurn(userId ,nameTurn.value, lastnameTurn.value, dniTurn.value, dateTurn.value, timeTurn.value);
 
 }
 
-
-
-//cancel or close the popup
+//emit of cancel or close the popup
 const emit = defineEmits(['closePopup'])
+
 const handleClickCloseCancel = () => {
     emit('closePopup')
 }
 
-
 // function to insert a new turn in supabase database
-const insertTurn = async (name, lastname, dni, time, date) => {
-
+const insertTurn = async (userId, name, lastname, dni, time, date) => {
 
     try {
         const { data, error } = await supabase
@@ -82,7 +77,8 @@ const insertTurn = async (name, lastname, dni, time, date) => {
                 apellidoTurno: lastname,  
                 fechaTurno: time, 
                 horaTurno: date, 
-                dniTurno: dni
+                dniTurno: dni,
+                user_id: userId
             })
         ;
 
@@ -94,10 +90,13 @@ const insertTurn = async (name, lastname, dni, time, date) => {
         dateTurn.value = null
         dniTurn.value = null
 
+        emit('closePopup')
+
     } catch (error) {
         console.log(error)
     };
 }
+
 
 </script>
 

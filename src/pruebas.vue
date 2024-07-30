@@ -99,17 +99,44 @@ const update = async () => {
 const deletee = async () => {
     const response = await supabase
         .from('turno')
-        .delete()
-        .eq('id', 11) // borra el row q tenga el id 1 en este caso
+        .delete('')
+        .eq('id', 42)
+        // .eq('id', 11) // borra el row q tenga el id 1 en este caso
     ;    
 
     try {
-        console.log(data)
+        console.log(response)
     } catch (error) {
         console.log(error)
     }
 }
 
+//function to update in real time
+const subscribe = async () => {
+
+    const turnoChannel = supabase
+        .channel('custom-insert-channel')
+        .on(
+          'postgres_changes',
+          {
+            event: 'INSERT',
+            schema: 'public',
+            table: 'turno',
+          },
+          (payload) => {
+            console.log('Nuevo turno:', payload.new)
+            // Agregar el nuevo turno a la lista
+            turnos.value.push(payload.new)
+          }
+        )
+        .subscribe()
+
+    onUnmounted(() => {
+        // Limpiar la suscripción cuando el componente se desmonta
+        supabase.removeChannel(turnoChannel)
+    })
+
+}
 </script>
 
 <style lang="scss" scoped>
