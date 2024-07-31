@@ -2,39 +2,52 @@
     <div class="all-container">
 
         <div class="title-day-container">
-            <h3> Turns for {{ today }}</h3>
+            <h3> All your Turns</h3>
         </div>
 
         <section v-if="popupNewTurn">
-            <NewTurn @closePopup="popupNewTurn = !popupNewTurn"/>
+            <NewTurn @closePopup="popupNewTurn = !popupNewTurn" />
         </section>
 
         <div class="turns-container">
-
-            <div class="turns-content">
-                <ul>
-                    <li></li>
-                </ul>
-            </div>
 
             <div class="noTurns-container">
 
                 <ol v-if="store.user != null">
                     <li v-for="turn in turnsArray" :key="turn.id">
-                        <p> 
-                            {{ turn.nombreTurno }}, {{ turn.apellidoTurno }}, {{ turn.horaTurno }}, {{ turn.dniTurno }} 
-                            <v-icon name="io-close-circle-outline" scale="1.5" @click="removeTurn(turn.id)"/>
-                        </p> 
+
+                        <div v-if="editTurnId !== turn.id" style="display: flex; gap: 5px;">
+                            <p> {{ turn.nombreTurno }} </p>
+                            <p> {{ turn.apellidoTurno }}, </p>
+                            <p> {{ turn.fechaTurno }}, </p>
+                            <p> {{ turn.horaTurno }}, </p>
+                            <p> {{ turn.dniTurno }} </p>
+                            <v-icon name="io-close-circle-outline" scale="1.5" @click="removeTurn(turn.id)" />
+                            <v-icon name="bi-pencil-fill" scale="1.5" @click="editTurn(turn.id)" />
+                        </div>
+
+                        <div v-else style="display: flex; gap: 5px; flex-wrap: wrap;">
+                            <input type="text" :placeholder="turn.nombreTurno" v-model="nombreTurno">
+                            <input type="text" :placeholder="turn.apellidoTurno.toUpperCase()" v-model="apellidoTurno">
+                            <input type="date" :placeholder="turn.fechaTurno" v-model="fechaTurno">
+                            <input type="time" :placeholder="turn.horaTurno" v-model="horaTurno">
+                            <input type="number" :placeholder="turn.dniTurno" v-model="dniTurno">
+
+                            <button @click.prevent="saveEdit(turn.id)"> Save </button>
+                            <button @click.prevent="handleCancel"> Cancel </button>
+                        </div>
+
                     </li>
                 </ol>
 
                 <p v-if="store.user == null"> Login to get access to your turns! </p>
-                <p v-if="turnsArray.length == 0 && store.user != null && !popupNewTurn"> There are no turns for today! </p>
+                <p v-if="turnsArray.length == 0 && store.user != null && !popupNewTurn"> There are no turns for today!
+                </p>
             </div>
 
         </div>
 
-        <div v-if="!popupNewTurn" class="btnAddTurn-container">
+        <div v-if="!popupNewTurn && !editTurnId" class="btnAddTurn-container">
             <button @click.prevent="handleClick">Add turn</button>
         </div>
 
@@ -48,12 +61,6 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { supabase } from '@/supabase.js'
 import { useUserStore } from '../../stores/userStore.js'
 const store = useUserStore();
-
-//show todays date
-const today = ref('')
-const setToday = () => {
-    today.value = new Date().toLocaleDateString();
-}
 
 //functionality to select and show turns of the day
 const turnsArray = ref([])
@@ -115,44 +122,105 @@ const removeTurn = async (idDeleted) => {
 
 }
 
-//function to refresh turns when a new one is created
-const channelInsert = async () => {
-    
+//function to update turns
+const editTurnId = ref(null);
+
+const nombreTurno = ref(null);
+const apellidoTurno = ref(null);
+const dniTurno = ref(null);
+const fechaTurno = ref(null);
+const horaTurno = ref(null);
+
+const editTurn = (id) => {
+    editTurnId.value = id
+}
+
+const saveEdit = async () => {
+
     try {
-        const {error} = supabase
-        .channel('new-turn-channel')
-        .on(
-          'postgres_changes',
-          {
-            event: 'INSERT',
-            schema: 'public',
-            table: 'turno',
-          },
-          (payload) => {
-            console.log(payload)
-            // Agregar el nuevo turno a la lista
-            turnsArray.value.push(payload.new)
-          }
-        )
-        .subscribe()
+        
+        const {error} = await supabase
+            .from('turno')
+            .update({
+                nombreTurno: nombreTurno.value, 
+                apellidoTurno: apellidoTurno.value,  
+                fechaTurno: fechaTurno.value, 
+                horaTurno: horaTurno.value, 
+                dniTurno: dniTurno.value,
+            })
+            .eq('id', editTurnId.value)
 
         if(error) throw error
+
+        turnsArray.value = turnsArray.value.map( turn => {
+
+            if(turn.id === editTurnId.value) {
+                return { ...turn,
+                    nombreTurno: nombreTurno.value,
+                    apellidoTurno: apellidoTurno.value,
+                    fechaTurno: fechaTurno.value,
+                    horaTurno: horaTurno.value,
+                    dniTurno: dniTurno.value,
+                }
+            }
+
+            return turn
+        })
+
     } catch (error) {
-        console.log(error.message)
+        console.log(error)
     }
 
+
+    editTurnId.value = null;
+}
+
+const handleCancel = () => {
+    nombreTurno.value = null
+    apellidoTurno.value = null
+    dniTurno.value = null
+    fechaTurno.value = null
+    horaTurno.value = null
+
+    editTurnId.value = null
 }
 
 
-onMounted(() => {
-    setToday(); // get todays date
-    showTurns(); // show existent turns from the database
-    channelInsert(); // start the suscription of the channel to update my arr of turns when i make an insert of a new turn
+//function to refresh turns when a new one is created
+const channel = ref('')
 
-    onUnmounted(() => { // delete the suscription when the component is unmounted.
-        supabase.removeChannel(newTurnChannel)
-    })
-})
+const channelInsert = () => {
+    channel.value = supabase
+    .channel('new-turn-channel')
+    .on(
+        'postgres_changes',
+        {
+        event: 'INSERT',
+        schema: 'public',
+        table: 'turno',
+        },
+        (payload) => {
+        // Agregar el nuevo turno a la lista
+        turnsArray.value.push(payload.new);
+        }
+    )
+    .subscribe((status) => {
+        if (status === 'CHANNEL_ERROR') {
+            console.error('Error en la suscripción al canal.');
+        }
+    });
+};
+
+onMounted(() => {
+    showTurns(); // Mostrar los turnos existentes desde la base de datos
+    channelInsert(); // Iniciar la suscripción al canal para actualizar los turnos al insertar uno nuevo
+});
+
+onUnmounted(() => {
+    if (channel.value) {
+        supabase.removeChannel(channel.value); // Eliminar la suscripción cuando el componente se desmonta
+    }
+});
 
 </script>
 

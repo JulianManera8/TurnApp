@@ -45,7 +45,7 @@ const handleSave = () => {
         return alert('activar popup de login')
     }
 
-    if(nameTurn.value == null || lastnameTurn.value == null || dniTurn.value == null || dateTurn.value == null || timeTurn.value == null) {
+    if(userId == null || nameTurn.value == null || lastnameTurn.value == null || dniTurn.value == null || dateTurn.value == null || timeTurn.value == null) {
         showError.value = true;
 
         setTimeout(() => {
@@ -67,7 +67,7 @@ const handleClickCloseCancel = () => {
 }
 
 // function to insert a new turn in supabase database
-const insertTurn = async (userId, name, lastname, dni, time, date) => {
+const insertTurn = async (userId, name, lastname, dni, date, time, ) => {
 
     try {
         const { data, error } = await supabase
@@ -75,8 +75,8 @@ const insertTurn = async (userId, name, lastname, dni, time, date) => {
             .insert({ 
                 nombreTurno: name, 
                 apellidoTurno: lastname,  
-                fechaTurno: time, 
-                horaTurno: date, 
+                fechaTurno: date, 
+                horaTurno: time, 
                 dniTurno: dni,
                 user_id: userId
             })

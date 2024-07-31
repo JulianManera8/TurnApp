@@ -4,8 +4,8 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
 import { OhVueIcon, addIcons } from "oh-vue-icons";
-import { IoCloseCircleOutline } from "oh-vue-icons/icons";
-addIcons( IoCloseCircleOutline );
+import { IoCloseCircleOutline, BiPencilFill } from "oh-vue-icons/icons";
+addIcons( IoCloseCircleOutline, BiPencilFill );
 
 import App from './App.vue'
 import router from './router'
