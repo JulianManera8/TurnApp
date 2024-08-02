@@ -2,7 +2,7 @@
     <div class="all-container">
 
         <div class="title-day-container">
-            <h3> All your Turns</h3>
+            <h3> All your Turns </h3>
         </div>
 
         <section v-if="popupNewTurn">
@@ -22,7 +22,7 @@
                             <p> {{ turn.fechaTurno }}, </p>
                             <p> {{ turn.horaTurno }}, </p>
                             <p> {{ turn.dniTurno }} </p>
-                            <v-icon name="io-close-circle-outline" scale="1.5" @click="removeTurn(turn.id)" />
+                            <v-icon name="bi-trash" scale="1.5" @click="removeTurn(turn.id)" />
                             <v-icon name="bi-pencil-fill" scale="1.5" @click="editTurn(turn.id)" />
                         </div>
 
@@ -49,44 +49,53 @@
         </div>
 
         <div v-if="!popupNewTurn && !editTurnId" class="btnAddTurn-container">
-            <button @click.prevent="handleClick">Add turn</button>
+            <button type="button" class="button" @click.prevent="handleClick">
+                <span class="button__text">Add Turn</span>
+                <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24"
+                        stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor"
+                        height="24" fill="none" class="svg">
+                        <line y2="19" y1="5" x2="12" x1="12"></line>
+                        <line y2="12" y1="12" x2="19" x1="5"></line>
+                    </svg></span>
+            </button>
         </div>
 
-        <div>
+        <section>
             <h2>calendario</h2>
-            <div>
 
-                <calendar-multi @change="onChange"
-                    :value="formatedDates"
-                    min="2024-01-01" 
-                    max="2024-12-31" 
-                    first-day-of-week="1"
-                    show-outside-days="true" 
-                >
-                    <calendar-month></calendar-month>
+            <div>
+                <calendar-multi :value="formattedDates.value" @change="onDateChange" min="2024-01-01" max="2024-12-31"
+                    first-day-of-week="1" show-outside-days="true">
+                    <calendar-month is-date-disallowed="true"> </calendar-month>
                 </calendar-multi>
             </div>
-        </div>
+        </section>
     </div>
 </template>
 
 <script setup>
 import NewTurn from '../Turns/NewTurn.vue'
 
-import { ref, onMounted, onUnmounted, watch } from 'vue'
+import { CalendarMulti, CalendarMonth } from 'cally'
+
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { supabase } from '@/supabase.js'
+
 import { useUserStore } from '../../stores/userStore.js'
 const storeUser = useUserStore();
 
 import { useTurnsStore } from '../../stores/turnsStore.js'
-const storeTurns = useTurnsStore()
+const storeTurns = useTurnsStore();
+
 
 //functionality to select and show turns of the day
+//and also to ccomplete the callendar with turns
 const turnsArray = ref([])
-
+const formattedDates = ref('')
 const showTurns = async () => {
     
     if(storeUser.user === null ) {
+        formattedDates.value = ''
         return
     }
 
@@ -101,9 +110,17 @@ const showTurns = async () => {
 
         for(let turn of data) {
             turnsArray.value.push(turn)
+           
         }
 
         storeTurns.updateArray(turnsArray.value)
+
+        formattedDates.value = computed( () => {
+            if(storeUser.user === null) {
+                return ''
+            }
+            return storeTurns.turns.map( turn => turn.fechaTurno).join(' ')
+        });
 
     } catch (error) {
         console.log(error.message)
@@ -114,7 +131,6 @@ const showTurns = async () => {
 
 //show the form to insert a new turn
 const popupNewTurn = ref(false)
-
 const handleClick = () => {
     if(storeUser.user === null) {
         return console.log('TENES  Q LOG PERRO')
@@ -123,6 +139,7 @@ const handleClick = () => {
 
     popupNewTurn.value = !popupNewTurn.value;
 }
+
 
 //function to delete a turn and refresh the turnsarray and dabatase
 const removeTurn = async (idDeleted) => {
@@ -147,7 +164,8 @@ const removeTurn = async (idDeleted) => {
 
 }
 
-//function to update turns
+
+//functionallity to update turns
 const editTurnId = ref(null);
 
 const newName = ref(null);
@@ -155,6 +173,7 @@ const newLastname = ref(null);
 const newDni = ref(null);
 const newDate = ref(null);
 const newHour = ref(null);
+
 
 //find the turn that i am currently editing and give those variables its data
 const editTurn = (id) => {
@@ -169,6 +188,7 @@ const editTurn = (id) => {
     newHour.value = turn.horaTurno;
   }
 };
+
 
 //update the turn in database, and the array in store.
 const saveEdit = async () => {
@@ -213,14 +233,25 @@ const saveEdit = async () => {
   }
 };
 
+
 //cancel editing
 const handleCancel = () => {
     editTurnId.value = null
 }
 
+
+// handle callendar
+const selectedDates = ref(''); // Para almacenar las fechas seleccionadas
+
+const onDateChange = (event) => {
+  selectedDates.value = event.target._props;
+  console.log('Fecha seleccionada:', selectedDates.value);
+  // Puedes realizar otras acciones aquí, como buscar eventos de ese día, etc.
+};
+
+
 //function to refresh turns when a new one is created
 const channel = ref('')
-
 const channelInsert = () => {
     channel.value = supabase
     .channel('new-turn-channel')
@@ -243,6 +274,7 @@ const channelInsert = () => {
     });
 };
 
+
 onMounted(() => {
     showTurns(); // Mostrar los turnos existentes desde la base de datos
     channelInsert(); // Iniciar la suscripción al canal para actualizar los turnos al insertar uno nuevo
@@ -258,4 +290,66 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 
+
+//btn to add a new turn
+/* From Uiverse.io by andrew-demchenk0 */ 
+.button {
+  position: relative;
+  width: 150px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border: 1px solid #34974d;
+  background-color: #3aa856;
+  border-radius: 0.7rem;
+}
+
+.button, .button__icon, .button__text {
+  transition: all 0.3s;
+  border-radius: 0.7rem;
+}
+
+.button .button__text {
+  transform: translateX(12px);
+  color: #fff;
+  font-weight: 600;
+}
+
+.button .button__icon {
+  position: absolute;
+  transform: translateX(109px);
+  height: 100%;
+  width: 39px;
+  background-color: #34974d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button .svg {
+  width: 30px;
+  stroke: #fff;
+}
+
+.button:hover {
+  background: #34974d;
+}
+
+.button:hover .button__text {
+  color: transparent;
+}
+
+.button:hover .button__icon {
+  width: 148px;
+  transform: translateX(0);
+}
+
+.button:active .button__icon {
+  background-color: #2e8644;
+}
+
+.button:active {
+  border: 1px solid #2e8644;
+}
 </style>

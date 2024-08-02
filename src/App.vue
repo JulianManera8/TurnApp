@@ -34,12 +34,14 @@ const checkUser = async () => {
 
     if (data.user) {
       storeUser.setUser(data.user)
+      appReady.value = true
     } else {
       storeUser.setUser(null)
+      appReady.value = true
     }
 
     // Marcar la aplicación como lista una vez que se ha verificado el usuario y cargado los turnos si es necesario
-    appReady.value = true
+    
 
   } catch (error) {
     console.log(error.message)
@@ -49,6 +51,7 @@ const checkUser = async () => {
 //if the user log in o log out or whatever change, this shoot
 supabase.auth.onAuthStateChange((event, session) => {
   storeUser.setUser(session ? session.user : null);
+  appReady.value = true
 });
 
 
