@@ -8,7 +8,6 @@
         <div class="nav-container">
             <ul>
                 <li> <RouterLink to="/" class="link"> Home </RouterLink></li>
-                <li> <RouterLink to="/turns" class="link"> Turns </RouterLink></li>
                 <li> <RouterLink to="/help" class="link"> Help </RouterLink></li>
             </ul>
         </div>

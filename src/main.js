@@ -7,6 +7,8 @@ import { OhVueIcon, addIcons } from "oh-vue-icons";
 import { IoCloseCircleOutline, BiPencilFill } from "oh-vue-icons/icons";
 addIcons( IoCloseCircleOutline, BiPencilFill );
 
+import "cally";
+
 import App from './App.vue'
 import router from './router'
 

@@ -27,8 +27,13 @@ import { supabase } from '@/supabase.js'
 import { ref, onMounted } from 'vue'
 
 import { useUserStore } from '../../stores/userStore.js'
-const store = useUserStore()
-const userId = store.user.id
+const storeUser = useUserStore()
+
+import { useTurnsStore } from '../../stores/turnsStore.js'
+const storeTurns = useTurnsStore()
+
+
+const userId = storeUser.user.id
 
 const nameTurn = ref(null) // string: julian
 const lastnameTurn = ref(null) // string manera
@@ -41,7 +46,7 @@ const showError = ref(false);
 //handle the click on save button, verifying that the user is logged in and has completed all the data
 const handleSave = () => {
 
-    if(store.user == null) {
+    if(storeUser.user == null) {
         return alert('activar popup de login')
     }
 
@@ -80,6 +85,7 @@ const insertTurn = async (userId, name, lastname, dni, date, time, ) => {
                 dniTurno: dni,
                 user_id: userId
             })
+            .select()
         ;
 
         if(error) throw error;
@@ -89,6 +95,8 @@ const insertTurn = async (userId, name, lastname, dni, date, time, ) => {
         timeTurn.value = null
         dateTurn.value = null
         dniTurn.value = null
+
+        // storeTurns.addTurn(data[0])
 
         emit('closePopup')
 

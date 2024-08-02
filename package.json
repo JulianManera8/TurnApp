@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.44.4",
+    "cally": "^0.7.1",
     "dotenv": "^16.4.5",
     "oh-vue-icons": "^1.0.0-rc3",
     "pinia": "^2.1.7",

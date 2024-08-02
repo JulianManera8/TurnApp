@@ -1,4 +1,5 @@
 <template>
+
     <div>       
         <button @click.prevent="insert">
             insert
@@ -16,11 +17,53 @@
             deletee
         </button>
     </div>
+
+
+    <h1>calendario</h1> <br/> <br/> 
+
+    <div>
+        <calendar-multi
+            :value="selected"
+            min="2024-01-01"
+            max="2024-12-31"
+            first-day-of-week="1"
+            show-outside-days="true"
+            @change="onChange"
+        >
+            <calendar-month></calendar-month>
+        </calendar-multi>
+
+    </div>
+
+    <div>
+        <h1> Event handling </h1>
+
+        <p style="border: 2px solid black;">Selected range: {{ selected }}</p>
+
+        <calendar-multi :value="selected" @change="onChange">
+            <calendar-month />
+        </calendar-multi>
+    </div>
+
 </template>
 
 <script setup>
 
 import { supabase } from '@/supabase'
+import {ref} from 'vue'
+
+const date = new Date().toISOString();
+const dateISO = date.slice(0, 10);
+
+
+const selected = ref("")
+function onChange(event) {
+  selected.value = event.target.value
+}
+
+
+
+
 
 // function to insert a new row
 const insert = async () => {

@@ -13,7 +13,6 @@
                 <h4>LINKS DE INTERÉS</h4>
                 <ul>
                     <li><router-link id="a" class="link" to="/">Home</router-link></li>
-                    <li><router-link id="a" class="link" to="/turns">Turns</router-link></li>
                     <li><router-link id="a" class="link" to="/help">Help</router-link></li>
                 </ul>
             </div>

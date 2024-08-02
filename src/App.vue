@@ -3,11 +3,10 @@
     <!-- <Pruebas />  -->
     <RouterView />
   </div>
-
 </template>
 
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
 import '../src/css/colors.css'
 
 import Pruebas from './pruebas.vue'
@@ -16,34 +15,46 @@ import { supabase } from '@/supabase.js'
 import { ref, onMounted } from 'vue'
 
 import { useUserStore } from './stores/userStore.js'
-const store = useUserStore();
+const storeUser = useUserStore();
 
-const appReady = ref(null)
+
+import { useTurnsStore } from './stores/turnsStore.js'
+const storeTurns = useTurnsStore()
+
+
+const appReady = ref(false)
 
 //check if there is any user loged in
 const checkUser = async () => {
-  const {data} =  await supabase.auth.getUser()
 
-  console.log(data.user)
-  if (!data.user) {
+  try {
+    const { error, data } = await supabase.auth.getUser()
+
+    if (error) throw error
+
+    if (data.user) {
+      storeUser.setUser(data.user)
+    } else {
+      storeUser.setUser(null)
+    }
+
+    // Marcar la aplicación como lista una vez que se ha verificado el usuario y cargado los turnos si es necesario
     appReady.value = true
-  } else {
-    store.setUser(data.user)
-    appReady.value = true
+
+  } catch (error) {
+    console.log(error.message)
   }
-
 }
 
 //if the user log in o log out or whatever change, this shoot
 supabase.auth.onAuthStateChange((event, session) => {
-  store.setUser(session ? session.user : null);
-  appReady.value = true;
+  storeUser.setUser(session ? session.user : null);
 });
 
 
 onMounted(() => {
   checkUser();
-}) 
+})
 
 
 </script>
@@ -61,6 +72,4 @@ onMounted(() => {
 div {
   opacity: var(--opacity-fondo);
 }
-
-
 </style>
