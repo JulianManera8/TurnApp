@@ -2,7 +2,7 @@
     <section class="all-container">
 
         <div class="title-container">
-            <RouterLink to="/" class="link"><h3>TurnApp</h3></RouterLink>
+            <RouterLink to="/" class="link"><h1>TurnApp</h1></RouterLink>
         </div>
 
         <div class="nav-container">
@@ -10,9 +10,6 @@
                 <li> <RouterLink to="/" class="link"> Home </RouterLink></li>
                 <li> <RouterLink to="/help" class="link"> Help </RouterLink></li>
             </ul>
-        </div>
-
-        <div class="dark-log-container">
             <Darkmode />
             <div class="log-container">
                 <button class="button" v-if="!loged" @click.prevent="showPopup = !showPopup"> Sign In! </button>
@@ -97,6 +94,8 @@ onMounted( () => {
 
 <style lang="scss" scoped>
 
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
 .all-container {
     //background-color: var(--color-fondo);
     background-color: rgba(255, 162, 0, 0.329);
@@ -113,10 +112,16 @@ onMounted( () => {
         color: black;
         text-decoration: none;
         cursor: pointer;
+        font-family: "Ubuntu", sans-serif;
+        font-size: larger;
     }
 }
 
 .nav-container {
+
+    display: flex;
+    align-items: center;
+    gap: 20px;
 
     ul {
         display: flex;
@@ -128,6 +133,8 @@ onMounted( () => {
             text-decoration: none;
             color: black;
             cursor: pointer;
+            font-family: "Ubuntu", sans-serif;
+            font-size: larger;
         }
     }
 
@@ -170,12 +177,12 @@ onMounted( () => {
 }
 
 //button to sign in
-/* From Uiverse.io by Deri-Kurniawan */ 
+
 .button {
   position: relative;
   padding: 12px 15px;
-  font-size: 16px;
   font-weight: 700;
+  height: 15px;
   text-transform: uppercase;
   color: #000;
   background-color: #fff;

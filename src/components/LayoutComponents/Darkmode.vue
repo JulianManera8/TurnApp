@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="darkmode-container">
         <button @click="cambiar">
             <label>
                 <input class="toggle-checkbox" type="checkbox">
@@ -30,12 +30,19 @@ const cambiar = () => {
 </script>
 
 <style lang="scss" scoped>
-
-button {
-    background-color: var(--color-fondo);
+.darkmode-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* From Uiverse.io by JkHuger */ 
+button {
+  background-color: var(--color-fondo);
+  border: none;
+  border-radius: 50%;
+  scale: 70%;
+}
+
 .toggle-checkbox {
   position: absolute;
   opacity: 0;

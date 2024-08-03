@@ -22,7 +22,7 @@ const handleClick = () => {
 .button {
   position: relative;
   padding: 12px 15px;
-  font-size: 16px;
+  height: 15px;
   font-weight: 700;
   text-transform: uppercase;
   color: #000;

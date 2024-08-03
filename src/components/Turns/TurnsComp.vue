@@ -249,7 +249,6 @@ const handleCancel = () => {
 
 // handle callendar
 const selectedDates = ref(''); // Para almacenar las fechas seleccionadas
-
 const onDateChange = (event) => {
   selectedDates.value = event.target._props;
   console.log('Fecha seleccionada:', selectedDates.value);
@@ -281,7 +280,6 @@ const channelInsert = () => {
     });
 };
 
-
 onMounted(() => {
     showTurns(); // Mostrar los turnos existentes desde la base de datos
     channelInsert(); // Iniciar la suscripción al canal para actualizar los turnos al insertar uno nuevo
@@ -297,10 +295,12 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 
+
 .all-container { 
     display: flex;
     justify-content: space-evenly;
 }
+
 
 .title-turns-container {
     display: flex;
@@ -318,7 +318,6 @@ onUnmounted(() => {
         display: flex;
         flex-direction: column;
         align-items: left;
-
         gap: 30px;
 
         li {
@@ -381,7 +380,6 @@ onUnmounted(() => {
     align-items: center;
     margin: 2% 20px;
 }
-
 
 
 
