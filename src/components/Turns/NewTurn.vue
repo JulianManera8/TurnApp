@@ -7,7 +7,6 @@
         <form>
             <input type="text" placeholder="Name" v-model="nameTurn">
             <input type="text" placeholder="Lastname" v-model="lastnameTurn">
-            <input type="number" placeholder="D.N.I" v-model="dniTurn">
             <input type="date" placeholder="Date" v-model="dateTurn">
             <input type="time" placeholder="Hour" v-model="timeTurn">
         </form>
@@ -37,7 +36,6 @@ const userId = storeUser.user.id
 
 const nameTurn = ref(null) // string: julian
 const lastnameTurn = ref(null) // string manera
-const dniTurn = ref(null) // number 43428302
 const dateTurn = ref(null) // date 2024-07-06
 const timeTurn = ref(null) // time 12:54
 
@@ -50,7 +48,7 @@ const handleSave = () => {
         return alert('activar popup de login')
     }
 
-    if(userId == null || nameTurn.value == null || lastnameTurn.value == null || dniTurn.value == null || dateTurn.value == null || timeTurn.value == null) {
+    if(userId == null || nameTurn.value == null || lastnameTurn.value == null || dateTurn.value == null || timeTurn.value == null) {
         showError.value = true;
 
         setTimeout(() => {
@@ -60,7 +58,7 @@ const handleSave = () => {
         return
     };
 
-    insertTurn(userId ,nameTurn.value, lastnameTurn.value, dniTurn.value, dateTurn.value, timeTurn.value);
+    insertTurn(userId ,nameTurn.value, lastnameTurn.value, dateTurn.value, timeTurn.value);
 
 }
 
@@ -72,7 +70,7 @@ const handleClickCloseCancel = () => {
 }
 
 // function to insert a new turn in supabase database
-const insertTurn = async (userId, name, lastname, dni, date, time, ) => {
+const insertTurn = async (userId, name, lastname, date, time, ) => {
 
     try {
         const { data, error } = await supabase
@@ -82,7 +80,6 @@ const insertTurn = async (userId, name, lastname, dni, date, time, ) => {
                 apellidoTurno: lastname,  
                 fechaTurno: date, 
                 horaTurno: time, 
-                dniTurno: dni,
                 user_id: userId
             })
             .select()
@@ -94,7 +91,6 @@ const insertTurn = async (userId, name, lastname, dni, date, time, ) => {
         lastnameTurn.value = null
         timeTurn.value = null
         dateTurn.value = null
-        dniTurn.value = null
 
         // storeTurns.addTurn(data[0])
 

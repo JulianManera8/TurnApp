@@ -1,66 +1,75 @@
 <template>
     <div class="all-container">
 
-        <div class="title-day-container">
-            <h3> All your Turns </h3>
+        <div class="title-turns-container">
+            <section class="title-container">
+
+                <h3> All your Turns </h3>
+
+                <div v-if="!popupNewTurn && !editTurnId" class="btnAddTurn-container">
+                    <button type="button" class="button" @click.prevent="handleClick">
+                        <span class="button__text">Add Turn</span>
+                        <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24"
+                                stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor"
+                                height="24" fill="none" class="svg">
+                                <line y2="19" y1="5" x2="12" x1="12"></line>
+                                <line y2="12" y1="12" x2="19" x1="5"></line>
+                            </svg></span>
+                    </button>
+                </div>
+            </section>
+    
+            <section class="turns-container">
+    
+                <div v-if="popupNewTurn">
+                    <NewTurn @closePopup="popupNewTurn = !popupNewTurn" />
+                </div>
+    
+                <div class="turns-content">
+                    
+                    <div class="order-container">
+                        <!-- aca va a ir un filter para ordernarlos por ultima creacion, o por fecha -->
+                        <!-- tmb meterle un searchbar -->
+                    </div>
+
+                    <ul v-if="storeUser.user != null">
+                        <li v-for="turn in turnsArray" :key="turn.id">
+    
+                            <div class="turn-item" v-if="editTurnId !== turn.id" >
+                                <p class="nameTurn"> {{ turn.nombreTurno }}  </p>
+                                <p> {{ turn.apellidoTurno }} <b>|</b> </p>
+                                <p> {{ turn.fechaTurno }} <b>|</b> </p>
+                                <p> {{ turn.horaTurno }} </p>
+                                <div class="icons">
+                                    <v-icon class="icon-trash" name="bi-trash" scale="1.3" @click="removeTurn(turn.id)" />
+                                    <v-icon class="icon-edit" name="bi-pencil-fill" scale="1.1" @click="editTurn(turn.id)" />
+                                </div>
+                            </div>
+    
+                            <div v-else style="display: flex; gap: 5px; flex-wrap: wrap;">
+                                <input type="text" :placeholder="turn.nombreTurno" v-model="newName">
+                                <input type="text" :placeholder="turn.apellidoTurno" v-model="newLastname">
+                                <input type="date" :placeholder="turn.fechaTurno" v-model="newDate">
+                                <input type="time" :placeholder="turn.horaTurno" v-model="newHour">
+    
+                                <button @click.prevent="saveEdit(turn.id)"> Save </button>
+                                <button @click.prevent="handleCancel"> Cancel </button>
+                            </div>
+    
+                        </li>
+                    </ul>
+    
+                    <p v-if="storeUser.user == null"> Login to get access to your turns! </p>
+                    <p v-if="turnsArray.length == 0 && storeUser.user != null && !popupNewTurn"> There are no turns for today! </p>
+    
+                </div>
+    
+    
+            </section>
         </div>
 
-        <section v-if="popupNewTurn">
-            <NewTurn @closePopup="popupNewTurn = !popupNewTurn" />
-        </section>
+        <section class="callendar-container">
 
-        <div class="turns-container">
-
-            <div class="noTurns-container">
-
-                <ol v-if="storeUser.user != null">
-                    <li v-for="turn in turnsArray" :key="turn.id">
-
-                        <div v-if="editTurnId !== turn.id" style="display: flex; gap: 5px;">
-                            <p> {{ turn.nombreTurno }} </p>
-                            <p> {{ turn.apellidoTurno }}, </p>
-                            <p> {{ turn.fechaTurno }}, </p>
-                            <p> {{ turn.horaTurno }}, </p>
-                            <p> {{ turn.dniTurno }} </p>
-                            <v-icon name="bi-trash" scale="1.5" @click="removeTurn(turn.id)" />
-                            <v-icon name="bi-pencil-fill" scale="1.5" @click="editTurn(turn.id)" />
-                        </div>
-
-                        <div v-else style="display: flex; gap: 5px; flex-wrap: wrap;">
-                            <input type="text" :placeholder="turn.nombreTurno" v-model="newName">
-                            <input type="text" :placeholder="turn.apellidoTurno" v-model="newLastname">
-                            <input type="date" :placeholder="turn.fechaTurno" v-model="newDate">
-                            <input type="time" :placeholder="turn.horaTurno" v-model="newHour">
-                            <input type="number" :placeholder="turn.dniTurno" v-model="newDni">
-
-                            <button @click.prevent="saveEdit(turn.id)"> Save </button>
-                            <button @click.prevent="handleCancel"> Cancel </button>
-                        </div>
-
-                    </li>
-                </ol>
-
-                <p v-if="storeUser.user == null"> Login to get access to your turns! </p>
-                <p v-if="turnsArray.length == 0 && storeUser.user != null && !popupNewTurn"> There are no turns for
-                    today!
-                </p>
-            </div>
-
-        </div>
-
-        <div v-if="!popupNewTurn && !editTurnId" class="btnAddTurn-container">
-            <button type="button" class="button" @click.prevent="handleClick">
-                <span class="button__text">Add Turn</span>
-                <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24"
-                        stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor"
-                        height="24" fill="none" class="svg">
-                        <line y2="19" y1="5" x2="12" x1="12"></line>
-                        <line y2="12" y1="12" x2="19" x1="5"></line>
-                    </svg></span>
-            </button>
-        </div>
-
-        <section>
             <h2>calendario</h2>
 
             <div>
@@ -69,7 +78,9 @@
                     <calendar-month is-date-disallowed="true"> </calendar-month>
                 </calendar-multi>
             </div>
+
         </section>
+
     </div>
 </template>
 
@@ -170,7 +181,6 @@ const editTurnId = ref(null);
 
 const newName = ref(null);
 const newLastname = ref(null);
-const newDni = ref(null);
 const newDate = ref(null);
 const newHour = ref(null);
 
@@ -183,7 +193,6 @@ const editTurn = (id) => {
 
     newName.value = turn.nombreTurno;
     newLastname.value = turn.apellidoTurno;
-    newDni.value = turn.dniTurno;
     newDate.value = turn.fechaTurno;
     newHour.value = turn.horaTurno;
   }
@@ -201,7 +210,6 @@ const saveEdit = async () => {
         apellidoTurno: newLastname.value,
         fechaTurno: newDate.value,
         horaTurno: newHour.value,
-        dniTurno: newDni.value,
       })
       .eq('id', editTurnId.value)
       .select();
@@ -224,7 +232,6 @@ const saveEdit = async () => {
     editTurnId.value = null;
     newName.value = null;
     newLastname.value = null;
-    newDni.value = null;
     newDate.value = null;
     newHour.value = null;
 
@@ -290,19 +297,107 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 
+.all-container { 
+    display: flex;
+    justify-content: space-evenly;
+}
 
-//btn to add a new turn
-/* From Uiverse.io by andrew-demchenk0 */ 
+.title-turns-container {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    margin: 2% 20px;
+    width: 50%;
+    gap: 15px;
+
+    .title-container {
+        display: flex;
+    }
+
+    .turns-container {
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+
+        gap: 30px;
+
+        li {
+            align-items: left;
+            margin: 10px 25px;
+
+            .turn-item {
+                display: flex;
+                margin-bottom: 20px;
+                align-items: center;
+
+                .nameTurn {
+                    margin-right: 5px;
+                }
+
+                b {
+                    margin: 0 10px;
+                    color: red;
+                }
+
+                .icons {
+                    margin-left: 5px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                    height: 100%;
+                    padding-bottom: 3px;
+
+                    .icon-trash {
+                        color: rgb(143, 0, 0);
+                        margin-right: 5px;
+                    }
+
+                    .icon-edit {
+                        color: rgb(0, 96, 128);
+
+                    }
+
+
+                }
+
+            }
+            
+        }
+
+    }
+}
+
+.btnAddTurn-container {
+    margin-left: 50px;
+}
+
+.callendar-container {
+    width: 40%;
+    background-color: rgba(1, 158, 1, 0.581);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 2% 20px;
+}
+
+
+
+
+
+//Button to add a new turn
 .button {
   position: relative;
-  width: 150px;
-  height: 40px;
+  width: 130px;
+  height: 35px;
   cursor: pointer;
   display: flex;
   align-items: center;
   border: 1px solid #34974d;
   background-color: #3aa856;
   border-radius: 0.7rem;
+  font-size: smaller;
 }
 
 .button, .button__icon, .button__text {
@@ -311,16 +406,16 @@ onUnmounted(() => {
 }
 
 .button .button__text {
-  transform: translateX(12px);
+  transform: translateX(7px);
   color: #fff;
   font-weight: 600;
 }
 
 .button .button__icon {
   position: absolute;
-  transform: translateX(109px);
+  transform: translateX(93px);
   height: 100%;
-  width: 39px;
+  width: 37px;
   background-color: #34974d;
   display: flex;
   align-items: center;
@@ -341,7 +436,7 @@ onUnmounted(() => {
 }
 
 .button:hover .button__icon {
-  width: 148px;
+  width: 130px;
   transform: translateX(0);
 }
 
