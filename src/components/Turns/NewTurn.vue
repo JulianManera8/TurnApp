@@ -3,33 +3,33 @@
         <div class="close-container">
             <v-icon @click="handleClickCloseCancel" name="io-close-circle-outline" scale="2" class="close-icon"></v-icon>
         </div>
-        <h3 style="color: green;">New Turn form</h3>
-        <form>
+
+        <form @submit="handleSave" class="editTurns-item">
             <input type="text" placeholder="Name" v-model="nameTurn">
             <input type="text" placeholder="Lastname" v-model="lastnameTurn">
             <input type="date" placeholder="Date" v-model="dateTurn">
             <input type="time" placeholder="Hour" v-model="timeTurn">
+
+            <button class="saveEditBtn" @click.prevent="handleSave"> Save </button> 
+            <button class="cancelEditBtn" @click.prevent="handleClickCloseCancel"> Cancel </button> 
         </form>
 
         <p v-if="showError"> You must complete all the info! </p>
 
-        <div>
-            <button @click.prevent="handleSave"> Save </button> 
-            <button @click.prevent="handleClickCloseCancel"> Cancel </button> 
-        </div>
+        
     </div>
 </template>
 
 <script setup>
 
 import { supabase } from '@/supabase.js'
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 
 import { useUserStore } from '../../stores/userStore.js'
 const storeUser = useUserStore()
 
-import { useTurnsStore } from '../../stores/turnsStore.js'
-const storeTurns = useTurnsStore()
+// import { useTurnsStore } from '../../stores/turnsStore.js'
+// const storeTurns = useTurnsStore()
 
 
 const userId = storeUser.user.id
@@ -106,11 +106,49 @@ const insertTurn = async (userId, name, lastname, date, time, ) => {
 
 <style lang="scss" scoped>
 
+.editTurns-item {
+    margin:30px 0 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
 
+    input {
+        border: 1px solid grey;
+        padding: 5px 10px;
+        border-radius: 2rem;        
+    }
+       
+}
+
+.saveEditBtn {
+    padding: 7px;
+    border-radius: 2rem;
+    border: 0px;
+    background-color: rgba(0, 161, 0, 0.396);
+    transition: all 0.2s;
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgba(0, 161, 0, 0.761);
+    }    
+}        
+        
+.cancelEditBtn {
+    padding: 7px;
+    border-radius: 2rem;
+    border: 0px;
+    background-color: rgba(255, 0, 0, 0.572);
+    transition: all 0.3s;
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgba(255, 0, 0, 0.861);
+    }
+}
 
 
 .close-container {
-    // position: absolute;
+    display: none;
     right: 10px;
     top: 10px;
 
