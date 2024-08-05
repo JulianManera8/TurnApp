@@ -4,68 +4,81 @@
         <div class="title-turns-container">
             <section class="title-container">
 
-                <h3> All your Turns </h3>
+                <h3> TURNOS </h3>
 
                 <div v-if="!popupNewTurn && !editTurnId" class="btnAddTurn-container">
                     <button type="button" class="button" @click.prevent="handleClick">
                         <span class="button__text">Add Turn</span>
-                        <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24"
-                                stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor"
-                                height="24" fill="none" class="svg">
+                        <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"
+                                stroke="currentColor" height="24" fill="none" class="svg">
                                 <line y2="19" y1="5" x2="12" x1="12"></line>
                                 <line y2="12" y1="12" x2="19" x1="5"></line>
                             </svg></span>
                     </button>
                 </div>
             </section>
-    
+
             <section class="turns-container">
-    
+
                 <div v-if="popupNewTurn">
                     <NewTurn @closePopup="popupNewTurn = !popupNewTurn" />
                 </div>
-    
+
                 <div class="turns-content">
-                    
-                    <div class="order-container">
-                        <!-- aca va a ir un filter para ordernarlos por ultima creacion, o por fecha -->
-                        <!-- tmb meterle un searchbar -->
-                    </div>
 
-                    <ul v-if="storeUser.user != null">
-                        <li v-for="turn in turnsArray" :key="turn.id">
-    
-                            <div class="turn-item" v-if="editTurnId !== turn.id" >
-                                <p class="nameTurn"> {{ turn.nombreTurno }}  </p>
-                                <p> {{ turn.apellidoTurno }} <b>|</b> </p>
-                                <p> {{ formatDisplayDate(turn.fechaTurno) }} <b>|</b> </p>
-                                <p> {{ formatDisplayHour(turn.horaTurno) }} </p>
-                                <div class="icons">
-                                    <v-icon class="icon-trash" name="bi-trash" scale="1.3" @click="removeTurn(turn.id)" />
-                                    <v-icon class="icon-edit" name="bi-pencil-fill" scale="1.1" @click="editTurn(turn.id)" />
-                                </div>
-                            </div>
+                    <template v-if="storeUser.user != null">
+                        <table>
 
-                            <!-- ACA VA UN V-ELSE -->
-                            <form v-else class="editTurns-item" @submit="saveEdit(turn.id)">
-                                <input type="text" :placeholder="turn.nombreTurno" v-model="newName">
-                                <input type="text" :placeholder="turn.apellidoTurno" v-model="newLastname">
-                                <input type="date" :placeholder="turn.fechaTurno" v-model="newDate">
-                                <input type="time" :placeholder="turn.horaTurno" v-model="newHour">
-    
-                                <button class="saveEditBtn" @click.prevent="saveEdit(turn.id)"> Save </button>
-                                <button class="cancelEditBtn" @click.prevent="handleCancel"> Cancel </button>
-                            </form>
-    
-                        </li>
-                    </ul>
-    
-                    <p v-if="storeUser.user == null"> Login to get access to your turns! </p>
-                    <p v-if="turnsArray.length == 0 && storeUser.user != null && !popupNewTurn"> There are no turns for today! </p>
-    
+                            <thead class="head-container">
+                                <tr>
+                                    <th class="head-item">Nombre</th>
+                                    <th class="head-item">Apellido</th>
+                                    <th class="head-item">Fecha</th>
+                                    <th class="head-item">Hora</th>
+                                    <th class="head-item">Acciones</th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="body-container">
+                                <tr v-for="turn in turnsArray" :key="turn.id">
+
+                                    <template v-if="editTurnId !== turn.id">
+                                        <td class="body-item"> <p> {{ turn.nombreTurno }}</p> </td>
+                                        <td class="body-item"> <p> {{ turn.apellidoTurno }}</p> </td>
+                                        <td class="body-item"> <p> {{ formatDisplayDate(turn.fechaTurno) }}</p> </td>
+                                        <td class="body-item"> <p> {{ formatDisplayHour(turn.horaTurno) }}</p> </td>
+                                        <td class="body-item">
+                                            <v-icon class="icon-trash" name="bi-trash" scale="1.3"
+                                                @click="removeTurn(turn.id)" />
+                                            <v-icon class="icon-edit" name="bi-pencil-fill" scale="1.1"
+                                                @click="editTurn(turn.id)" />
+                                        </td>
+                                    </template>
+
+                                    <template v-else @submit="saveEdit(turn.id)">
+                                        <td> <input class="edit-item" id="name" type="text" :placeholder="turn.nombreTurno" v-model="newName" /> </td>
+                                        <td> <input class="edit-item" id="lastname" type="text" :placeholder="turn.apellidoTurno" v-model="newLastname" /> </td>
+                                        <td> <input class="edit-item" id="date" type="date" :placeholder="turn.fechaTurno" v-model="newDate" /> </td>
+                                        <td> <input class="edit-item" id="time" type="time" :placeholder="turn.horaTurno" v-model="newHour" /> </td>
+                                        <td>
+                                            <v-icon class="cancelEditBtn" name="io-close-circle-outline" @click.prevent="handleCancel" />
+                                            <v-icon class="cancelEditBtn" name="io-checkmark-circle-outline" @click.prevent="saveEdit(turn.id)" />
+                                        </td>
+
+                                    </template>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </template>
+
+                    <p v-if="storeUser.user == null">Login to get access to your turns!</p>
+                    <p v-if="turnsArray.length == 0 && storeUser.user != null && !popupNewTurn"> There are no turns for
+                        today! </p>
                 </div>
-    
-    
+
+
             </section>
         </div>
 
@@ -128,8 +141,6 @@ const showTurns = async () => {
 
         storeTurns.updateArray(turnsArray.value)
 
-        
-
         formattedDates.value = computed( () => {
             if(storeUser.user === null) {
                 return ''
@@ -162,8 +173,7 @@ function setOrder(array) {
 
 }
 
-
-//function to format the display of the date
+//function to format the display of the date and hour
 function formatDisplayDate(date) {
     let dateStr = date
     const [year, month, day] = dateStr.split('-');
@@ -315,6 +325,7 @@ const channelInsert = () => {
         (payload) => {
         // Agregar el nuevo turno a la lista
         turnsArray.value.push(payload.new);
+        setOrder(turnsArray.value)
         }
     )
     .subscribe((status) => {
@@ -359,70 +370,54 @@ onUnmounted(() => {
 
     .title-container {
         display: flex;
+        align-items: center;
+        justify-content: left;
     }
+}
 
-    .turns-container {
-        display: flex;
-        flex-direction: column;
-        align-items: left;
-        gap: 20px;
+.turns-content {
+    display: flex;
+    justify-content: left;
 
-        li {
-            align-items: left;
-            margin: 10px 25px;
-
-            .turn-item {
-                display: flex;
-                margin-bottom: 20px;
-                align-items: center;
-
-                .nameTurn {
-                    margin-right: 5px;
-                }
-
-                b {
-                    margin: 0 10px;
-                    color: red;
-                }
-
-                .icons {
-                    margin-left: 10px;
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: space-between;
-                    align-items: center;
-                    height: 100%;
-                    padding-bottom: 3px;
-
-                    .icon-trash {
-                        color: rgb(143, 0, 0);
-                        margin: 0 5px;
-                        cursor: pointer;
-                    }
-
-                    .icon-edit {
-                        color: rgb(0, 96, 128);
-                        cursor: pointer;
-                    }
-
-
-                }
-
-            }
-            
-        }
-
+    table {
+        width: 100%;
+        text-align: center;
+        line-height: 40px;
     }
+}
 
-    .editTurns-item {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
+.edit-item {
+    display: flex;
+    text-align: center;
+    padding: 5px 0;
+}
+
+#name {
+    width: 110px;
+}
+
+#lastname {
+    width: 160px;
+}
+
+#date {
+    width: 140px;
+}
+
+#time {
+    width: 130px;
+}
+
+.editTurns-item {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
 
         input {
             border: 1px solid grey;
             padding: 5px 10px;
             border-radius: 2rem;
+            width: 148px;
         }
 
         .saveEditBtn {
@@ -452,10 +447,10 @@ onUnmounted(() => {
         }
 
     }
-}
+
 
 .btnAddTurn-container {
-    margin-left: 50px;
+    margin-left: 30px;
 }
 
 .callendar-container {
@@ -466,6 +461,8 @@ onUnmounted(() => {
     align-items: center;
     margin: 2% 15px;
 }
+
+
 
 //Button to add a new turn
 .button {
@@ -479,6 +476,7 @@ onUnmounted(() => {
   background-color: #3aa856;
   border-radius: 0.7rem;
   font-size: smaller;
+  scale: 80%;
 }
 
 .button, .button__icon, .button__text {

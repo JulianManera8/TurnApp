@@ -28,8 +28,8 @@ import { ref } from 'vue'
 import { useUserStore } from '../../stores/userStore.js'
 const storeUser = useUserStore()
 
-// import { useTurnsStore } from '../../stores/turnsStore.js'
-// const storeTurns = useTurnsStore()
+import { useTurnsStore } from '../../stores/turnsStore.js'
+const storeTurns = useTurnsStore()
 
 
 const userId = storeUser.user.id
@@ -91,8 +91,6 @@ const insertTurn = async (userId, name, lastname, date, time, ) => {
         lastnameTurn.value = null
         timeTurn.value = null
         dateTurn.value = null
-
-        // storeTurns.addTurn(data[0])
 
         emit('closePopup')
 
