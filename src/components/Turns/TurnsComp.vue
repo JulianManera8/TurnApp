@@ -47,7 +47,7 @@
                             </div>
 
                             <!-- ACA VA UN V-ELSE -->
-                            <div v-else class="editTurns-item">
+                            <form v-else class="editTurns-item" @submit="saveEdit(turn.id)">
                                 <input type="text" :placeholder="turn.nombreTurno" v-model="newName">
                                 <input type="text" :placeholder="turn.apellidoTurno" v-model="newLastname">
                                 <input type="date" :placeholder="turn.fechaTurno" v-model="newDate">
@@ -55,7 +55,7 @@
     
                                 <button class="saveEditBtn" @click.prevent="saveEdit(turn.id)"> Save </button>
                                 <button class="cancelEditBtn" @click.prevent="handleCancel"> Cancel </button>
-                            </div>
+                            </form>
     
                         </li>
                     </ul>
@@ -124,7 +124,11 @@ const showTurns = async () => {
             turnsArray.value.push(turn)
         }
 
+        setOrder(turnsArray.value)
+
         storeTurns.updateArray(turnsArray.value)
+
+        
 
         formattedDates.value = computed( () => {
             if(storeUser.user === null) {
@@ -138,6 +142,26 @@ const showTurns = async () => {
     }
 
 }
+
+//function to order the turns in display
+function setOrder(array) {
+
+    array.value = array.sort( (a, b) => {
+        const dateA = new Date(a.fechaTurno)
+        const dateB = new Date(b.fechaTurno)
+
+        if(dateA.getTime() === dateB.getTime()) {
+            const timeA = a.horaTurno
+            const timeB = b.horaTurno
+
+            return timeA.localeCompare(timeB)
+        }
+
+        return dateA - dateB       
+    })
+
+}
+
 
 //function to format the display of the date
 function formatDisplayDate(date) {
@@ -182,6 +206,8 @@ const removeTurn = async (idDeleted) => {
         turnsArray.value = turnsArray.value.filter( turn => {
             return turn.id !== idDeleted
         })
+
+        setOrder(turnsArray.value)
 
         storeTurns.updateArray(turnsArray.value)
 
@@ -241,6 +267,8 @@ const saveEdit = async () => {
       return turn;
 
     });
+
+    setOrder(turnsArray.value)
 
     storeTurns.updateArray(turnsArray.value)
 
@@ -438,9 +466,6 @@ onUnmounted(() => {
     align-items: center;
     margin: 2% 15px;
 }
-
-
-
 
 //Button to add a new turn
 .button {
