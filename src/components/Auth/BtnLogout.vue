@@ -18,11 +18,11 @@ const handleClick = () => {
 <style lang="scss" scoped>
 
 //btn to log out
-/* From Uiverse.io by Deri-Kurniawan */ 
 .button {
   position: relative;
-  padding: 12px 15px;
+  padding: 10px 15px 15px;
   height: 15px;
+  font-size: smaller;
   font-weight: 700;
   text-transform: uppercase;
   color: #000;

@@ -1,12 +1,18 @@
 <template>
     <div>
-        <h1>Sign in</h1>
+        <h1>SIGN IN</h1>
 
-        <form>
+        <form @submit="signIn">
 
             <div class="input-container">
                 <input type="email" name="email" id="email" placeholder="Email" v-model="email" autocomplete="username"/>
-                <input type="password" name="password" autocomplete="current-password" id="password" placeholder="Password" v-model="password"/>
+                <div class="password-container">
+                    <input class="inputPassword" :type="inputType" name="password" autocomplete="current-password" id="password" placeholder="Password" v-model="password" />
+                    <div class="icons-container">
+                        <v-icon class="hidingPassword" v-if="showPassword" name="bi-eye-slash" scale="1.4" @click="toggleType" />
+                        <v-icon class="showingPassword" v-else name="bi-eye" scale="1.4" @click="toggleType" />
+                    </div>
+                </div>
             </div>
 
             <div class="btn-container">
@@ -26,10 +32,10 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
-import { RouterLink, RouterView } from 'vue-router'
-
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { supabase } from '@/supabase.js'
 
 const email = ref('')
@@ -39,7 +45,7 @@ const password = ref('')
 const signIn = async () => {
 
     try {
-        const {error, data} = await supabase.auth.signInWithPassword({
+        const { error } = await supabase.auth.signInWithPassword({
             email: email.value,
             password: password.value
         });
@@ -47,7 +53,7 @@ const signIn = async () => {
         if (error) throw error
 
         setTimeout(() => {
-            window.location.reload();
+            router.push('/')
         }, 1000);
 
     } catch (error) {
@@ -60,7 +66,7 @@ const signIn = async () => {
 const signInGoogle = async () => {
 
     try {
-        const {data, error} = await supabase.auth.signInWithOAuth({
+        const { error } = await supabase.auth.signInWithOAuth({
             provider: 'google',
         })
 
@@ -87,6 +93,25 @@ const signInGoogle = async () => {
   
 // }
 
+
+//functionality to show or hide the password
+const showPassword = ref(false)
+const interruptor = ref(true) 
+const inputType = ref('password')
+
+const toggleType = () => {
+    showPassword.value = !showPassword.value
+    interruptor.value = !interruptor.value
+
+    if(!interruptor.value) {
+       return inputType.value = 'text'
+    } 
+
+    return inputType.value = 'password'
+}
+
+
+
 //emit de cambiar de formulario
 
 const changeForm = () => {
@@ -105,17 +130,13 @@ const changeForm = () => {
     box-sizing: content-box;
 }
 
-.all-container {
-    max-width: 350px;
-    min-width: 350px;
-}
 
 h1 {
-    color: rgb(172, 172, 172);
+    color: teal;
     display: flex;
     text-align: center;
     width: 100%;
-    margin-bottom: 20px;
+    margin: 70px 0 30px 0;
     font-size: 40px;
 }  
 
@@ -132,6 +153,22 @@ h1 {
         border-radius: 20px;
         border: none;
         background-color: rgb(227, 227, 227);
+    }
+}
+
+.password-container {
+    display: flex;
+    width: 100%;
+    position: relative;
+
+    .icons-container {
+        position: absolute;
+        right: -35px;
+        top: 8px;
+
+        .hidingPassword, .showingPassword {
+            cursor: pointer;
+        }
     }
 }
 
@@ -201,6 +238,7 @@ h1 {
     cursor: pointer;
     border: none;
     background-color: transparent;
+    margin-bottom: 170px;
 
     &:hover {
         color: rgb(0, 184, 184);

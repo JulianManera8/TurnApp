@@ -12,27 +12,13 @@
             </ul>
             <Darkmode />
             <div class="log-container">
-                <button class="button" v-if="!loged" @click.prevent="showPopup = !showPopup"> Sign In! </button>
+                <router-link to="/login" v-if="!loged"> <button class="button"> Sign In! </button> </router-link> 
                 <BtnLogout v-else @handleClick="logOut"/>
             </div>
         </div>
 
     </section>
     
-    <section class="popupAuth-container" v-if="showPopup">
-
-        <div class="close-container">
-            <v-icon @click="showPopup = !showPopup" name="io-close-circle-outline" scale="2" class="close-icon"></v-icon>
-        </div>
-
-        <div class="login-container" v-if="signIn">
-            <LoginForm @changeForm="signIn = !signIn"/>
-        </div>
-        <div class="register-container" v-else>
-            <RegisterForm @changeForm="signIn = !signIn" />
-        </div>
-
-    </section>
 
     <RouterView />
 </template>
@@ -42,8 +28,6 @@ import '../../css/colors.css'
 
 import Darkmode from '../LayoutComponents/Darkmode.vue'
 import BtnLogout from '../Auth/BtnLogout.vue'
-import LoginForm from '../Auth/LoginForm.vue'
-import RegisterForm from '../Auth/RegisterForm.vue'
 
 import { RouterLink, RouterView } from 'vue-router'
 import { onMounted, ref } from 'vue'
@@ -67,7 +51,6 @@ const checkUser = () => {
 
 //show popup window to login or register
 const signIn = ref(true)
-const showPopup = ref(false)
 
 
 //logout of the account
@@ -84,6 +67,7 @@ const logOut = async () => {
         console.alert(error)
     }
 };
+
 
 //to verify if the user is logged in or not, as soon as the user enters the web.
 onMounted( () => {
@@ -105,6 +89,7 @@ onMounted( () => {
     align-items: center;
     padding: 15px;
     transition: all 0.3s;
+    opacity: var(--opacity);
 }
 
 .title-container {
@@ -145,44 +130,46 @@ onMounted( () => {
     gap: 10px;
 }
 
-.popupAuth-container {
-    background-color: rgb(255, 212, 212);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: fit-content;
-    width: 450px;
-    box-shadow: 0px 0px 10000px 200px black;
-    border-radius: 1rem;
-    padding: 15px;
+// .popupAuth-container {
+//     background-color: #f5f5f5;
+//     position: absolute;
+//     top: 50%;
+//     left: 50%;
+//     transform: translate(-50%, -50%);
+//     height: fit-content;
+//     width: 450px;
+//     border-radius: 1rem;
+//     padding: 15px;
+//     z-index: 1000;
+//     box-shadow: 0px 0px 100px black;
 
-    .close-container {
-        position: absolute;
-        right: 10px;
-        top: 10px;
+//     .close-container {
+//         position: absolute;
+//         right: 10px;
+//         top: 10px;
 
-        .close-icon {
-            opacity: .5;
-            transition: all 0.20s;
-            cursor: pointer;
+//         .close-icon {
+//             opacity: .5;
+//             transition: all 0.20s;
+//             cursor: pointer;
 
-            &:hover {
-                opacity: 0.8;
-            }
-        }
+//             &:hover {
+//                 opacity: 0.8;
+//             }
+//         }
 
-    }
+//     }
 
-}
+// }
 
 //button to sign in
 
 .button {
   position: relative;
-  padding: 12px 15px;
+  padding: 10px 15px 15px;
   font-weight: 700;
   height: 15px;
+  font-size: smaller;
   text-transform: uppercase;
   color: #000;
   background-color: #fff;

@@ -1,7 +1,15 @@
 :root { /* ESTOS SON LOS COLORES EN LIGHT MODE (normal) */
     --color-fondo: #f5f5f5;
+    --opacity: 1;
 }
 
 .darkMode { /* ESTOS SON LOS COLORES EN DARKMODE */
     --color-fondo: #020224;
+}
+
+
+.popupActive {
+    --popup-active:rgba(0, 0, 0, 0.5);
+    --opacity: 0.3;
+
 }

@@ -45,15 +45,16 @@
                                     <v-icon class="icon-edit" name="bi-pencil-fill" scale="1.1" @click="editTurn(turn.id)" />
                                 </div>
                             </div>
-    
-                            <div v-else style="display: flex; gap: 5px; flex-wrap: wrap;">
+
+                            <!-- ACA VA UN V-ELSE -->
+                            <div v-else class="editTurns-item">
                                 <input type="text" :placeholder="turn.nombreTurno" v-model="newName">
                                 <input type="text" :placeholder="turn.apellidoTurno" v-model="newLastname">
                                 <input type="date" :placeholder="turn.fechaTurno" v-model="newDate">
                                 <input type="time" :placeholder="turn.horaTurno" v-model="newHour">
     
-                                <button @click.prevent="saveEdit(turn.id)"> Save </button>
-                                <button @click.prevent="handleCancel"> Cancel </button>
+                                <button class="saveEditBtn" @click.prevent="saveEdit(turn.id)"> Save </button>
+                                <button class="cancelEditBtn" @click.prevent="handleCancel"> Cancel </button>
                             </div>
     
                         </li>
@@ -154,6 +155,11 @@ const handleClick = () => {
 
 //function to delete a turn and refresh the turnsarray and dabatase
 const removeTurn = async (idDeleted) => {
+
+    const confirmDelete = confirm('Are you sure you want to delete this turn?')
+    if(!confirmDelete) {
+        return 
+    } 
 
     try {
         const {error} = await supabase
@@ -298,7 +304,9 @@ onUnmounted(() => {
 
 .all-container { 
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
+    flex-wrap: wrap;
+    opacity: var(--opacity) !important;
 }
 
 
@@ -306,8 +314,9 @@ onUnmounted(() => {
     display: flex;
     flex-direction: column;
     align-items: left;
-    margin: 2% 20px;
+    margin: 2% 10px;
     width: 50%;
+    min-width: 565px;
     gap: 15px;
 
     .title-container {
@@ -318,7 +327,7 @@ onUnmounted(() => {
         display: flex;
         flex-direction: column;
         align-items: left;
-        gap: 30px;
+        gap: 20px;
 
         li {
             align-items: left;
@@ -339,7 +348,7 @@ onUnmounted(() => {
                 }
 
                 .icons {
-                    margin-left: 5px;
+                    margin-left: 10px;
                     display: flex;
                     flex-direction: row;
                     justify-content: space-between;
@@ -349,12 +358,13 @@ onUnmounted(() => {
 
                     .icon-trash {
                         color: rgb(143, 0, 0);
-                        margin-right: 5px;
+                        margin: 0 5px;
+                        cursor: pointer;
                     }
 
                     .icon-edit {
                         color: rgb(0, 96, 128);
-
+                        cursor: pointer;
                     }
 
 
@@ -365,6 +375,45 @@ onUnmounted(() => {
         }
 
     }
+
+    .editTurns-item {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+
+        input {
+            border: 1px solid grey;
+            padding: 5px 10px;
+            border-radius: 2rem;
+        }
+
+        .saveEditBtn {
+            padding: 7px;
+            border-radius: 2rem;
+            border: 0px;
+            background-color: rgba(0, 161, 0, 0.396);
+            transition: all 0.2s;
+            cursor: pointer;
+
+            &:hover {
+                background-color: rgba(0, 161, 0, 0.761);
+            }
+        }        
+        
+        .cancelEditBtn {
+            padding: 7px;
+            border-radius: 2rem;
+            border: 0px;
+            background-color: rgba(255, 0, 0, 0.572);
+            transition: all 0.3s;
+            cursor: pointer;
+
+            &:hover {
+                background-color: rgba(255, 0, 0, 0.861);
+            }
+        }
+
+    }
 }
 
 .btnAddTurn-container {
@@ -372,13 +421,12 @@ onUnmounted(() => {
 }
 
 .callendar-container {
-    width: 40%;
-    background-color: rgba(1, 158, 1, 0.581);
+    width: 35%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 2% 20px;
+    margin: 2% 15px;
 }
 
 

@@ -24,7 +24,7 @@
 import '../../css/colors.css'
 
 const cambiar = () => {
-    document.body.classList.toggle("darkMode");
+  document.body.classList.toggle("darkMode");
 }
 
 </script>
