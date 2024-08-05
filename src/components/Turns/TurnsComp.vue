@@ -38,8 +38,8 @@
                             <div class="turn-item" v-if="editTurnId !== turn.id" >
                                 <p class="nameTurn"> {{ turn.nombreTurno }}  </p>
                                 <p> {{ turn.apellidoTurno }} <b>|</b> </p>
-                                <p> {{ turn.fechaTurno }} <b>|</b> </p>
-                                <p> {{ turn.horaTurno }} </p>
+                                <p> {{ formatDisplayDate(turn.fechaTurno) }} <b>|</b> </p>
+                                <p> {{ formatDisplayHour(turn.horaTurno) }} </p>
                                 <div class="icons">
                                     <v-icon class="icon-trash" name="bi-trash" scale="1.3" @click="removeTurn(turn.id)" />
                                     <v-icon class="icon-edit" name="bi-pencil-fill" scale="1.1" @click="editTurn(turn.id)" />
@@ -122,7 +122,6 @@ const showTurns = async () => {
 
         for(let turn of data) {
             turnsArray.value.push(turn)
-           
         }
 
         storeTurns.updateArray(turnsArray.value)
@@ -138,6 +137,17 @@ const showTurns = async () => {
         console.log(error.message)
     }
 
+}
+
+//function to format the display of the date
+function formatDisplayDate(date) {
+    let dateStr = date
+    const [year, month, day] = dateStr.split('-');
+    return dateStr = `${day}/${month}/${year}`;
+}
+
+function formatDisplayHour(hour) {
+    return hour.slice(0 ,5)
 }
 
 
