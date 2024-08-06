@@ -105,7 +105,7 @@ const insertTurn = async (userId, name, lastname, date, time, ) => {
 <style lang="scss" scoped>
 
 .editTurns-item {
-    margin:30px 0 10px;
+    margin:10px 0 20px;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;

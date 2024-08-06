@@ -4,8 +4,8 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
 import { OhVueIcon, addIcons } from "oh-vue-icons";
-import { IoCloseCircleOutline, BiPencilFill, BiTrash, BiEyeSlash, BiEye, IoCheckmarkCircleOutline } from "oh-vue-icons/icons";
-addIcons( IoCloseCircleOutline, BiPencilFill, BiTrash, BiEyeSlash, BiEye, IoCheckmarkCircleOutline );
+import { IoCloseCircleOutline, BiPencilFill, BiTrash, BiEyeSlash, BiEye, IoCheckmarkCircleOutline, FaArrowRight, FaArrowLeft } from "oh-vue-icons/icons";
+addIcons( IoCloseCircleOutline, BiPencilFill, BiTrash, BiEyeSlash, BiEye, IoCheckmarkCircleOutline, FaArrowRight, FaArrowLeft );
 
 import "cally";
 

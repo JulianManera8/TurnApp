@@ -4,7 +4,7 @@
         <div class="title-turns-container">
             <section class="title-container">
 
-                <h3> TURNOS </h3>
+                <h3> TURNS </h3>
 
                 <div v-if="!popupNewTurn && !editTurnId" class="btnAddTurn-container">
                     <button type="button" class="button" @click.prevent="handleClick">
@@ -30,40 +30,59 @@
                     <template v-if="storeUser.user != null">
                         <table>
 
-                            <thead class="head-container">
+                            <!-- <thead class="head-container">
                                 <tr>
                                     <th class="head-item">Nombre</th>
                                     <th class="head-item">Apellido</th>
                                     <th class="head-item">Fecha</th>
                                     <th class="head-item">Hora</th>
-                                    <th class="head-item">Acciones</th>
+                                    <th class="head-item"></th>
                                 </tr>
-                            </thead>
+                            </thead> -->
 
                             <tbody class="body-container">
                                 <tr v-for="turn in turnsArray" :key="turn.id">
 
                                     <template v-if="editTurnId !== turn.id">
-                                        <td class="body-item"> <p> {{ turn.nombreTurno }}</p> </td>
-                                        <td class="body-item"> <p> {{ turn.apellidoTurno }}</p> </td>
-                                        <td class="body-item"> <p> {{ formatDisplayDate(turn.fechaTurno) }}</p> </td>
-                                        <td class="body-item"> <p> {{ formatDisplayHour(turn.horaTurno) }}</p> </td>
                                         <td class="body-item">
-                                            <v-icon class="icon-trash" name="bi-trash" scale="1.3"
-                                                @click="removeTurn(turn.id)" />
-                                            <v-icon class="icon-edit" name="bi-pencil-fill" scale="1.1"
-                                                @click="editTurn(turn.id)" />
+                                            <p> {{ turn.nombreTurno }}</p>
+                                        </td>
+                                        <td class="body-item">
+                                            <p> {{ turn.apellidoTurno }}</p>
+                                        </td>
+                                        <td class="body-item">
+                                            <p> {{ formatDisplayDate(turn.fechaTurno) }}</p>
+                                        </td>
+                                        <td class="body-item">
+                                            <p> {{ formatDisplayHour(turn.horaTurno) }}</p>
+                                        </td>
+                                        <td class="body-item">
+                                            <div class="icons-container">
+                                                <v-icon class="icon-trash" name="bi-trash" scale="1.3"
+                                                    @click="removeTurn(turn.id)" />
+                                                <v-icon class="icon-edit" name="bi-pencil-fill" scale="1.1"
+                                                    @click="editTurn(turn.id)" />
+                                            </div>
                                         </td>
                                     </template>
 
                                     <template v-else @submit="saveEdit(turn.id)">
-                                        <td> <input class="edit-item" id="name" type="text" :placeholder="turn.nombreTurno" v-model="newName" /> </td>
-                                        <td> <input class="edit-item" id="lastname" type="text" :placeholder="turn.apellidoTurno" v-model="newLastname" /> </td>
-                                        <td> <input class="edit-item" id="date" type="date" :placeholder="turn.fechaTurno" v-model="newDate" /> </td>
-                                        <td> <input class="edit-item" id="time" type="time" :placeholder="turn.horaTurno" v-model="newHour" /> </td>
+                                        <td> <input class="edit-item" id="name" type="text"
+                                                :placeholder="turn.nombreTurno" v-model="newName" /> </td>
+                                        <td> <input class="edit-item" id="lastname" type="text"
+                                                :placeholder="turn.apellidoTurno" v-model="newLastname" /> </td>
+                                        <td> <input class="edit-item" id="date" type="date"
+                                                :placeholder="turn.fechaTurno" v-model="newDate" /> </td>
+                                        <td> <input class="edit-item" id="time" type="time"
+                                                :placeholder="turn.horaTurno" v-model="newHour" /> </td>
                                         <td>
-                                            <v-icon class="cancelEditBtn" name="io-close-circle-outline" @click.prevent="handleCancel" />
-                                            <v-icon class="cancelEditBtn" name="io-checkmark-circle-outline" @click.prevent="saveEdit(turn.id)" />
+                                            <div class="icons-container">
+                                                <v-icon class="cancelEditBtn" scale="1.3" name="io-close-circle-outline"
+                                                    @click.prevent="handleCancel" />
+                                                <v-icon class="saveEditBtn" scale="1.3"
+                                                    name="io-checkmark-circle-outline"
+                                                    @click.prevent="saveEdit(turn.id)" />
+                                            </div>
                                         </td>
 
                                     </template>
@@ -73,9 +92,11 @@
                         </table>
                     </template>
 
-                    <p v-if="storeUser.user == null">Login to get access to your turns!</p>
-                    <p v-if="turnsArray.length == 0 && storeUser.user != null && !popupNewTurn"> There are no turns for
-                        today! </p>
+                    <div class="msg-container">
+                        <p class="noUser" v-if="storeUser.user == null">Login to get access to your turns!</p>
+                        <p class="noTurns" v-if="turnsArray.length == 0 && storeUser.user != null && !popupNewTurn">
+                            There are no turns.</p>
+                    </div>
                 </div>
 
 
@@ -83,13 +104,19 @@
         </div>
 
         <section class="callendar-container">
-
-            <h2>calendario</h2>
-
             <div>
-                <calendar-multi :value="formattedDates.value" @change="onDateChange" min="2024-01-01" max="2024-12-31"
-                    first-day-of-week="1" show-outside-days="true">
-                    <calendar-month is-date-disallowed="true"> </calendar-month>
+                <calendar-multi 
+                    :value="formattedDates.value" 
+                    @change="onDateChange" 
+                    min="2024-01-01" 
+                    max="2024-12-31"
+                    first-day-of-week="1" 
+                    show-outside-days="true">
+                    <v-icon name="fa-arrow-left" class="leftArrow" aria-label="Previous" slot="previous"></v-icon>
+                    <v-icon name="fa-arrow-right" class="rightArrow" aria-label="Next" slot="next"></v-icon>
+                    <div class="grid">
+                        <calendar-month is-date-disallowed="true"></calendar-month>
+                    </div>
                 </calendar-multi>
             </div>
 
@@ -351,6 +378,7 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 
 
+
 .all-container { 
     display: flex;
     justify-content: center;
@@ -362,7 +390,6 @@ onUnmounted(() => {
 .title-turns-container {
     display: flex;
     flex-direction: column;
-    align-items: left;
     margin: 2% 10px;
     width: 50%;
     min-width: 565px;
@@ -377,77 +404,101 @@ onUnmounted(() => {
 
 .turns-content {
     display: flex;
-    justify-content: left;
+    justify-content: center;
+    width: 100%;
 
     table {
         width: 100%;
         text-align: center;
-        line-height: 40px;
+        line-height: 60px;
+        border-collapse: collapse;
+        table-layout: fixed;
+        transition: all 0.15s;
+
+        td {
+            width: 135px;
+
+        }
+
+        td:nth-child(5) {
+            width: 100px;
+        }
+        
+
+        tr {
+            border-top: 1px solid rgb(221, 221, 221);
+            border-bottom: 1px solid rgb(221, 221, 221);
+            transition: all 0.15s;
+        }
+
+        tr:hover { /* Color al pasar el cursor sobre una fila */
+            background-color: #62e30012;
+            transition: all 0.15s;
+        }
+
     }
 }
 
 .edit-item {
-    display: flex;
-    text-align: center;
-    padding: 5px 0;
+    padding: 5px 7px; 
+    border: 1px solid rgb(200, 200, 200);
+    border-radius: 1rem;
 }
 
+.icons-container {
+    display: flex;
+    flex-direction: row !important;
+    gap: 10px;
+    margin-left: 10px;
+    
+
+    .cancelEditBtn, .saveEditBtn, .icon-trash , .icon-edit {
+        cursor: pointer;
+    }
+
+    .icon-trash {
+        color: rgb(139, 0, 0);
+    }
+
+    .saveEditBtn:hover {
+        background-color: #00d53577;
+        border-radius: 50%;
+        transition: backgroundColor 0.15s;
+    }
+
+    .cancelEditBtn:hover {
+        background-color: #e9000077;
+        border-radius: 50%;
+        transition: backgroundColor 0.15s;
+    }
+}
+
+
 #name {
-    width: 110px;
+    width: 100px;
 }
 
 #lastname {
-    width: 160px;
+    width: 110px;
 }
 
 #date {
-    width: 140px;
-}
-
-#time {
     width: 130px;
 }
 
-.editTurns-item {
+#time {
+    width: 86px;
+}
+
+.msg-container {
+    width: 100%;
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
 
-        input {
-            border: 1px solid grey;
-            padding: 5px 10px;
-            border-radius: 2rem;
-            width: 148px;
-        }
-
-        .saveEditBtn {
-            padding: 7px;
-            border-radius: 2rem;
-            border: 0px;
-            background-color: rgba(0, 161, 0, 0.396);
-            transition: all 0.2s;
-            cursor: pointer;
-
-            &:hover {
-                background-color: rgba(0, 161, 0, 0.761);
-            }
-        }        
-        
-        .cancelEditBtn {
-            padding: 7px;
-            border-radius: 2rem;
-            border: 0px;
-            background-color: rgba(255, 0, 0, 0.572);
-            transition: all 0.3s;
-            cursor: pointer;
-
-            &:hover {
-                background-color: rgba(255, 0, 0, 0.861);
-            }
-        }
-
+    .noTurns {
+        width: 100vw;
+    
     }
-
+}
 
 .btnAddTurn-container {
     margin-left: 30px;
@@ -461,6 +512,80 @@ onUnmounted(() => {
     align-items: center;
     margin: 2% 15px;
 }
+
+calendar-multi {
+
+
+    scale: 90%;
+
+    &::part(button) {
+        border: 1px solid #ffffff;
+        background-color: transparent;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+    }
+
+    .leftArrow, .rightArrow {
+        height: 20px;
+        width: 20px;
+        fill: black;
+        background-color: transparent;
+        padding: 7px;
+        transition: all 0.2s;
+    }
+
+    .leftArrow:hover {
+        transform: translateX(-5px);
+    }
+    .rightArrow:hover {
+        transform: translateX(5px);
+    }
+
+    calendar-month {
+
+        &::part(heading) {
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        &::part(head) {
+            font-size: small;
+            color: rgb(0, 0, 0);
+        }
+
+
+        &::part(today) {
+            color: red; 
+        }
+
+        &::part(day) {
+            font-size: smaller; 
+            border-radius: 50%;
+            transition: all 0.2s;
+
+            &:hover {
+                background-color: rgba(0, 182, 0, 0.113);
+                transition: all 0.2s;
+            }
+        }
+
+        &::part(selected) {
+            font-size: small;
+            color: white;
+            --color-accent: rgba(0, 182, 0, 0.707);
+            --color-text-on-accent: #ffffff;
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
+
+
+
+
+    }
+}
+
+
 
 
 
