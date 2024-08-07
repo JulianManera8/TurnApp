@@ -112,11 +112,14 @@
                     max="2024-12-31"
                     first-day-of-week="1" 
                     show-outside-days="true">
+
                     <v-icon name="fa-arrow-left" class="leftArrow" aria-label="Previous" slot="previous"></v-icon>
                     <v-icon name="fa-arrow-right" class="rightArrow" aria-label="Next" slot="next"></v-icon>
+
                     <div class="grid">
-                        <calendar-month is-date-disallowed="true"></calendar-month>
+                        <calendar-month ref="calendar"></calendar-month>
                     </div>
+
                 </calendar-multi>
             </div>
 
@@ -130,7 +133,7 @@ import NewTurn from '../Turns/NewTurn.vue'
 
 import { CalendarMulti, CalendarMonth } from 'cally'
 
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted, computed, nextTick } from 'vue'
 import { supabase } from '@/supabase.js'
 
 import { useUserStore } from '../../stores/userStore.js'
@@ -336,6 +339,33 @@ const onDateChange = (event) => {
   // Puedes realizar otras acciones aquí, como buscar eventos de ese día, etc.
 };
 
+const calendar = ref(null)
+
+const disableButtons = async () => {
+  await nextTick();
+
+  const shadowRoot = calendar.value.shadowRoot;
+  console.log(shadowRoot);
+
+  if (shadowRoot) {
+
+    const dayButtons = shadowRoot.querySelectorAll('[part~="button"][part~="day"]');
+    // console.log(dayButtons);
+
+    //TENGO TODOS LOS BOTONES EN LA VARIABLE dayButtons
+    //YA ACCEDI A LOS BOTONES, AHORA TENGO QUE VER QUE HAGO CON ESOS
+
+    dayButtons.forEach(button => {
+      button.disabled = true;
+    });
+  }
+};
+
+
+
+
+
+
 
 //function to refresh turns when a new one is created
 const channel = ref('')
@@ -363,6 +393,7 @@ const channelInsert = () => {
 };
 
 onMounted(() => {
+    disableButtons();
     showTurns(); // Mostrar los turnos existentes desde la base de datos
     channelInsert(); // Iniciar la suscripción al canal para actualizar los turnos al insertar uno nuevo
 });
