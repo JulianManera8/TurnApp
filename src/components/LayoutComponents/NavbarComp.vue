@@ -2,7 +2,7 @@
     <section class="all-container">
 
         <div class="title-container">
-            <RouterLink to="/" class="link title"><h1>TurnApp</h1></RouterLink>
+            <RouterLink to="/" class="link title"><h1>WebTurn</h1></RouterLink>
         </div>
 
         <div class="nav-container">
