@@ -30,23 +30,24 @@ const cambiar = () => {
 </script>
 
 <style lang="scss" scoped>
+
 .darkmode-container {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0 -15px;
 }
 
 button {
   background-color: var(--color-fondo);
   border: none;
   border-radius: 50%;
-  scale: 70%;
+  scale: 55%;
 }
 
 .toggle-checkbox {
   position: absolute;
   opacity: 0;
-  cursor: pointer;
   height: 0;
   width: 0;
 }
@@ -60,6 +61,7 @@ button {
   border-radius: 10em;
   background-color: white;
   transition: background-color 250ms;
+  cursor: pointer;
 }
 
 .toggle-checkbox:checked ~ .toggle-slot {

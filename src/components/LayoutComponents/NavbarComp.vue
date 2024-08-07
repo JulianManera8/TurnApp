@@ -2,13 +2,13 @@
     <section class="all-container">
 
         <div class="title-container">
-            <RouterLink to="/" class="link"><h1>TurnApp</h1></RouterLink>
+            <RouterLink to="/" class="link title"><h1>TurnApp</h1></RouterLink>
         </div>
 
         <div class="nav-container">
             <ul>
-                <li> <RouterLink to="/" class="link"> Home </RouterLink></li>
-                <li> <RouterLink to="/help" class="link"> Help </RouterLink></li>
+                <li> <RouterLink to="/" class="link nav"> Home </RouterLink></li>
+                <li> <RouterLink to="/help" class="link nav"> Help </RouterLink></li>
             </ul>
             <Darkmode />
             <div class="log-container">
@@ -82,14 +82,15 @@ onMounted( () => {
 
 .all-container {
     //background-color: var(--color-fondo);
-    background-color: rgba(255, 162, 0, 0.329);
+    // background-color: rgba(42, 121, 0, 0.723);
+    background: linear-gradient(to bottom,rgb(58, 167, 0), transparent);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 15px;
+    padding: 15px 15px 30px;
     transition: all 0.3s;
-    opacity: var(--opacity);
+    margin-bottom: 30px;
 }
 
 .title-container {
@@ -98,9 +99,9 @@ onMounted( () => {
         text-decoration: none;
         cursor: pointer;
         font-family: "Ubuntu", sans-serif;
-        font-size: larger;
     }
 }
+
 
 .nav-container {
 
@@ -119,7 +120,7 @@ onMounted( () => {
             color: black;
             cursor: pointer;
             font-family: "Ubuntu", sans-serif;
-            font-size: larger;
+            font-size: smaller;
         }
     }
 
@@ -130,46 +131,14 @@ onMounted( () => {
     gap: 10px;
 }
 
-// .popupAuth-container {
-//     background-color: #f5f5f5;
-//     position: absolute;
-//     top: 50%;
-//     left: 50%;
-//     transform: translate(-50%, -50%);
-//     height: fit-content;
-//     width: 450px;
-//     border-radius: 1rem;
-//     padding: 15px;
-//     z-index: 1000;
-//     box-shadow: 0px 0px 100px black;
-
-//     .close-container {
-//         position: absolute;
-//         right: 10px;
-//         top: 10px;
-
-//         .close-icon {
-//             opacity: .5;
-//             transition: all 0.20s;
-//             cursor: pointer;
-
-//             &:hover {
-//                 opacity: 0.8;
-//             }
-//         }
-
-//     }
-
-// }
-
 //button to sign in
 
 .button {
   position: relative;
-  padding: 10px 15px 15px;
+  padding: 10px 10px 13px;
   font-weight: 700;
-  height: 15px;
-  font-size: smaller;
+  height: 10px;
+  font-size: 10px;
   text-transform: uppercase;
   color: #000;
   background-color: #fff;
@@ -178,30 +147,14 @@ onMounted( () => {
   overflow: hidden;
   z-index: 1;
   transition: all 0.2s ease-in-out;
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
 
 .button:hover {
-  color: #fff;
+  color: #5daa00bc;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-.button::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to right, #007bff, #00bfff);
-  transition: all 0.4s ease-in-out;
-  z-index: -1;
-  border-radius: 50px;
-}
 
-.button:hover::before {
-  left: 0;
-}
 
 </style>

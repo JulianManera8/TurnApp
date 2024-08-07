@@ -8,9 +8,9 @@
                 <slot></slot>
             </main>
         </div>
-        <div class="footer">
+        <!-- <div class="footer">
             <FooterComp />
-        </div>
+        </div> -->
     </div>
 </template>
 
