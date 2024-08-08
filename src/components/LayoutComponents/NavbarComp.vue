@@ -99,6 +99,7 @@ onMounted( () => {
         text-decoration: none;
         cursor: pointer;
         font-family: "Ubuntu", sans-serif;
+        font-size: larger;
     }
 }
 
@@ -120,7 +121,7 @@ onMounted( () => {
             color: black;
             cursor: pointer;
             font-family: "Ubuntu", sans-serif;
-            font-size: smaller;
+            font-size: large;
         }
     }
 
@@ -137,8 +138,8 @@ onMounted( () => {
   position: relative;
   padding: 10px 10px 13px;
   font-weight: 700;
-  height: 10px;
-  font-size: 10px;
+  height: 12px;
+  font-size: 13px;
   text-transform: uppercase;
   color: #000;
   background-color: #fff;

@@ -1,19 +1,19 @@
 <template>
 
-  <div style="margin-top: 10px;">
+  <div>
     
     <h1>CREATE AN ACCOUNT</h1>
 
     <form @submit="handleCreate">
 
       <div class="input-container">
-        <input type="text" name="name" id="name" placeholder="Nombre" autocomplete="name" v-model="name" />
-        <input type="text" name="lastname" id="lastname" placeholder="Apellido" v-model="lastname"/>
+        <input type="text" name="name" id="name" placeholder="Name" autocomplete="name" v-model="name" />
+        <input type="text" name="lastname" id="lastname" placeholder="Lastname" v-model="lastname"/>
         <input type="email" name="email" id="email" placeholder="Email" autocomplete="email" v-model="email"/>
         
         <div class="password-container">
-          <input :type="inputType" class="inputPassword" name="password" id="password" placeholder="Contraseña" autocomplete="current-password" v-model="password"  />
-          <input :type="inputType" class="inputPassword" name="repPassword" id="repPassword" placeholder="Confirma la contraseña" autocomplete="current-password" v-model="repPassword" />
+          <input :type="inputType" class="inputPassword" name="password" id="password" placeholder="Password" autocomplete="current-password" v-model="password"  />
+          <input :type="inputType" class="inputPassword" name="repPassword" id="repPassword" placeholder="Confirm password" autocomplete="current-password" v-model="repPassword" />
 
           <div class="icons-container">
             <v-icon class="hidingPassword" v-if="showPassword" name="bi-eye-slash" scale="1.4" @click="toggleType" />
@@ -202,7 +202,7 @@ h1 {
   
 .btn-signIn {
   padding: 10px 15px;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-size: large;
   border-radius: 20px;
   border: 0 !important;
   outline: 0 !important;
@@ -226,6 +226,7 @@ h1 {
   background-color: transparent;
   cursor: pointer;
   margin-bottom: 50px;
+  font-size: large;
 
   &:hover {
     color: rgb(0, 184, 184);

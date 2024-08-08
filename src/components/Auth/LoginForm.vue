@@ -136,7 +136,7 @@ h1 {
     display: flex;
     text-align: center;
     width: 100%;
-    margin: 70px 0 30px 0;
+    margin: 30px 0 30px 0;
     font-size: 40px;
 }  
 
@@ -164,7 +164,7 @@ h1 {
     .icons-container {
         position: absolute;
         right: -35px;
-        top: 8px;
+        top: 6px;
 
         .hidingPassword, .showingPassword {
             cursor: pointer;
@@ -180,7 +180,7 @@ h1 {
 
 .btn-signIn {
     padding: 10px 15px;
-    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    font-size: large;
     border-radius: 20px;
     border: 0 !important;
     outline: 0 !important;
@@ -218,6 +218,7 @@ h1 {
         border: none;
         padding: 10px;
         border-radius: 20px;
+        font-size: medium;
 
         &:hover {
             background-color: rgba(0, 184, 184, 0.484);
@@ -239,6 +240,7 @@ h1 {
     border: none;
     background-color: transparent;
     margin-bottom: 170px;
+    font-size: large;
 
     &:hover {
         color: rgb(0, 184, 184);

@@ -23,7 +23,7 @@ const handleClick = () => {
   padding: 10px 10px 13px;
   font-weight: 700;
   height: 10px;
-  font-size: 10px;
+  font-size: 13px;
   text-transform: uppercase;
   color: #000;
   background-color: #fff;

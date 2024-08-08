@@ -4,7 +4,7 @@
         <div class="title-turns-container">
             <section class="title-container">
 
-                <h3> TURNS </h3>
+                <h3 class="turns-title"> TURNS </h3>
 
                 <div v-if="!popupNewTurn && !editTurnId" class="btnAddTurn-container">
                     <button type="button" class="button" @click.prevent="handleClick">
@@ -29,17 +29,6 @@
 
                     <template v-if="storeUser.user != null">
                         <table>
-
-                            <!-- <thead class="head-container">
-                                <tr>
-                                    <th class="head-item">Nombre</th>
-                                    <th class="head-item">Apellido</th>
-                                    <th class="head-item">Fecha</th>
-                                    <th class="head-item">Hora</th>
-                                    <th class="head-item"></th>
-                                </tr>
-                            </thead> -->
-
                             <tbody class="body-container">
                                 <tr v-for="turn in turnsArray" :key="turn.id">
 
@@ -430,6 +419,12 @@ onUnmounted(() => {
         display: flex;
         align-items: center;
         justify-content: left;
+
+        .turns-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
     }
 }
 
@@ -546,9 +541,6 @@ onUnmounted(() => {
 
 calendar-multi {
 
-
-    scale: 90%;
-
     &::part(button) {
         border: 1px solid #ffffff;
         background-color: transparent;
@@ -638,6 +630,7 @@ calendar-multi {
 .button, .button__icon, .button__text {
   transition: all 0.3s;
   border-radius: 0.7rem;
+  font-size: large;
 }
 
 .button .button__text {
