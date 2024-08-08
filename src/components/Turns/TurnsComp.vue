@@ -4,7 +4,7 @@
         <div class="title-turns-container">
             <section class="title-container">
 
-                <h3 class="turns-title"> TURNS </h3>
+                <h3 class="turns-title"> TURNS <span class="spanTitle"> (today)</span></h3>
 
                 <div v-if="!popupNewTurn && !editTurnId" class="btnAddTurn-container">
                     <button type="button" class="button" @click.prevent="handleClick">
@@ -34,16 +34,16 @@
 
                                     <template v-if="editTurnId !== turn.id">
                                         <td class="body-item">
-                                            <p> {{ turn.nombreTurno }}</p>
+                                            <p :data-date="turn.fechaTurno"> {{ turn.nombreTurno }}</p>
                                         </td>
                                         <td class="body-item">
-                                            <p> {{ turn.apellidoTurno }}</p>
+                                            <p :data-date="turn.fechaTurno"> {{ turn.apellidoTurno }}</p>
                                         </td>
                                         <td class="body-item">
-                                            <p> {{ formatDisplayDate(turn.fechaTurno) }}</p>
+                                            <p :data-date="turn.fechaTurno"> {{ formatDisplayDate(turn.fechaTurno) }}</p>
                                         </td>
                                         <td class="body-item">
-                                            <p> {{ formatDisplayHour(turn.horaTurno) }}</p>
+                                            <p :data-date="turn.fechaTurno"> {{ formatDisplayHour(turn.horaTurno) }}</p>
                                         </td>
                                         <td class="body-item">
                                             <div class="icons-container">
@@ -131,6 +131,9 @@ const storeUser = useUserStore();
 import { useTurnsStore } from '../../stores/turnsStore.js'
 const storeTurns = useTurnsStore();
 
+import { useRouter } from 'vue-router'
+const router = useRouter();
+
 
 //functionality to select and show turns of the day
 //and also to ccomplete the callendar with turns
@@ -190,6 +193,24 @@ function setOrder(array) {
         return dateA - dateB       
     })
 
+    array.value = array.map( turn => {
+        const today = new Date().toISOString().split('T')[0];
+        console.log(today)
+        console.log(turn.fechaTurno)
+
+        if(turn.fechaTurno === today) {
+
+            nextTick( () => {
+                const element = document.querySelectorAll(`[data-date="${turn.fechaTurno}"]`)
+                element.forEach( el => el.classList.add('turnToday'))
+            })
+        }
+
+        return turn
+    })
+
+    // console.log(array.value)
+
 }
 
 //function to format the display of the date and hour
@@ -208,11 +229,9 @@ function formatDisplayHour(hour) {
 const popupNewTurn = ref(false)
 const handleClick = () => {
     if(storeUser.user === null) {
-        return console.log('TENES  Q LOG PERRO')
+        router.push('/login')
         //ACA TENGO Q ACTIVARLE EL POPUP PARA LOGEAR/REGISTRAR
     }
-
-    popupNewTurn.value = !popupNewTurn.value;
 }
 
 
@@ -330,29 +349,22 @@ const onDateChange = (event) => {
 
 const calendar = ref(null)
 
+
+
 const disableButtons = async () => {
   await nextTick();
 
   const shadowRoot = calendar.value.shadowRoot;
-  console.log(shadowRoot);
 
   if (shadowRoot) {
-
     const dayButtons = shadowRoot.querySelectorAll('[part~="button"][part~="day"]');
-    // console.log(dayButtons);
-
-    //TENGO TODOS LOS BOTONES EN LA VARIABLE dayButtons
-    //YA ACCEDI A LOS BOTONES, AHORA TENGO QUE VER QUE HAGO CON ESOS
 
     dayButtons.forEach(button => {
-      button.disabled = true;
+        button.disabled = true
+        button.style = 'opacity: 1; cursor: default';
     });
   }
 };
-
-
-
-
 
 
 
@@ -424,6 +436,13 @@ onUnmounted(() => {
             font-size: 28px;
             font-weight: bold;
             margin-right: 10px;
+
+            .spanTitle {
+                font-size: 20px;
+                font-weight: 300;
+                color: green;
+                margin-left: 5px;
+            }
         }
     }
 }
@@ -463,6 +482,11 @@ onUnmounted(() => {
         }
 
     }
+}
+
+.turnToday {
+
+   color: rgb(0, 116, 0);
 }
 
 .edit-item {
