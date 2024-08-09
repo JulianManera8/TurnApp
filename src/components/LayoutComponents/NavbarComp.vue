@@ -2,23 +2,66 @@
     <section class="all-container">
 
         <div class="title-container">
-            <RouterLink to="/" class="link title"><h1>WebTurn</h1></RouterLink>
+            <RouterLink to="/" class="link title">
+                <h1>WebTurn</h1>
+            </RouterLink>
         </div>
 
         <div class="nav-container">
-            <ul>
-                <li> <RouterLink to="/" class="link nav"> Home </RouterLink></li>
-                <li> <RouterLink to="/help" class="link nav"> Help </RouterLink></li>
-            </ul>
-            <Darkmode />
-            <div class="log-container">
-                <router-link to="/login" v-if="!loged"> <button class="button"> Sign In! </button> </router-link> 
-                <BtnLogout v-else @handleClick="logOut"/>
-            </div>
+            <template v-if="!showMenu">
+                <ul>
+                    <li>
+                        <RouterLink to="/" class="link nav"> Home </RouterLink>
+                    </li>
+                    <li>
+                        <RouterLink to="/help" class="link nav"> Help </RouterLink>
+                    </li>
+                </ul>
+                <Darkmode />
+                <div class="log-container">
+                    <router-link to="/login" v-if="!loged"> <button class="button"> Sign In! </button> </router-link>
+                    <BtnLogout v-else @handleClick="logOut" />
+                </div>
+            </template>
+
+            <template v-else>
+                <ul>
+                    <label class="burger" for="burger">
+                        <input type="checkbox" id="burger" @click="displayMenu = !displayMenu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </label>
+
+                    <transition name="displayMenu">
+                        <div v-if="displayMenu" class="responsive-container"
+                            :style="{ display: displayMenu ? 'flex' : 'none' }">
+                            <li>
+                                <RouterLink to="/" class="link nav"> Home </RouterLink>
+                            </li>
+                            <li>
+                                <RouterLink to="/help" class="link nav"> Help </RouterLink>
+                            </li>
+                            <li>
+                                <Darkmode />
+                            </li>
+                            <li>
+                                <div class="log-container">
+                                    <router-link to="/login" v-if="!loged">
+                                        <button class="button"> Sign In! </button>
+                                    </router-link>
+                                    <BtnLogout v-else @handleClick="logOut" />
+                                </div>
+                            </li>
+                        </div>
+                    </transition>
+                </ul>
+            </template>
+
         </div>
 
     </section>
-    
+
 
     <RouterView />
 </template>
@@ -49,8 +92,22 @@ const checkUser = () => {
 
 }
 
-//show popup window to login or register
-const signIn = ref(true)
+
+//checkear el window width y en base a eso activar o desactivar el menu hamburguesa y todo eso
+const showMenu = ref(false)
+const displayMenu = ref(false)
+
+if(window.innerWidth < 500) {
+    showMenu.value = true;
+} 
+
+window.addEventListener('resize', () => {
+    if (window.innerWidth < 500) {
+       return showMenu.value = true
+    }
+    return showMenu.value = false
+});
+
 
 
 //logout of the account
@@ -67,7 +124,6 @@ const logOut = async () => {
         console.alert(error)
     }
 };
-
 
 //to verify if the user is logged in or not, as soon as the user enters the web.
 onMounted( () => {
@@ -101,6 +157,51 @@ onMounted( () => {
         font-family: "Ubuntu", sans-serif;
         font-size: larger;
     }
+}
+
+.responsive-container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    background-color: green;
+    top: 60px;
+    right: 0;
+    gap: 20px;
+    width: 100px;
+    padding: 20px;
+    z-index: 2000;
+}
+
+.displayMenu-enter-active, .displayMenu-leave-active {
+    transition: all 0.325s ease-in;
+    /* This makes sure the transition occurs over the duration you specified */
+}
+
+.displayMenu-enter-from {
+    opacity: 0;
+    transform: translateX(100%);
+    /* Start off-screen to the right */
+}
+
+.displayMenu-enter-to {
+    opacity: 1;
+    transform: translateX(0);
+    /* End at the original position */
+}
+
+.displayMenu-leave-from {
+    opacity: 1;
+    transform: translateX(0);
+    /* Start from the original position */
+}
+
+.displayMenu-leave-to {
+    opacity: 0;
+    transform: translateX(100%);
+    /* End off-screen to the left */
 }
 
 
@@ -157,5 +258,64 @@ onMounted( () => {
 }
 
 
+//menu when responsive
+.burger {
+  position: relative;
+  width: 40px;
+  height: 30px;
+  background: transparent;
+  cursor: pointer;
+  display: block;
+}
 
+.burger input {
+  display: none;
+}
+
+.burger span {
+  display: block;
+  position: absolute;
+  height: 4px;
+  width: 100%;
+  background: black;
+  border-radius: 9px;
+  opacity: 1;
+  left: 0;
+  transform: rotate(0deg);
+  transition: .25s ease-in-out;
+}
+
+.burger span:nth-of-type(1) {
+  top: 0px;
+  transform-origin: left center;
+}
+
+.burger span:nth-of-type(2) {
+  top: 50%;
+  transform: translateY(-50%);
+  transform-origin: left center;
+}
+
+.burger span:nth-of-type(3) {
+  top: 100%;
+  transform-origin: left center;
+  transform: translateY(-100%);
+}
+
+.burger input:checked ~ span:nth-of-type(1) {
+  transform: rotate(45deg);
+  top: 0px;
+  left: 5px;
+}
+
+.burger input:checked ~ span:nth-of-type(2) {
+  width: 0%;
+  opacity: 0;
+}
+
+.burger input:checked ~ span:nth-of-type(3) {
+  transform: rotate(-45deg);
+  top: 28px;
+  left: 5px;
+}
 </style>
