@@ -134,7 +134,7 @@ onMounted( () => {
 .all-container {
     //background-color: var(--color-fondo);
     // background-color: rgba(42, 121, 0, 0.723);
-    background: linear-gradient(to bottom,rgb(58, 167, 0), transparent);
+    background: linear-gradient(to bottom,rgb(54, 156, 0), white);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -146,7 +146,7 @@ onMounted( () => {
 
 .title-container {
     .link {
-        color: black;
+        color: rgb(0, 0, 0);
         text-decoration: none;
         cursor: pointer;
         font-family: "Ubuntu", sans-serif;
@@ -160,13 +160,13 @@ onMounted( () => {
     position: absolute;
     align-items: center;
     justify-content: center;
-    text-align: left;
-    background-color: green;
-    top: 60px;
+    text-align: center;
+    background: linear-gradient(to top,rgb(54, 156, 0), white);
+    top: 85px;
     right: 0;
     gap: 20px;
-    width: 100px;
-    padding: 20px;
+    width: 100%;
+    padding: 20px 0px;
     z-index: 2000;
 }
 
@@ -176,27 +176,19 @@ onMounted( () => {
 }
 
 .displayMenu-enter-from {
-    opacity: 0;
     transform: translateX(100%);
-    /* Start off-screen to the right */
 }
 
 .displayMenu-enter-to {
-    opacity: 1;
     transform: translateX(0);
-    /* End at the original position */
 }
 
 .displayMenu-leave-from {
-    opacity: 1;
     transform: translateX(0);
-    /* Start from the original position */
 }
 
 .displayMenu-leave-to {
-    opacity: 0;
     transform: translateX(100%);
-    /* End off-screen to the left */
 }
 
 

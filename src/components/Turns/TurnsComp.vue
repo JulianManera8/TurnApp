@@ -4,8 +4,7 @@
         <div class="title-turns-container">
             <section class="title-container">
 
-                <h3 class="turns-title"> TURNS <span class="spanTitle" v-if="storeUser.user != null"> (today)</span>
-                </h3>
+                <h3 class="turns-title"> TURNS </h3>
 
                 <div v-if="!popupNewTurn && !editTurnId" class="btnAddTurn-container">
                     <button type="button" class="button" @click.prevent="handleClick">
@@ -464,12 +463,12 @@ onUnmounted(() => {
         font-size: large;
 
         td {
-            width: 120px;
+            width: 130px;
 
         }
 
         td:nth-child(5) {
-            width: 80px;
+            width: 100px;
         }
 
 
@@ -716,9 +715,11 @@ calendar-multi {
         max-width: 95%;
         min-width: 95%;
         line-height: 130%;
+        
+
 
         .title-container {
-            width: 87%;
+            width: 91%;
             text-align: left;
             align-items: left !important;
             justify-content: left;
@@ -728,6 +729,28 @@ calendar-multi {
     .turns-container {
         max-width: 90%;
         overflow: auto;
+    }
+
+    .msg-container {
+        display: flex;
+        width: 100vw;
+        overflow: none !important;
+    }
+
+    #name {
+        width: 80px;
+    }
+
+    #lastname {
+        width: 90px;
+    }
+
+    #date {
+        width: 120px;
+    }
+
+    #time {
+        width: 90px;
     }
 
 }
