@@ -139,7 +139,6 @@ const formattedDates = ref('')
 const showTurns = async () => {
 
     if (storeUser.user === null) {
-        turnsArray.value = []
         formattedDates.value = ''
         return
     }
@@ -154,11 +153,7 @@ const showTurns = async () => {
         if (error) throw error
 
         for (let turn of data) {
-
-            if(turn.user_id === storeUser.user.id) {
-                return turnsArray.value.push(turn)
-            }
-            
+            turnsArray.value.push(turn)
         }
 
         setOrder(turnsArray.value)
@@ -212,7 +207,7 @@ function setOrder(array) {
     })
 
     // console.log(array.value)
-
+    turnsArray.value = array
 }
 
 //function to format the display of the date and hour
@@ -385,9 +380,11 @@ const channelInsert = () => {
                 table: 'turno',
             },
             (payload) => {
-                // Agregar el nuevo turno a la lista
-                turnsArray.value.push(payload.new);
-                setOrder(turnsArray.value)
+                if (payload.new.user_id === storeUser.user.id) {
+                    // Agregar el nuevo turno a la lista
+                    turnsArray.value.push(payload.new);
+                    setOrder(turnsArray.value);
+                }
             }
         )
         .subscribe((status) => {
