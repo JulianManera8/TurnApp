@@ -346,7 +346,6 @@ const onDateChange = (event) => {
 const calendar = ref(null)
 
 
-
 const disableButtons = async () => {
     await nextTick();
 
@@ -416,6 +415,7 @@ onUnmounted(() => {
 .title-turns-container {
     display: flex;
     flex-direction: column;
+    align-items: left;
     margin: 2% 10px;
     width: 40%;
     min-width: 565px;
@@ -443,8 +443,8 @@ onUnmounted(() => {
 
 .turns-content {
     display: flex;
-    justify-content: center;
-
+    justify-content: left;
+    width: 100%;
 
     table {
         width: 100%;
@@ -478,6 +478,10 @@ onUnmounted(() => {
         }
 
     }
+}
+
+.turns-container {
+    margin-bottom: 70px;
 }
 
 .turnToday {
@@ -698,5 +702,22 @@ calendar-multi {
 
 .button:active {
     border: 1px solid #2e8644;
+}
+
+
+@media (width < 620px) {
+
+    .title-turns-container {
+        max-width: 95%;
+        min-width: 95%;
+        align-items: left !important;
+    }
+
+    .turns-content {
+        overflow-x: visible;
+    }
+
+
+
 }
 </style>

@@ -17,7 +17,6 @@
                         <RouterLink to="/help" class="link nav"> Help </RouterLink>
                     </li>
                 </ul>
-                <Darkmode />
                 <div class="log-container">
                     <router-link to="/login" v-if="!loged"> <button class="button"> Sign In! </button> </router-link>
                     <BtnLogout v-else @handleClick="logOut" />
@@ -43,9 +42,6 @@
                                 <RouterLink to="/help" class="link nav"> Help </RouterLink>
                             </li>
                             <li>
-                                <Darkmode />
-                            </li>
-                            <li>
                                 <div class="log-container">
                                     <router-link to="/login" v-if="!loged">
                                         <button class="button"> Sign In! </button>
@@ -69,7 +65,6 @@
 <script setup>
 import '../../css/colors.css'
 
-import Darkmode from '../LayoutComponents/Darkmode.vue'
 import BtnLogout from '../Auth/BtnLogout.vue'
 
 import { RouterLink, RouterView } from 'vue-router'
