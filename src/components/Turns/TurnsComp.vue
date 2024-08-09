@@ -441,6 +441,10 @@ onUnmounted(() => {
     }
 }
 
+.turns-container {
+    margin-bottom: 90px;
+}
+
 .turns-content {
     display: flex;
     justify-content: left;
@@ -478,10 +482,6 @@ onUnmounted(() => {
         }
 
     }
-}
-
-.turns-container {
-    margin-bottom: 70px;
 }
 
 .turnToday {
@@ -563,7 +563,6 @@ onUnmounted(() => {
     justify-content: center;
     align-items: center;
     margin: 2% 15px;
-    scale: 110%;
 }
 
 calendar-multi {
@@ -708,16 +707,17 @@ calendar-multi {
 @media (width < 620px) {
 
     .title-turns-container {
+        align-items: center;
+        margin: auto;
         max-width: 95%;
         min-width: 95%;
-        align-items: left !important;
+        line-height: 130%;
     }
 
-    .turns-content {
-        overflow-x: visible;
+    .turns-container {
+        max-width: 90%;
+        overflow: auto;
     }
-
-
 
 }
 </style>
