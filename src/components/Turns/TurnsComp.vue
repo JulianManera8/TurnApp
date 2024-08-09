@@ -139,6 +139,7 @@ const formattedDates = ref('')
 const showTurns = async () => {
 
     if (storeUser.user === null) {
+        turnsArray.value = []
         formattedDates.value = ''
         return
     }
@@ -153,7 +154,11 @@ const showTurns = async () => {
         if (error) throw error
 
         for (let turn of data) {
-            turnsArray.value.push(turn)
+
+            if(turn.user_id === storeUser.user.id) {
+                return turnsArray.value.push(turn)
+            }
+            
         }
 
         setOrder(turnsArray.value)
