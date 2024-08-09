@@ -439,6 +439,10 @@ onUnmounted(() => {
             }
         }
     }
+
+    @media (width < 879px) {
+        align-items: center;
+    }
 }
 
 .turns-container {
@@ -712,6 +716,13 @@ calendar-multi {
         max-width: 95%;
         min-width: 95%;
         line-height: 130%;
+
+        .title-container {
+            width: 87%;
+            text-align: left;
+            align-items: left !important;
+            justify-content: left;
+        }
     }
 
     .turns-container {
