@@ -35,17 +35,17 @@
 
                                     <template v-if="editTurnId !== turn.id">
                                         <td class="body-item">
-                                            <p :data-date="turn.fechaTurno"> {{ turn.nombreTurno }}</p>
+                                            <p> {{ turn.nombreTurno }}</p>
                                         </td>
                                         <td class="body-item">
-                                            <p :data-date="turn.fechaTurno"> {{ turn.apellidoTurno }}</p>
+                                            <p> {{ turn.apellidoTurno }}</p>
                                         </td>
                                         <td class="body-item">
                                             <p :data-date="turn.fechaTurno"> {{ formatDisplayDate(turn.fechaTurno) }}
                                             </p>
                                         </td>
                                         <td class="body-item">
-                                            <p :data-date="turn.fechaTurno"> {{ formatDisplayHour(turn.horaTurno) }}</p>
+                                            <p> {{ formatDisplayHour(turn.horaTurno) }}</p>
                                         </td>
                                         <td class="body-item">
                                             <div class="icons-container">
@@ -192,11 +192,8 @@ function setOrder(array) {
 
     array.value = array.map(turn => {
         const today = new Date().toLocaleDateString('en-CA');
-        console.log(today)
-
 
         if (turn.fechaTurno === today) {
-            console.log('se activa')
             nextTick(() => {
                 const element = document.querySelectorAll(`[data-date="${turn.fechaTurno}"]`)
                 element.forEach(el => el.classList.add('turnToday'))
