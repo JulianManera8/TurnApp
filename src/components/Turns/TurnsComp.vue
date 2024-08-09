@@ -429,13 +429,6 @@ onUnmounted(() => {
             font-size: 28px;
             font-weight: bold;
             margin-right: 10px;
-
-            .spanTitle {
-                font-size: 20px;
-                font-weight: 300;
-                color: green;
-                margin-left: 5px;
-            }
         }
     }
 
@@ -488,7 +481,7 @@ onUnmounted(() => {
 }
 
 .turnToday {
-    color: rgb(0, 195, 0);
+    color: rgb(54, 156, 0);
 }
 
 .edit-item {
@@ -619,7 +612,7 @@ calendar-multi {
             transition: all 0.2s;
 
             &:hover {
-                background-color: rgba(0, 182, 0, 0.113);
+                background-color: rgba(55, 156, 0, 0.162);
                 transition: all 0.2s;
             }
         }
@@ -627,7 +620,7 @@ calendar-multi {
         &::part(selected) {
             font-size: small;
             color: white;
-            --color-accent: rgba(0, 182, 0, 0.707);
+            --color-accent: rgb(54, 156, 0);
             --color-text-on-accent: #ffffff;
             border-radius: 50%;
             transition: all 0.2s;
@@ -674,7 +667,7 @@ calendar-multi {
     transform: translateX(93px);
     height: 100%;
     width: 37px;
-    background-color: #34974d;
+    background-color: rgb(54, 156, 0);
     display: flex;
     align-items: center;
     justify-content: center;

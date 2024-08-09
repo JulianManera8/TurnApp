@@ -8,17 +8,12 @@
                 <slot></slot>
             </main>
         </div>
-        <!-- <div class="footer">
-            <FooterComp />
-        </div> -->
     </div>
 </template>
 
 <script setup>
 
 import NavbarComp from '../components/LayoutComponents/NavbarComp.vue'
-import FooterComp from '../components/LayoutComponents/FooterComp.vue'
-
 
 </script>
 
