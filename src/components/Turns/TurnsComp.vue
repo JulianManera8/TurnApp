@@ -33,8 +33,9 @@
                         <p class="noTurns" v-if="turnsArray.length == 0 && storeUser.user != null && !popupNewTurn">
                             There are no turns.</p>
                     </div>
+
                     <template v-if="storeUser.user != null">
-                        <table v-if="turnsArray == null">
+                        <table v-if="turnsArray != null">
                             <tbody class="body-container">
                                 <tr v-for="turn in turnsArray" :key="turn.id">
 

@@ -145,6 +145,7 @@ h1 {
         border-radius: 20px;
         border: none;
         background-color: rgb(227, 227, 227);
+        font-size: medium;
     }
 }
 
