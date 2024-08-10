@@ -244,5 +244,12 @@ h1 {
     }
 }
 
+@media (width < 620px) {
+    .input-container {
+        input {
+            font-size: large;
+        }
+    }
+}
 </style>
 
