@@ -13,9 +13,6 @@
                     <li>
                         <RouterLink to="/" class="link nav"> Home </RouterLink>
                     </li>
-                    <li>
-                        <RouterLink to="/help" class="link nav"> Help </RouterLink>
-                    </li>
                 </ul>
                 <div class="log-container">
                     <router-link to="/login" v-if="!loged"> <button class="button"> Sign In! </button> </router-link>
@@ -37,9 +34,6 @@
                             :style="{ display: displayMenu ? 'flex' : 'none' }">
                             <li>
                                 <RouterLink to="/" class="link nav"> Home </RouterLink>
-                            </li>
-                            <li>
-                                <RouterLink to="/help" class="link nav"> Help </RouterLink>
                             </li>
                             <li>
                                 <div class="log-container">
