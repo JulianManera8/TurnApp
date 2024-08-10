@@ -726,6 +726,16 @@ calendar-multi {
         overflow: auto;
     }
 
+    table {
+        td:nth-child(1) {
+            width: 100px;
+        }
+
+        td:nth-child(2) {
+            width: 100px;
+        }
+    }
+
     .msg-container {
         display: flex;
         width: 100vw;

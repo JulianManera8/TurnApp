@@ -3,11 +3,13 @@
         <form @submit="handleSave" class="editTurns-item">
             <input type="text" placeholder="Name" v-model="nameTurn">
             <input type="text" placeholder="Lastname" v-model="lastnameTurn">
-            <input type="date" placeholder="Date" v-model="dateTurn">
-            <input type="time" placeholder="Hour" v-model="timeTurn">
+            <input type="date" placeholder="dd/mm/yyyy" v-model="dateTurn">
+            <input type="time" placeholder="hh-mm" v-model="timeTurn">
 
-            <button class="saveEditBtn" @click.prevent="handleSave"> Save </button> 
-            <button class="cancelEditBtn" @click.prevent="handleClickCloseCancel"> Cancel </button> 
+            <div class="btn-container">
+                <button class="saveEditBtn" @click.prevent="handleSave"> Save </button> 
+                <button class="cancelEditBtn" @click.prevent="handleClickCloseCancel"> Cancel </button> 
+            </div>
         </form>
 
         <p v-if="showError" class="errorMsg"> You must complete all the info! </p>
@@ -19,7 +21,7 @@
 <script setup>
 
 import { supabase } from '@/supabase.js'
-import { ref } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 
 import { useUserStore } from '../../stores/userStore.js'
 const storeUser = useUserStore()
@@ -27,12 +29,16 @@ const storeUser = useUserStore()
 import { useRouter } from 'vue-router'
 const router = useRouter()
 
+let today = new Date().toISOString().split('T')[0];
+console.log(today)
+
 const userId = storeUser.user.id
 
 const nameTurn = ref(null)
 const lastnameTurn = ref(null)
-const dateTurn = ref(null) 
-const timeTurn = ref(null)
+const dateTurn = ref(today) 
+console.log(dateTurn.value)
+const timeTurn = ref('12:00')
 
 const showError = ref(false);
 
@@ -94,6 +100,10 @@ const insertTurn = async (userId, name, lastname, date, time, ) => {
     };
 }
 
+onMounted( () => {
+    // setToday();
+})
+
 
 </script>
 
@@ -103,22 +113,26 @@ const insertTurn = async (userId, name, lastname, date, time, ) => {
     margin:10px 0 20px;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 10px;
+    
 
     input {
         border: 1px solid grey;
         padding: 5px 10px;
         border-radius: 2rem;   
-        
-        &:nth-child(3) {
-            width: 130px;
+        font-size: medium;
 
-        }
+        width: 40%;
+    }
 
-        &:nth-child(4) {
-            width: 130px;
-        }
-    }       
+    .btn-container{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 20px;
+    }
 }
 
 .errorMsg {
