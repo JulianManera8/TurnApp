@@ -138,6 +138,7 @@ const changeForm = () => {
   flex-direction: column;
   margin: auto;
   box-sizing: content-box;
+  scale: 98%;
 }
   
 
@@ -146,7 +147,7 @@ h1 {
   display: flex;
   text-align: center;
   width: 100%;
-  margin: 30px 0;
+  margin: 20px 0;
   font-size: 40px;
 }  
   

@@ -119,6 +119,7 @@ const changeForm = () => {
     flex-direction: column;
     margin: auto;
     box-sizing: content-box;
+    scale: 98%;
 }
 
 

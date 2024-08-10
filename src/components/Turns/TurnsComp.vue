@@ -447,8 +447,9 @@ onUnmounted(() => {
     width: 100%;
 
     .msg-container {
-        position: fixed;
-        left: 30px;
+        position: absolute;
+        left: 25px;
+        width: 80%;
     }
 
     table {
