@@ -2,12 +2,12 @@
     <section class="all-container">
 
         <div class="title-container">
+            <img src="../icons/sinfondo.png">
             
             <RouterLink to="/" class="link title">
                 <h1>WebTurn</h1>
             </RouterLink>
 
-            <img src="../icons/sinfondo.png">
         </div>
 
         <div class="nav-container">
@@ -144,14 +144,11 @@ onMounted( () => {
 .title-container {
     display: flex;
     align-items: center;
-    position: relative;
 
     img {
         display: block;
-        position: absolute;
-        left: 160px;
         width: 65px;
-        margin-left: 20px;
+        margin-right: 20px;
     }
 
     .link {
