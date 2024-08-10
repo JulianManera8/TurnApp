@@ -734,6 +734,13 @@ calendar-multi {
         td:nth-child(2) {
             width: 100px;
         }
+        td:nth-child(3) {
+            width: 160px;
+        }
+
+        td:nth-child(4) {
+            width: 100px;
+        }
     }
 
     .msg-container {
@@ -742,21 +749,18 @@ calendar-multi {
         overflow: none !important;
     }
 
-    #name {
-        width: 80px;
+    .edit-item {
+        width: 80% !important;
+        height: 30px;
+        margin-bottom: 10px;
+        font-size: medium;
     }
 
-    #lastname {
-        width: 90px;
+    td {
+
     }
 
-    #date {
-        width: 120px;
-    }
-
-    #time {
-        width: 90px;
-    }
+   
 
 }
 </style>
