@@ -15,6 +15,7 @@
                 </div>
             </div>
 
+            <p v-if="errorMsg" class="errorMsg"> {{ errorMsg }}</p>
             <div class="btn-container">
 
                 <button type="submit" class="btn-signIn" @click.prevent="signIn">Sign In!</button>
@@ -41,6 +42,8 @@ import { supabase } from '@/supabase.js'
 const email = ref('')
 const password = ref('')
 
+const errorMsg = ref(false)
+
 //function to login using the email and password
 const signIn = async () => {
 
@@ -57,7 +60,11 @@ const signIn = async () => {
         }, 1000);
 
     } catch (error) {
-        console.log(error.message)
+        errorMsg.value = 'Email or password incorrect'
+
+        setTimeout(() => {
+            errorMsg.value = false
+        }, 3000);
     }
   
 }
@@ -77,22 +84,6 @@ const signInGoogle = async () => {
     }
 
 }
-
-//function to login using facebook
-// const signInFacebook = async () => {
-//   let { data, error } = await supabase.auth.signInWithOAuth({
-//     provider: 'facebook'
-//   })
-
-//   if(error) {
-//     console.log(error.message)
-//   } else {
-//     console.log('logeado correctamente')
-//     window.location.href = '../../home'
-//   }
-  
-// }
-
 
 //functionality to show or hide the password
 const showPassword = ref(false)
@@ -170,6 +161,11 @@ h1 {
             cursor: pointer;
         }
     }
+}
+
+.errorMsg {
+    color: red;
+    margin-bottom: 10px;
 }
 
 .btn-container {

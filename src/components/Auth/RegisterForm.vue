@@ -23,8 +23,10 @@
         
       </div>  
 
+      <p v-if="errorMsg" class="errorMsg"> {{ errorMsg }} </p>
+
       <div class="btn-container">
-        <p v-if="error"> Debes completar todos los campos </p>
+        
         <button type="submit" class="btn-signIn" @click.prevent="handleCreate">Create!</button>
       </div>
 
@@ -50,13 +52,13 @@ const email = ref('')
 const password = ref('')
 const repPassword = ref('')
 
-const error = ref(false)
+const errorMsg = ref(false)
 //function to create account in supabase
 const signUp = async () => {
 
   if(email.value && password.value && name.value && lastname.value && repPassword.value) {
 
-    error.value = false
+    errorMsg.value = false
 
     if(repPassword.value === password.value) {
 
@@ -73,35 +75,26 @@ const signUp = async () => {
         });
 
         if(error) throw error
+        setTimeout(() => {
+          router.push('/')
+        }, 1000);
 
       } catch (error) {
-        console.log(error.message)
+        errorMsg.value = 'This email has already been registered!'
+        setTimeout(() => {
+          errorMsg.value = false
+        }, 2500);
       }
 
-      setTimeout(() => {
-        router.push('/')
-      }, 1000);
-          
-
     } else {
-      alert('las contras no coinciden')
+      errorMsg.value = 'Password do not match'
+      setTimeout(() => {
+        errorMsg.value = false
+      }, 2500);
     };
 
   } else {
-    const inputs = document.querySelectorAll('input')
-
-    inputs.forEach(input => {
-
-      if(input.value === '') {
-        error.value = true;
-
-        setTimeout(() => {
-          error.value = false
-        }, 3000);
-
-      }
-
-    });
+    errorMsg.value = 'You must complete all.'
   };
 
 }
@@ -193,6 +186,10 @@ h1 {
   }
 }
 
+.errorMsg {
+    color: red;
+    margin-bottom: 10px;
+}
 
 .btn-container {
   display: flex;

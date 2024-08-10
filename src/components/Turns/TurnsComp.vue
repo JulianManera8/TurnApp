@@ -446,6 +446,11 @@ onUnmounted(() => {
     justify-content: left;
     width: 100%;
 
+    .msg-container {
+        position: fixed;
+        left: 30px;
+    }
+
     table {
         width: 100%;
         text-align: center;
@@ -457,7 +462,6 @@ onUnmounted(() => {
 
         td {
             width: 130px;
-
         }
 
         td:nth-child(5) {
@@ -538,15 +542,13 @@ onUnmounted(() => {
     width: 65px;
 }
 
-.msg-container {
-    width: 100%;
-    display: flex;
-
-    .noTurns {
-        width: 100vw;
-
-    }
-}
+// .msg-container {
+//     width: 100%;
+//     display: flex;
+//     justify-content: left;
+//     text-align: left;
+//     background-color: red;
+// }
 
 .btnAddTurn-container {
     margin-left: 30px;

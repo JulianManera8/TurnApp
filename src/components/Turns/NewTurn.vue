@@ -1,9 +1,5 @@
 <template>
     <div>
-        <div class="close-container">
-            <v-icon @click="handleClickCloseCancel" name="io-close-circle-outline" scale="2" class="close-icon"></v-icon>
-        </div>
-
         <form @submit="handleSave" class="editTurns-item">
             <input type="text" placeholder="Name" v-model="nameTurn">
             <input type="text" placeholder="Lastname" v-model="lastnameTurn">
@@ -14,7 +10,7 @@
             <button class="cancelEditBtn" @click.prevent="handleClickCloseCancel"> Cancel </button> 
         </form>
 
-        <p v-if="showError"> You must complete all the info! </p>
+        <p v-if="showError" class="errorMsg"> You must complete all the info! </p>
 
         
     </div>
@@ -28,16 +24,15 @@ import { ref } from 'vue'
 import { useUserStore } from '../../stores/userStore.js'
 const storeUser = useUserStore()
 
-import { useTurnsStore } from '../../stores/turnsStore.js'
-const storeTurns = useTurnsStore()
-
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
 const userId = storeUser.user.id
 
-const nameTurn = ref(null) // string: julian
-const lastnameTurn = ref(null) // string manera
-const dateTurn = ref(null) // date 2024-07-06
-const timeTurn = ref(null) // time 12:54
+const nameTurn = ref(null)
+const lastnameTurn = ref(null)
+const dateTurn = ref(null) 
+const timeTurn = ref(null)
 
 const showError = ref(false);
 
@@ -45,7 +40,7 @@ const showError = ref(false);
 const handleSave = () => {
 
     if(storeUser.user == null) {
-        return alert('activar popup de login')
+        router.push('/login')
     }
 
     if(userId == null || nameTurn.value == null || lastnameTurn.value == null || dateTurn.value == null || timeTurn.value == null) {
@@ -53,7 +48,7 @@ const handleSave = () => {
 
         setTimeout(() => {
             showError.value = false;
-        }, 5000);
+        }, 3000);
 
         return
     };
@@ -113,52 +108,54 @@ const insertTurn = async (userId, name, lastname, date, time, ) => {
     input {
         border: 1px solid grey;
         padding: 5px 10px;
-        border-radius: 2rem;        
-    }
-       
+        border-radius: 2rem;   
+        
+        &:nth-child(3) {
+            width: 130px;
+
+        }
+
+        &:nth-child(4) {
+            width: 130px;
+        }
+    }       
+}
+
+.errorMsg {
+    color: red;
 }
 
 .saveEditBtn {
-    padding: 7px;
-    border-radius: 2rem;
-    border: 0px;
-    background-color: rgba(0, 161, 0, 0.396);
-    transition: all 0.2s;
+    color: #2ba100;
+    padding: 0.5em .7em;
+    font-size: 17px;
+    border-radius: 2em;
+    background: rgba(238, 238, 238, 0.582);
     cursor: pointer;
+    border: 2px solid #32970045;
+    transition: all 0.3s;
+    box-shadow: 4px 4px 8px #c5c5c5, -2px -2px 8px #ffffff;
 
     &:hover {
-        background-color: rgba(0, 161, 0, 0.761);
-    }    
+        box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff;
+    }
+
 }        
         
 .cancelEditBtn {
-    padding: 7px;
-    border-radius: 2rem;
-    border: 0px;
-    background-color: rgba(255, 0, 0, 0.572);
-    transition: all 0.3s;
+    color: #ff0000;
+    padding: 0.5em .7em;
+    font-size: 17px;
+    border-radius: 2em;
+    background: rgba(238, 238, 238, 0.582);
     cursor: pointer;
+    border: 2px solid #ff000045;
+    transition: all 0.3s;
+    box-shadow: 4px 4px 8px #c5c5c5, -2px -2px 8px #ffffff;
 
     &:hover {
-        background-color: rgba(255, 0, 0, 0.861);
+        box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff;
     }
 }
 
-
-.close-container {
-    display: none;
-    right: 10px;
-    top: 10px;
-
-    .close-icon {
-        opacity: .5;
-        transition: all 0.20s;
-        cursor: pointer;
-
-        &:hover {
-            opacity: 0.8;
-        }
-    }
-
-}
 </style>
