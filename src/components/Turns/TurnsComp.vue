@@ -30,12 +30,12 @@
                     
                     <div class="msg-container">
                         <p class="noUser" v-if="storeUser.user == null">Login to get access to your turns!</p>
-                        <p class="noTurns" v-if="turnsArray.length == 0 && storeUser.user != null && !popupNewTurn">
-                            There are no turns.</p>
+                        <p class="noTurns" v-if="turnsArray.length == 0 && storeUser.user != null && !popupNewTurn"> There are no turns. </p>
                     </div>
 
                     <template v-if="storeUser.user != null">
-                        <table v-if="turnsArray != null">
+
+                        <table>
                             <tbody class="body-container">
                                 <tr v-for="turn in turnsArray" :key="turn.id">
 
@@ -446,8 +446,13 @@ onUnmounted(() => {
 
 .turns-content {
     display: flex;
-    justify-content: left;
+    flex-direction: column;
+    align-items: left;
     width: 100%;
+
+    @media (width < 879px) {
+        align-items: center;
+    }
     
 
     table {
