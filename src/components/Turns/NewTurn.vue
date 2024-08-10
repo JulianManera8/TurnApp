@@ -30,14 +30,12 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 let today = new Date().toISOString().split('T')[0];
-console.log(today)
 
 const userId = storeUser.user.id
 
 const nameTurn = ref(null)
 const lastnameTurn = ref(null)
 const dateTurn = ref(today) 
-console.log(dateTurn.value)
 const timeTurn = ref('12:00')
 
 const showError = ref(false);
@@ -100,11 +98,6 @@ const insertTurn = async (userId, name, lastname, date, time, ) => {
     };
 }
 
-onMounted( () => {
-    // setToday();
-})
-
-
 </script>
 
 <style lang="scss" scoped>
@@ -124,6 +117,9 @@ onMounted( () => {
         font-size: medium;
 
         width: 40%;
+        min-width: 40%;
+        color: black;
+        text-decoration: none;
     }
 
     .btn-container{
