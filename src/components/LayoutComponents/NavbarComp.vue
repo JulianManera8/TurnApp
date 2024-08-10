@@ -2,9 +2,12 @@
     <section class="all-container">
 
         <div class="title-container">
+            
             <RouterLink to="/" class="link title">
                 <h1>WebTurn</h1>
             </RouterLink>
+
+            <img src="../icons/sinfondo.png">
         </div>
 
         <div class="nav-container">
@@ -139,12 +142,31 @@ onMounted( () => {
 }
 
 .title-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    img {
+        display: block;
+        position: absolute;
+        left: 160px;
+        width: 65px;
+        margin-left: 20px;
+    }
+
     .link {
         color: rgb(0, 0, 0);
         text-decoration: none;
         cursor: pointer;
-        font-family: "Ubuntu", sans-serif;
         font-size: larger;
+    }
+
+    h1 {
+        background: linear-gradient(to bottom, #ffffff, #ffffff);
+        -webkit-text-stroke: 2px rgb(0, 0, 0);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
 }
 
