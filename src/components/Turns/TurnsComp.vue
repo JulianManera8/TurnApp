@@ -24,11 +24,17 @@
                 <div v-if="popupNewTurn">
                     <NewTurn @closePopup="popupNewTurn = !popupNewTurn" />
                 </div>
+                
 
                 <div class="turns-content">
-
+                    
+                    <div class="msg-container">
+                        <p class="noUser" v-if="storeUser.user == null">Login to get access to your turns!</p>
+                        <p class="noTurns" v-if="turnsArray.length == 0 && storeUser.user != null && !popupNewTurn">
+                            There are no turns.</p>
+                    </div>
                     <template v-if="storeUser.user != null">
-                        <table>
+                        <table v-if="turnsArray == null">
                             <tbody class="body-container">
                                 <tr v-for="turn in turnsArray" :key="turn.id">
 
@@ -82,11 +88,7 @@
                         </table>
                     </template>
 
-                    <div class="msg-container">
-                        <p class="noUser" v-if="storeUser.user == null">Login to get access to your turns!</p>
-                        <p class="noTurns" v-if="turnsArray.length == 0 && storeUser.user != null && !popupNewTurn">
-                            There are no turns.</p>
-                    </div>
+                    
                 </div>
 
 
@@ -445,12 +447,7 @@ onUnmounted(() => {
     display: flex;
     justify-content: left;
     width: 100%;
-
-    .msg-container {
-        position: absolute;
-        left: 25px;
-        width: 80%;
-    }
+    
 
     table {
         width: 100%;
@@ -542,14 +539,6 @@ onUnmounted(() => {
 #time {
     width: 65px;
 }
-
-// .msg-container {
-//     width: 100%;
-//     display: flex;
-//     justify-content: left;
-//     text-align: left;
-//     background-color: red;
-// }
 
 .btnAddTurn-container {
     margin-left: 30px;
@@ -725,6 +714,12 @@ calendar-multi {
     .turns-container {
         max-width: 90%;
         overflow: auto;
+    }
+
+    .msg-container {
+        position: absolute;
+        left: 7%;
+        width: 80%;
     }
 
     table {
