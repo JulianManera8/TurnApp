@@ -1,29 +1,21 @@
 # TurnApp
 
-This template should help get you started developing with Vue 3 in Vite.
+FUTURAS FEATURES:
 
-## Recommended IDE Setup
+  -> Mejor ui para elegir turnos
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+  -> Poder interactuar con el calendario:
+    - ver turno
+    - modificar turno
+    - crear un turno tucando un dia
 
-## Customize configuration
+  -> Posibilidad de notificar determinado tiempo antes al usuario o al cliente
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+  -> Barra de buscador de turnos
+    - Buscar por: nombre / apellido / fecha 
 
-## Project Setup
+  -> Almacenar turnos que ya vencieron y mostrarlos en algun otro lado
 
-```sh
-npm install
-```
+  -> Opcion de poder agregar algun comentario u observacion
 
-### Compile and Hot-Reload for Development
 
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
