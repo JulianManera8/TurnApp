@@ -706,7 +706,7 @@ calendar-multi {
         max-width: 95%;
         min-width: 95%;
         line-height: 130%;
-        
+        text-align: center;
 
 
         .title-container {
@@ -720,6 +720,14 @@ calendar-multi {
     .turns-container {
         max-width: 90%;
         overflow: auto;
+        
+    }
+
+    .turns-content {
+        display: flex;
+        flex-direction: row;
+        justify-content: left;
+        width: 100%;
     }
 
     .msg-container {
@@ -756,13 +764,7 @@ calendar-multi {
         height: 30px;
         margin-bottom: 10px;
         font-size: medium;
-    }
-
-    td {
-
-    }
-
-   
+    }   
 
 }
 </style>

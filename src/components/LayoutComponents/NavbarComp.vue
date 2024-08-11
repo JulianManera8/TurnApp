@@ -175,7 +175,7 @@ onMounted( () => {
     justify-content: center;
     text-align: center;
     background: linear-gradient(to top,rgb(54, 156, 0), white);
-    top: 85px;
+    top: 100px;
     right: 0;
     gap: 20px;
     width: 100%;
